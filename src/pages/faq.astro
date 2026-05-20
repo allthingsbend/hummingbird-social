@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+import FAQJsonLd from '../components/FAQJsonLd.astro';
+import '../styles/hss-phase1.css';
+
+const faqs = [
+  { question: 'Can I change the wording on a downloadable template?', answer: 'Yes. Editable templates are designed so you can personalize the wording with your names, date, time, venue, RSVP details, and event information.' },
+  { question: 'Can I change the font colors?', answer: 'Some templates allow font color changes, while others are intentionally designed with a more fixed style. Check the individual product description before purchasing.' },
+  { question: 'What envelope size do I need for a 5x7 invitation?', answer: 'A 5x7 invitation usually pairs with an A7 envelope. Always confirm your final printed size before ordering envelopes.' },
+  { question: 'Where should I print my wedding templates?', answer: 'You can print through a local print shop, online printer, office print center, or at home. For wedding invitations, a professional or local printer usually gives the best finish.' },
+  { question: 'What paper should I use for wedding invitations?', answer: 'A 100 lb to 130 lb cover cardstock is a strong starting point. Matte, linen, cotton, or lightly textured paper usually works well for wedding stationery.' },
+  { question: 'Can I use the template on my phone?', answer: 'Some editing platforms work on mobile, but desktop is usually easier for detailed edits, spacing, and final proofing.' },
+  { question: 'Do you offer custom design requests?', answer: 'Yes. If you love the studio style but need a custom layout, matching piece, or more personalized suite, you can submit a custom request.' },
+  { question: 'Can I print more than one copy?', answer: 'Yes. After you finish editing and downloading your file, you can print the quantity needed for your event.' }
+];
+---
+
+<Layout title="Wedding Template FAQs | Hummingbird Social Studio" description="Answers to common questions about editable wedding templates, printing, envelopes, file types, wording, customization, and custom design requests.">
+  <FAQJsonLd items={faqs} />
+  <main class="hss-page">
+    <section class="hss-hero"><div class="hss-container"><p class="hss-eyebrow">FAQ</p><h1>Questions before you buy a wedding template?</h1><p class="hss-lead">Here are simple answers about editing, printing, envelopes, paper, file types, custom requests, and using digital stationery templates.</p><div class="hss-button-row"><a class="hss-button" href="/shop/">Shop Templates</a><a class="hss-button-secondary" href="/contact/">Contact the Studio</a></div></div></section>
+    <section class="hss-section"><div class="hss-narrow"><div class="hss-faq">{faqs.map((item) => (<details><summary>{item.question}</summary><p>{item.answer}</p></details>))}</div></div></section>
+    <section class="hss-section"><div class="hss-container hss-grid-2"><div class="hss-callout"><h2>Still deciding?</h2><p>Start with the How It Works page if you are new to digital templates. It explains the full process from purchase to printing.</p><a class="hss-button-secondary" href="/how-it-works/">How It Works</a></div><div class="hss-callout"><h2>Ready to print?</h2><p>Use the Printing Guide for paper weights, file types, size notes, and tips before sending files to a printer.</p><a class="hss-button-secondary" href="/printing-guide/">Printing Guide</a></div></div></section>
+  </main>
+</Layout>

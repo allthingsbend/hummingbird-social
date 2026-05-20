@@ -1,0 +1,65 @@
+---
+import Layout from '../layouts/Layout.astro';
+import FAQJsonLd from '../components/FAQJsonLd.astro';
+import '../styles/hss-phase1.css';
+
+const faqs = [
+  { question: 'How do editable wedding templates work?', answer: 'After purchase, you receive access to an editable digital template. You update the wording, adjust approved design details, download the finished file, and print it at home, locally, or through an online printer.' },
+  { question: 'Do I need design software?', answer: 'No. Hummingbird Social Studio templates are designed to be beginner-friendly and are edited through the template platform listed on each product page.' },
+  { question: 'Can I print my template more than once?', answer: 'Yes. Once your file is edited and downloaded, you can print the quantity you need for your event.' }
+];
+---
+
+<Layout title="How Editable Wedding Templates Work | Hummingbird Social Studio" description="Learn how Hummingbird Social Studio editable wedding templates work, from purchase and personalization to downloading, printing, and assembling your stationery.">
+  <FAQJsonLd items={faqs} />
+  <main class="hss-page">
+    <section class="hss-hero">
+      <div class="hss-container">
+        <p class="hss-eyebrow">How It Works</p>
+        <h1>Beautiful wedding stationery, edited on your timeline.</h1>
+        <p class="hss-lead">Our editable templates are made for couples who want polished, designer-quality stationery without starting from a blank page. Choose a design, personalize the details, download your files, and print when you are ready.</p>
+        <div class="hss-button-row">
+          <a class="hss-button" href="/shop/">Shop Templates</a>
+          <a class="hss-button-secondary" href="/printing-guide/">Read the Printing Guide</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="hss-section">
+      <div class="hss-container hss-grid">
+        <article class="hss-card"><h2>1. Choose your design</h2><p>Browse wedding invitations, bridal shower templates, signage, and day-of stationery. Pick the style that fits your celebration, whether it is minimalist, modern, romantic, garden-inspired, or Palm Springs-inspired.</p></article>
+        <article class="hss-card"><h2>2. Personalize the wording</h2><p>Update names, dates, locations, times, event details, and other text. Each template is structured to keep the layout balanced while still giving you room to make it your own.</p></article>
+        <article class="hss-card"><h2>3. Download and print</h2><p>Export your finished file and print through a local print shop, online printer, or at home if your printer supports the paper size and quality you want.</p></article>
+      </div>
+    </section>
+
+    <section class="hss-section">
+      <div class="hss-narrow">
+        <p class="hss-eyebrow">Simple Process</p>
+        <div class="hss-steps">
+          <div class="hss-step"><div><h2>Purchase the template</h2><p>After checkout, follow the access instructions included with your order. Keep the original email handy so you can return to your template while planning.</p></div></div>
+          <div class="hss-step"><div><h2>Edit the details</h2><p>Replace the sample wording with your event information. Review names, addresses, dates, punctuation, and line breaks carefully before downloading.</p></div></div>
+          <div class="hss-step"><div><h2>Download the right file type</h2><p>Use PDF for most professional printing. Use JPG or PNG when a printer specifically asks for image files or when you need a digital preview.</p></div></div>
+          <div class="hss-step"><div><h2>Print, trim, and assemble</h2><p>Order prints, choose envelopes, add finishing touches, and mail or display your stationery. For best results, run one test print before ordering a full batch.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hss-section">
+      <div class="hss-container hss-grid-2">
+        <div class="hss-callout"><h2>What you can usually edit</h2><ul class="hss-list"><li>Names, dates, times, and locations</li><li>Event wording and RSVP details</li><li>Some font colors, depending on the design</li><li>Some layout elements, depending on the template</li></ul></div>
+        <div class="hss-callout"><h2>What to check before buying</h2><ul class="hss-list"><li>The final size of the template</li><li>Whether the platform works for your needs</li><li>Printer file requirements</li><li>Whether matching suite pieces are available</li></ul></div>
+      </div>
+    </section>
+
+    <section class="hss-section">
+      <div class="hss-narrow">
+        <p class="hss-eyebrow">Questions</p>
+        <h2>Editable Template FAQs</h2>
+        <div class="hss-faq">
+          {faqs.map((item) => (<details><summary>{item.question}</summary><p>{item.answer}</p></details>))}
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

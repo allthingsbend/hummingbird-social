@@ -1,0 +1,252 @@
+:root {
+  --hss-cream: #fbf7f0;
+  --hss-blush: #f3ded8;
+  --hss-sage: #7f8f7a;
+  --hss-ink: #2f2a27;
+  --hss-muted: #6f6560;
+  --hss-line: #e7dcd3;
+  --hss-white: #fffdf9;
+}
+
+.hss-page {
+  color: var(--hss-ink);
+  background: var(--hss-cream);
+}
+
+.hss-hero,
+.hss-section {
+  padding: 4.5rem 1.25rem;
+}
+
+.hss-hero {
+  background: linear-gradient(135deg, var(--hss-cream), var(--hss-blush));
+  border-bottom: 1px solid var(--hss-line);
+}
+
+.hss-container {
+  width: min(1120px, 100%);
+  margin: 0 auto;
+}
+
+.hss-narrow {
+  width: min(820px, 100%);
+  margin: 0 auto;
+}
+
+.hss-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  font-size: .8rem;
+  color: var(--hss-sage);
+  font-weight: 700;
+  margin-bottom: .75rem;
+}
+
+.hss-hero h1,
+.hss-section h2,
+.hss-card h3 {
+  line-height: 1.08;
+  margin: 0 0 1rem;
+}
+
+.hss-hero h1 {
+  font-size: clamp(2.5rem, 5vw, 4.75rem);
+  max-width: 950px;
+}
+
+.hss-lead {
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  color: var(--hss-muted);
+  max-width: 800px;
+  line-height: 1.7;
+}
+
+.hss-button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .85rem;
+  margin-top: 1.75rem;
+}
+
+.hss-button,
+.hss-button-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: .9rem 1.15rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 700;
+  border: 1px solid var(--hss-ink);
+}
+
+.hss-button {
+  background: var(--hss-ink);
+  color: var(--hss-white);
+}
+
+.hss-button-secondary {
+  background: transparent;
+  color: var(--hss-ink);
+}
+
+.hss-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.hss-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.hss-card,
+.hss-callout,
+.hss-faq details,
+.hss-copy-box {
+  background: var(--hss-white);
+  border: 1px solid var(--hss-line);
+  border-radius: 24px;
+  padding: 1.5rem;
+  box-shadow: 0 12px 30px rgba(47, 42, 39, .06);
+}
+
+.hss-card p,
+.hss-section p,
+.hss-section li {
+  color: var(--hss-muted);
+  line-height: 1.75;
+}
+
+.hss-list {
+  padding-left: 1.2rem;
+}
+
+.hss-list li {
+  margin-bottom: .55rem;
+}
+
+.hss-steps {
+  counter-reset: hss-step;
+  display: grid;
+  gap: 1rem;
+}
+
+.hss-step {
+  counter-increment: hss-step;
+  display: grid;
+  grid-template-columns: 3.25rem 1fr;
+  gap: 1rem;
+  align-items: start;
+  background: var(--hss-white);
+  border: 1px solid var(--hss-line);
+  border-radius: 24px;
+  padding: 1.25rem;
+}
+
+.hss-step::before {
+  content: counter(hss-step);
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  background: var(--hss-blush);
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+}
+
+.hss-step h2,
+.hss-step h3 {
+  margin-top: 0;
+}
+
+.hss-table-wrap {
+  overflow-x: auto;
+  background: var(--hss-white);
+  border: 1px solid var(--hss-line);
+  border-radius: 20px;
+}
+
+.hss-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 680px;
+}
+
+.hss-table th,
+.hss-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--hss-line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.hss-table th {
+  background: #f7eee7;
+}
+
+.hss-faq {
+  display: grid;
+  gap: .85rem;
+}
+
+.hss-faq summary {
+  cursor: pointer;
+  font-weight: 800;
+  color: var(--hss-ink);
+}
+
+.hss-copy-box {
+  margin: 1rem 0;
+}
+
+.hss-copy-box strong {
+  display: block;
+  margin-bottom: .5rem;
+}
+
+.hss-mini-note {
+  font-size: .95rem;
+  color: var(--hss-muted);
+}
+
+.hss-size-guide {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.hss-size-item {
+  border: 1px dashed var(--hss-sage);
+  background: #fffaf5;
+  border-radius: 18px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.hss-size-shape {
+  margin: 0 auto 1rem;
+  background: var(--hss-blush);
+  border: 1px solid var(--hss-line);
+  border-radius: 8px;
+}
+
+.hss-shape-invite { width: 90px; height: 126px; }
+.hss-shape-rsvp { width: 92px; height: 65px; }
+.hss-shape-envelope { width: 124px; height: 88px; }
+
+@media (max-width: 840px) {
+  .hss-grid,
+  .hss-grid-2,
+  .hss-size-guide {
+    grid-template-columns: 1fr;
+  }
+
+  .hss-hero,
+  .hss-section {
+    padding: 3rem 1rem;
+  }
+}
