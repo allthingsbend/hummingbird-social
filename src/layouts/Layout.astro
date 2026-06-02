@@ -38,7 +38,11 @@ const { title, description } = Astro.props;
         />
       </a>
 
-      <nav class="nav">
+      <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        Menu
+      </button>
+
+      <nav class="nav" aria-label="Main navigation">
         <a href="/wedding-invitation-suites/">Wedding Invitations</a>
         <a href="/bridal-shower-invitations/">Bridal Shower</a>
         <a href="/how-it-works/">How It Works</a>
@@ -63,10 +67,21 @@ const { title, description } = Astro.props;
         <a href="/printing-guide/">Printing Guide</a> ·
         <a href="/wording-etiquette/">Wording & Etiquette</a> ·
         <a href="/faq/">FAQ</a> ·
-        <a href="/custom-design-requests/">Custom Design Requests</a>
+        <a href="/custom-design-requests/">Custom Design Requests</a> ·
+        <a href="/sitemap/">Sitemap</a>
       </p>
 
       <p>© 2026 Hummingbird Social Studio</p>
     </footer>
+
+    <script>
+      const menuButton = document.querySelector('.menu-toggle');
+      const nav = document.querySelector('.nav');
+
+      menuButton?.addEventListener('click', () => {
+        const isOpen = nav?.classList.toggle('is-open');
+        menuButton.setAttribute('aria-expanded', String(isOpen));
+      });
+    </script>
   </body>
 </html>
