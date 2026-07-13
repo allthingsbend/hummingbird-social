@@ -3,6 +3,8 @@ import '../styles/global.css';
 import '../styles/hss-phase1.css';
 
 const { title, description } = Astro.props;
+
+const etsyShopUrl = 'https://www.etsy.com/shop/HummingbirdSocial';
 ---
 
 <!doctype html>
@@ -31,14 +33,18 @@ const { title, description } = Astro.props;
 
   <body>
     <header class="site-header">
-      <a class="logo" href="/">
+      <a class="logo" href="/" aria-label="Hummingbird Social home">
         <img
           src="/images/hummingbird-social-studio-logo.png"
-          alt="Hummingbird Social Studio"
+          alt="Hummingbird Social"
         />
       </a>
 
-      <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <button
+        class="menu-toggle"
+        aria-label="Toggle navigation"
+        aria-expanded="false"
+      >
         Menu
       </button>
 
@@ -50,6 +56,14 @@ const { title, description } = Astro.props;
         <a href="/faq/">FAQ</a>
         <a href="/about/">About</a>
         <a href="/contact/">Contact</a>
+
+        <a
+          href={etsyShopUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Shop on Etsy
+        </a>
       </nav>
     </header>
 
@@ -57,21 +71,28 @@ const { title, description } = Astro.props;
 
     <footer class="site-footer">
       <p>
-        Hummingbird Social Studio creates downloadable wedding invitation
-        templates, bridal shower invitations, and modern celebration
-        stationery.
+        Hummingbird Social creates editable wedding invitations, save the dates,
+        bridal shower invitations, and modern celebration stationery.
       </p>
 
       <p>
+        <a href="/wedding-invitation-suites/">Wedding Invitations</a> ·
         <a href="/how-it-works/">How It Works</a> ·
         <a href="/printing-guide/">Printing Guide</a> ·
         <a href="/wording-etiquette/">Wording & Etiquette</a> ·
         <a href="/faq/">FAQ</a> ·
         <a href="/custom-design-requests/">Custom Design Requests</a> ·
+        <a
+          href={etsyShopUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Shop on Etsy
+        </a> ·
         <a href="/sitemap/">Sitemap</a>
       </p>
 
-      <p>© 2026 Hummingbird Social Studio</p>
+      <p>© 2026 Hummingbird Social</p>
     </footer>
 
     <script>
