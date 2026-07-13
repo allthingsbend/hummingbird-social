@@ -4,6 +4,7 @@
   --text: #433630;
   --muted: #7c6d65;
   --terracotta: #c98362;
+  --terracotta-dark: #ae6c4e;
   --blush: #e7d3c8;
   --gold: #c6a27a;
   --border: #eadfd4;
@@ -31,18 +32,27 @@ a {
   text-decoration: none;
 }
 
+
+/* =========================
+   HEADER & NAVIGATION
+========================= */
+
 .site-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 1.5rem;
   padding: 1rem 5%;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
   z-index: 100;
+}
+
+.logo {
+  flex-shrink: 0;
 }
 
 .logo img {
@@ -53,19 +63,50 @@ a {
 
 .nav {
   display: flex;
-  gap: 1.4rem;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1.15rem;
   flex-wrap: wrap;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
+  font-weight: 500;
 }
 
 .nav a {
   color: var(--muted);
-  transition: 0.2s ease;
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 
 .nav a:hover {
   color: var(--terracotta);
 }
+
+
+/* Etsy button in top navigation */
+
+.nav a[href*="etsy.com"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--terracotta);
+  color: #ffffff;
+  padding: 0.7rem 1.15rem;
+  border-radius: 999px;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 6px 16px rgba(201, 131, 98, 0.2);
+}
+
+.nav a[href*="etsy.com"]:hover {
+  background: var(--terracotta-dark);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+
+/* Mobile menu button */
 
 .menu-toggle {
   display: none;
@@ -78,6 +119,11 @@ a {
   font-size: 0.95rem;
   cursor: pointer;
 }
+
+
+/* =========================
+   HERO
+========================= */
 
 .hero {
   padding: 7rem 5%;
@@ -129,6 +175,11 @@ a {
   margin-bottom: 2rem;
 }
 
+
+/* =========================
+   TYPOGRAPHY
+========================= */
+
 .eyebrow {
   color: var(--terracotta);
   text-transform: uppercase;
@@ -172,6 +223,11 @@ p {
   font-size: 1.18rem;
 }
 
+
+/* =========================
+   BUTTONS
+========================= */
+
 .button-row {
   display: flex;
   gap: 1rem;
@@ -182,11 +238,14 @@ p {
 .button {
   display: inline-block;
   background: var(--terracotta);
-  color: white;
+  color: #ffffff;
   padding: 0.95rem 1.5rem;
   border-radius: 999px;
   font-weight: 600;
-  transition: 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease,
+    background 0.2s ease;
 }
 
 .button:hover {
@@ -197,6 +256,11 @@ p {
 .button.secondary {
   background: var(--gold);
 }
+
+
+/* =========================
+   SECTIONS & LAYOUT
+========================= */
 
 .section,
 .content-section {
@@ -218,18 +282,33 @@ p {
   gap: 1.5rem;
 }
 
+
+/* =========================
+   CARDS
+========================= */
+
 .card {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 28px;
   padding: 2rem;
-  transition: 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
 }
 
 .card:hover {
   transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(67, 54, 48, 0.07);
+  border-color: var(--blush);
 }
+
+
+/* =========================
+   FEATURE BANDS & PAGE HERO
+========================= */
 
 .feature-band {
   background: #efe2d8;
@@ -246,6 +325,11 @@ p {
   padding-left: 1.2rem;
 }
 
+
+/* =========================
+   FOOTER
+========================= */
+
 .site-footer {
   background: #2f2622;
   color: #f6eee8;
@@ -261,6 +345,31 @@ p {
 
 .site-footer a {
   color: #f6eee8;
+  transition: color 0.2s ease;
+}
+
+.site-footer a:hover {
+  color: #e0a888;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 1100px) {
+  .site-header {
+    gap: 1rem;
+  }
+
+  .nav {
+    gap: 0.85rem;
+    font-size: 0.88rem;
+  }
+
+  .nav a[href*="etsy.com"] {
+    padding: 0.65rem 1rem;
+  }
 }
 
 @media (max-width: 900px) {
@@ -277,6 +386,11 @@ p {
     grid-template-columns: 1fr;
   }
 }
+
+
+/* =========================
+   MOBILE
+========================= */
 
 @media (max-width: 768px) {
   .site-header {
@@ -299,7 +413,7 @@ p {
     display: none;
     width: 100%;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 0;
     padding-top: 0.65rem;
   }
@@ -312,6 +426,15 @@ p {
     width: 100%;
     padding: 0.8rem 0;
     border-top: 1px solid #eadfd8;
+  }
+
+  .nav a[href*="etsy.com"] {
+    width: 100%;
+    margin-top: 0.75rem;
+    padding: 0.85rem 1.25rem;
+    border-top: 0;
+    border-radius: 999px;
+    text-align: center;
   }
 
   .hero {
@@ -376,6 +499,11 @@ p {
     padding: 2.5rem 5%;
   }
 }
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
 
 @media (max-width: 480px) {
   .site-header {
