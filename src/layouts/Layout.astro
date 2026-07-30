@@ -21,6 +21,24 @@ const etsyShopUrl = 'https://www.etsy.com/shop/HummingbirdSocial';
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    <!-- Google Analytics -->
+    <script
+      is:inline
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-561FJ6GV3X"
+    ></script>
+
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag() {
+        window.dataLayer.push(arguments);
+      }
+
+      gtag('js', new Date());
+      gtag('config', 'G-561FJ6GV3X');
+    </script>
+
     <title>{title}</title>
     <meta name="description" content={description} />
 
@@ -79,7 +97,7 @@ const etsyShopUrl = 'https://www.etsy.com/shop/HummingbirdSocial';
         <a href="/wedding-invitation-suites/">Wedding Invitations</a> ·
         <a href="/how-it-works/">How It Works</a> ·
         <a href="/printing-guide/">Printing Guide</a> ·
-        <a href="/wording-etiquette/">Wording & Etiquette</a> ·
+        <a href="/wording-etiquette/">Wording &amp; Etiquette</a> ·
         <a href="/faq/">FAQ</a> ·
         <a href="/custom-design-requests/">Custom Design Requests</a> ·
         <a
