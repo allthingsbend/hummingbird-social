@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { seoPrintablePages } from '../data/seo-printable-pages';
 const title = 'HTML Sitemap | Hummingbird Social Studio';
 const description = 'Browse Hummingbird Social Studio shop pages, wedding invitation collections, printables and planning resources.';
 ---
@@ -12,6 +13,11 @@ const description = 'Browse Hummingbird Social Studio shop pages, wedding invita
       <li><a href="/printing-guide/">Printing Guide</a></li><li><a href="/wording-etiquette/">Wording &amp; Etiquette</a></li>
       <li><a href="/bridal-shower-invitations/">Bridal Shower Invitations</a></li><li><a href="/faq/">FAQ</a></li><li><a href="/about/">About</a></li><li><a href="/contact/">Contact</a></li>
     </ul></div>
+
+    <div><h2>Printable Guides</h2><ul>
+      {seoPrintablePages.map((page) => <li><a href={`/printables/${page.slug}/`}>{page.h1}</a></li>)}
+    </ul></div>
+
     <div><h2>Shop Products</h2><ul>
       <li><a href="/shop/adhd-planner/">ADHD Planner</a></li>
       <li><a href="/shop/baby-shower-planner/">Printable Baby Shower Planner</a></li>
@@ -25,6 +31,7 @@ const description = 'Browse Hummingbird Social Studio shop pages, wedding invita
       <li><a href="/shop/pregnancy-journal-planner/">Pregnancy Journal & Planner</a></li>
       <li><a href="/shop/wedding-checklist/">Printable Wedding Planning Checklist</a></li>
     </ul></div>
+
     <div><h2>Wedding Invitation Collections</h2><ul>
       <li><a href="/wedding-invitation-suites/">Wedding Invitation Suites</a></li>
       <li><a href="/wedding-invitation-suites/bend-oregon-wedding-invitations/">Bend Oregon Wedding Invitations</a></li>
@@ -41,7 +48,7 @@ const description = 'Browse Hummingbird Social Studio shop pages, wedding invita
   </div></section>
 </Layout>
 <style>
-  .sitemap-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2.5rem; }
+  .sitemap-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:3rem 4rem; }
   .sitemap-grid h2 { font-size:2rem; } .sitemap-grid ul { padding-left:1.15rem; } .sitemap-grid li { margin:.55rem 0; } .sitemap-grid a { text-decoration:underline; text-underline-offset:3px; }
   @media (max-width:800px) { .sitemap-grid { grid-template-columns:1fr; } }
 </style>
