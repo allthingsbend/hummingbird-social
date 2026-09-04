@@ -1,80 +1,32 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { allProducts, resolve } from '../lib/products';
 
-const etsyShopUrl = 'https://www.etsy.com/shop/HummingbirdSocial';
-
-const featuredProducts = [
-  {
-    title: 'Palm Springs Save the Date Card',
-    description:
-      'A modern Palm Springs save the date featuring your wedding venue and destination details.',
-    url: 'https://www.etsy.com/listing/4535297551/palm-springs-save-the-date-card-w-venue',
-  },
-  {
-    title: 'Joshua Tree Wedding Invitation Template',
-    description:
-      'An editable Joshua Tree wedding invitation template inspired by desert landscapes and modern destination weddings.',
-    url: 'https://www.etsy.com/listing/4519847566/joshua-tree-wedding-invitation-template',
-  },
-];
+const products = (await allProducts()).map(resolve);
+const liveProducts = products.filter((p) => p.isLive).slice(0, 4);
+const etsyShopUrl = 'https://hummingbirdsocial.etsy.com';
 ---
 
-<Layout
-  title="Hummingbird Social | Editable Wedding Invitations & Templates"
-  description="Shop editable wedding invitation templates, save the dates, bridal shower invitations, printable wedding stationery, and modern downloadable designs from Hummingbird Social."
->
+<Layout title="Hummingbird Social Studio | Wedding Templates & Digital Printables" description="Shop editable wedding invitation templates, save the dates and thoughtful printable planners from Hummingbird Social Studio. Browse on our site and check out securely on Etsy.">
   <main>
     <section class="hero">
       <div class="hero-inner">
         <div class="hero-copy">
-          <p class="eyebrow">Editable wedding templates</p>
-
-          <h1>Modern wedding stationery made simple.</h1>
-
+          <p class="eyebrow">Digital designs by Hummingbird Social Studio</p>
+          <h1>Thoughtful designs for celebrations and real life.</h1>
           <p class="lead">
-            Hummingbird Social creates editable wedding invitations, save the
-            dates, bridal shower invitations, day-of stationery, and printable
-            celebration designs with a soft, romantic, and modern feel.
+            Editable wedding invitations and save the dates, plus a growing collection of printable planners, journals and checklists.
+            Browse everything here, then complete purchases securely through Etsy.
           </p>
-
-          <div class="button-row">
-            <a
-              class="button"
-              href={etsyShopUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Shop on Etsy
-            </a>
-
-            <a class="button secondary" href="/wedding-invitation-suites/">
-              Browse Wedding Invitations
-            </a>
-          </div>
+          <div class="button-row"><a class="button" href="/shop/">Shop Hummingbird Social</a><a class="button secondary" href="/wedding-invitation-suites/">Browse Wedding Invitations</a></div>
         </div>
-
         <div class="hero-card">
           <div class="hero-card-inner">
-            <p class="eyebrow">Download · Edit · Print</p>
-
-            <h2>
-              Beautiful wedding stationery without the custom-design timeline.
-            </h2>
-
-            <p>
-              Choose a design you love, personalize your wording and event
-              details, and print your stationery when you are ready.
-            </p>
-
-            <div class="button-row">
-              <a class="button" href="/how-it-works/">
-                See How It Works
-              </a>
-
-              <a class="button secondary" href="/printing-guide/">
-                Printing Guide
-              </a>
-            </div>
+            <p class="eyebrow">Simple by design</p>
+            <h2>{liveProducts.length} designs available now — with more in the works.</h2>
+            <p>Wedding templates are editable in Canva. New printables are being built as ready-to-use digital planning tools.</p>
+            <div class="button-row"><a class="button" href="/shop/">See the Shop</a><a class="button secondary" href="/printables/">Preview Printables</a></div>
           </div>
         </div>
       </div>
@@ -82,257 +34,55 @@ const featuredProducts = [
 
     <section class="section">
       <div class="container">
-        <p class="eyebrow">Featured designs</p>
-
-        <h2>Start with our latest wedding templates.</h2>
-
-        <div class="grid">
-          {
-            featuredProducts.map((product) => (
-              <a
-                class="card"
-                href={product.url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <h3>{product.title}</h3>
-
-                <p>{product.description}</p>
-
-                <p>
-                  <strong>View on Etsy →</strong>
-                </p>
-              </a>
-            ))
-          }
-
-          <a
-            class="card"
-            href={etsyShopUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h3>Shop All Designs</h3>
-
-            <p>
-              Explore the complete Hummingbird Social Etsy shop for editable
-              wedding invitations, save the dates, and new stationery designs.
-            </p>
-
-            <p>
-              <strong>Visit the Etsy Shop →</strong>
-            </p>
-          </a>
+        <p class="eyebrow">Available now</p>
+        <h2>Shop the current Etsy collection.</h2>
+        <p class="lead home-intro">See the product details here first. When you are ready to buy, the checkout opens in the Hummingbird Social Etsy shop.</p>
+        <div class="home-shop-grid">
+          {liveProducts.map((p) => <ProductCard url={p.url} title={p.title} tagline={p.tagline} description={p.description} price={p.price} image={p.images[0]} category={p.category} type={p.type} isLive={p.isLive} />)}
         </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <p class="eyebrow">Shop by category</p>
-
-        <h2>Wedding templates for every little detail.</h2>
-
-        <div class="grid">
-          <a class="card" href="/wedding-invitation-suites/">
-            <h3>Wedding Invitation Suites</h3>
-
-            <p>
-              Editable invitation templates with matching RSVP cards, detail
-              cards, and coordinated stationery for modern weddings.
-            </p>
-          </a>
-
-          <a class="card" href="/bridal-shower-invitations/">
-            <h3>Bridal Shower Invitations</h3>
-
-            <p>
-              Pretty, easy-to-edit bridal shower invitation templates for
-              brunches, garden parties, intimate gatherings, and stylish
-              celebrations.
-            </p>
-          </a>
-
-          <a class="card" href="/custom-design-requests/">
-            <h3>Custom Design Requests</h3>
-
-            <p>
-              Need a matching sign, menu, thank you card, or custom layout?
-              Request a coordinated design in the Hummingbird Social style.
-            </p>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <section class="feature-band">
-      <div class="container content">
-        <p class="eyebrow">Why digital templates?</p>
-
-        <h2>Download, edit, print, and celebrate.</h2>
-
-        <p>
-          Digital templates give you the flexibility to create beautiful wedding
-          stationery without waiting on a fully custom design process. Choose a
-          design you love, personalize the wording, update your event details,
-          and print when you are ready.
-        </p>
-
-        <p>
-          Every Hummingbird Social template is designed to feel polished and
-          intentional while still being simple enough for real-life wedding
-          planning.
-        </p>
-
-        <div class="button-row">
-          <a
-            class="button"
-            href={etsyShopUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Shop on Etsy
-          </a>
-
-          <a class="button secondary" href="/how-it-works/">
-            How It Works
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <p class="eyebrow">Helpful planning guides</p>
-
-        <h2>Everything you need to feel confident before you print.</h2>
-
-        <div class="grid">
-          <a class="card" href="/how-it-works/">
-            <h3>How It Works</h3>
-
-            <p>
-              Learn how editable templates work, what happens after purchase,
-              how to customize your design, and how to download your files.
-            </p>
-          </a>
-
-          <a class="card" href="/printing-guide/">
-            <h3>Wedding Printing Guide</h3>
-
-            <p>
-              Find simple guidance on cardstock, paper finishes, envelope
-              sizes, online printers, local print shops, and home printing.
-            </p>
-          </a>
-
-          <a class="card" href="/wording-etiquette/">
-            <h3>Wording & Etiquette</h3>
-
-            <p>
-              Find wording ideas for adult-only weddings, cash bars,
-              micro-weddings, elopements, family situations, and more.
-            </p>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container content">
-        <p class="eyebrow">Our style</p>
-
-        <h2>Soft romance, clean typography, and thoughtful details.</h2>
-
-        <p>
-          Hummingbird Social is for couples and hosts who want stationery that
-          feels elevated but approachable. Our designs blend warm neutrals,
-          romantic details, vintage-inspired touches, modern layouts, and
-          polished typography.
-        </p>
-
-        <p>
-          From the first save the date to the final thank you card, each piece is
-          created to help your event feel cohesive, beautiful, and easy to pull
-          together.
-        </p>
-
-        <div class="button-row">
-          <a class="button" href="/about/">
-            About Hummingbird Social
-          </a>
-
-          <a
-            class="button secondary"
-            href={etsyShopUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Visit Our Etsy Shop
-          </a>
-        </div>
+        <div class="button-row"><a class="button" href="/shop/">Browse the Full Shop</a><a class="button secondary" href={etsyShopUrl} target="_blank" rel="noopener noreferrer">Visit Etsy</a></div>
       </div>
     </section>
 
     <section class="feature-band">
       <div class="container">
-        <p class="eyebrow">Popular template needs</p>
-
-        <h2>Start with the piece you need most.</h2>
-
+        <p class="eyebrow">Shop your way</p>
+        <h2>Wedding stationery now. More printable life tools next.</h2>
         <div class="grid">
-          <a class="card" href="/wedding-invitation-suites/">
-            <h3>Wedding Invitations</h3>
-
-            <p>
-              Editable invitation suites for formal weddings, intimate
-              celebrations, destination weddings, and modern events.
-            </p>
-          </a>
-
-          <a class="card" href="/bridal-shower-invitations/">
-            <h3>Bridal Shower Invitations</h3>
-
-            <p>
-              Printable shower invitations for garden parties, brunch showers,
-              modern bridal celebrations, and hosted gatherings.
-            </p>
-          </a>
-
-          <a class="card" href="/custom-design-requests/">
-            <h3>Matching Stationery</h3>
-
-            <p>
-              Request matching menus, signs, place cards, thank you cards, or
-              coordinated day-of pieces for your celebration.
-            </p>
-          </a>
+          <a class="card" href="/wedding-invitation-suites/"><h3>Wedding Invitations</h3><p>Editable invitation and save-the-date designs with hand-drawn destination and venue details.</p><strong>Browse wedding designs →</strong></a>
+          <a class="card" href="/printables/"><h3>Printable Planners</h3><p>Preview the growing collection of wedding, pregnancy, postpartum, home and organization printables.</p><strong>Explore printables →</strong></a>
+          <a class="card" href="/how-it-works/"><h3>How It Works</h3><p>Understand what you receive, how Canva templates work, and the easiest ways to download and print.</p><strong>See the process →</strong></a>
         </div>
       </div>
     </section>
 
     <section class="section">
       <div class="container content">
-        <p class="eyebrow">Questions before you order?</p>
+        <p class="eyebrow">Made to feel personal</p>
+        <h2>Soft romance, clean typography and thoughtful details.</h2>
+        <p>Hummingbird Social is for people who want digital designs that feel elevated without making the process complicated. Wedding pieces mix original hand-drawn artwork with simple typography; the printable collection carries that same calm, useful approach into planning and everyday life.</p>
+        <div class="button-row"><a class="button" href="/about/">About Hummingbird Social</a><a class="button secondary" href="/custom-design-requests/">Custom Design Requests</a></div>
+      </div>
+    </section>
 
-        <h2>Planning should feel easier, not more confusing.</h2>
-
-        <p>
-          Not sure how editable templates work, what paper to choose, or whether
-          a design can be adjusted for your event? Start with our support pages
-          or reach out with your question.
-        </p>
-
-        <div class="button-row">
-          <a class="button" href="/faq/">
-            View Common Questions
-          </a>
-
-          <a class="button secondary" href="/contact/">
-            Contact Hummingbird Social
-          </a>
+    <section class="section">
+      <div class="container">
+        <p class="eyebrow">Helpful before you print</p>
+        <h2>Guides for the details that come after choosing a design.</h2>
+        <div class="grid">
+          <a class="card" href="/printing-guide/"><h3>Printing Guide</h3><p>Cardstock, paper finishes, envelope sizes, online printers, local print shops and home printing.</p></a>
+          <a class="card" href="/wording-etiquette/"><h3>Wording &amp; Etiquette</h3><p>Invitation wording ideas for adult-only weddings, cash bars, intimate celebrations and more.</p></a>
+          <a class="card" href="/faq/"><h3>Common Questions</h3><p>Answers about editing, downloading, printing, digital products and custom requests.</p></a>
         </div>
       </div>
     </section>
   </main>
 </Layout>
+
+<style>
+  .home-shop-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; margin-top: 2rem; }
+  .home-intro { max-width: 48rem; }
+  .feature-band .card strong { display: inline-block; margin-top: .75rem; color: var(--text); }
+  @media (max-width: 1050px) { .home-shop-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 620px) { .home-shop-grid { grid-template-columns: 1fr; } }
+</style>

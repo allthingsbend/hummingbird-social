@@ -1,0 +1,110 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { allProducts, resolve, SITE } from '../../lib/products';
+
+const products = (await allProducts()).map(resolve);
+const categories = [...new Set(products.map((p) => p.category))];
+const liveCount = products.filter((p) => p.isLive).length;
+
+const title = 'Shop Digital Wedding Templates & Printable Planners | Hummingbird Social';
+const description = 'Shop editable wedding invitations and save the dates, plus printable planners, journals and checklists from Hummingbird Social Studio.';
+const listSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Hummingbird Social Studio shop',
+  itemListElement: products.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.title, url: `${SITE}${p.url}` })),
+};
+---
+
+<Layout title={title} description={description}>
+  <link rel="canonical" href={`${SITE}/shop/`} slot="head" />
+  <script type="application/ld+json" set:html={JSON.stringify(listSchema)} is:inline slot="head" />
+
+  <main class="shop">
+    <header class="shop__header">
+      <p class="shop__eyebrow">Hummingbird Social Studio</p>
+      <h1>Digital designs for celebrations and real life.</h1>
+      <p>
+        Shop editable wedding stationery you can personalize in Canva, plus printable planners, journals and checklists.
+        Browse everything here; products that are live finish checkout securely on Etsy.
+      </p>
+      <div class="shop__facts">
+        <span><strong>{liveCount}</strong> designs available now</span>
+        <span>Digital downloads</span>
+        <span>Nothing ships</span>
+      </div>
+    </header>
+
+    <div class="shop__filters" role="group" aria-label="Filter products">
+      <button type="button" class="chip is-active" data-filter="all" aria-pressed="true">Everything</button>
+      {categories.map((c) => <button type="button" class="chip" data-filter={c} aria-pressed="false">{c}</button>)}
+    </div>
+
+    <div class="shop__grid" id="shop-grid">
+      {products.map((p) => (
+        <ProductCard url={p.url} title={p.title} tagline={p.tagline} description={p.description} price={p.price}
+          image={p.images[0]} category={p.category} type={p.type} isLive={p.isLive} />
+      ))}
+    </div>
+    <p class="shop__empty" id="shop-empty" hidden>Nothing in that category yet.</p>
+
+    <section class="shop__note">
+      <div>
+        <p class="shop__eyebrow">Two ways to use the shop</p>
+        <h2>Templates you edit. Printables you simply use.</h2>
+      </div>
+      <div class="shop__note-grid">
+        <article><h3>Editable Canva templates</h3><p>Personalize the wording and details, then download a finished file for printing or digital sharing.</p></article>
+        <article><h3>Ready-to-print PDFs</h3><p>Planning tools and journals designed to download and use without learning a design program.</p></article>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<script is:inline>
+  (() => {
+    const chips = document.querySelectorAll('.shop__filters .chip');
+    const cards = document.querySelectorAll('#shop-grid .product-card');
+    const empty = document.getElementById('shop-empty');
+    chips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        chips.forEach((c) => {
+          const active = c === chip;
+          c.classList.toggle('is-active', active);
+          c.setAttribute('aria-pressed', String(active));
+        });
+        let shown = 0;
+        cards.forEach((card) => {
+          const match = filter === 'all' || card.dataset.category === filter;
+          card.hidden = !match;
+          if (match) shown++;
+        });
+        if (empty) empty.hidden = shown > 0;
+      });
+    });
+  })();
+</script>
+
+<style>
+  .shop { max-width: 72rem; margin: 0 auto; padding: 0 1.25rem 5rem; }
+  .shop__header { margin: 0 -1.25rem 2.25rem; padding: 5.5rem max(1.25rem, calc((100vw - 72rem)/2 + 1.25rem)); background: linear-gradient(135deg, #fffaf5, #f0dfd5); border-bottom: 1px solid var(--border); }
+  .shop__eyebrow { margin: 0 0 .75rem; color: var(--terracotta); text-transform: uppercase; letter-spacing: .16em; font-size: .76rem; font-weight: 600; }
+  .shop__header h1 { max-width: 52rem; margin: 0 0 1rem; font-size: clamp(3rem, 7vw, 5.2rem); }
+  .shop__header > p:not(.shop__eyebrow) { max-width: 44rem; font-size: 1.1rem; }
+  .shop__facts { display: flex; flex-wrap: wrap; gap: .65rem; margin-top: 1.5rem; }
+  .shop__facts span { padding: .55rem .8rem; border: 1px solid rgba(67,54,48,.13); border-radius: 999px; background: rgba(255,255,255,.6); font-size: .84rem; color: var(--muted); }
+  .shop__filters { display: flex; flex-wrap: wrap; gap: .5rem; margin: 2.25rem 0 2rem; }
+  .chip { padding: .5rem 1rem; border: 1px solid var(--border); border-radius: 999px; background: #fffaf5; color: var(--muted); font: inherit; font-size: .86rem; cursor: pointer; }
+  .chip.is-active { border-color: var(--terracotta); background: var(--terracotta); color: #fff; }
+  .chip:focus-visible { outline: 2px solid var(--terracotta); outline-offset: 2px; }
+  .shop__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 1.5rem; }
+  .shop__empty { padding: 3rem 0; }
+  .shop__note { margin-top: 5rem; padding: 3rem; border: 1px solid var(--border); border-radius: 28px; background: #efe2d8; }
+  .shop__note h2 { max-width: 40rem; margin-top: 0; font-size: clamp(2rem, 4vw, 3.2rem); }
+  .shop__note-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1.5rem; }
+  .shop__note-grid article { background: rgba(255,253,249,.82); border: 1px solid var(--border); border-radius: 20px; padding: 1.4rem; }
+  .shop__note-grid h3 { margin-top: 0; }
+  @media (max-width: 700px) { .shop__header { padding-top: 3.5rem; padding-bottom: 3.5rem; } .shop__note { padding: 1.4rem; } .shop__note-grid { grid-template-columns: 1fr; } }
+</style>

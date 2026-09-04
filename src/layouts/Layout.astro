@@ -1,126 +1,60 @@
 ---
 import '../styles/global.css';
 import '../styles/hss-phase1.css';
-
 const { title, description } = Astro.props;
-
-const etsyShopUrl = 'https://www.etsy.com/shop/HummingbirdSocial';
+const etsyShopUrl = 'https://hummingbirdsocial.etsy.com';
 ---
-
 <!doctype html>
 <html lang="en">
   <head>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
-
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <!-- Google Analytics -->
-    <script
-      is:inline
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-561FJ6GV3X"
-    ></script>
-
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-561FJ6GV3X"></script>
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
-
-      function gtag() {
-        window.dataLayer.push(arguments);
-      }
-
+      function gtag() { window.dataLayer.push(arguments); }
       gtag('js', new Date());
       gtag('config', 'G-561FJ6GV3X');
     </script>
-
     <title>{title}</title>
     <meta name="description" content={description} />
-
-    <link
-      rel="icon"
-      type="image/png"
-      href="/images/hummingbird-social-studio-favicon.png"
-    />
+    <link rel="icon" type="image/png" href="/images/hummingbird-social-studio-favicon.png" />
+    <slot name="head" />
   </head>
-
   <body>
     <header class="site-header">
-      <a class="logo" href="/" aria-label="Hummingbird Social home">
-        <img
-          src="/images/hummingbird-social-studio-logo.png"
-          alt="Hummingbird Social"
-        />
-      </a>
-
-      <button
-        class="menu-toggle"
-        aria-label="Toggle navigation"
-        aria-expanded="false"
-      >
-        Menu
-      </button>
-
+      <a class="logo" href="/" aria-label="Hummingbird Social home"><img src="/images/hummingbird-social-studio-logo.png" alt="Hummingbird Social" /></a>
+      <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">Menu</button>
       <nav class="nav" aria-label="Main navigation">
+        <a href="/shop/">Shop</a>
         <a href="/wedding-invitation-suites/">Wedding Invitations</a>
-        <a href="/bridal-shower-invitations/">Bridal Shower</a>
+        <a href="/printables/">Printables</a>
         <a href="/how-it-works/">How It Works</a>
         <a href="/printing-guide/">Printing Guide</a>
-        <a href="/faq/">FAQ</a>
         <a href="/about/">About</a>
         <a href="/contact/">Contact</a>
-
-        <a
-          href={etsyShopUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Shop on Etsy
-        </a>
+        <a href={etsyShopUrl} target="_blank" rel="noopener noreferrer">Etsy Shop</a>
       </nav>
     </header>
-
     <slot />
-
     <footer class="site-footer">
+      <p>Hummingbird Social Studio creates editable wedding stationery and thoughtful digital planning tools for celebrations and everyday life.</p>
       <p>
-        Hummingbird Social creates editable wedding invitations, save the dates,
-        bridal shower invitations, and modern celebration stationery.
+        <a href="/shop/">Shop</a> · <a href="/wedding-invitation-suites/">Wedding Invitations</a> · <a href="/printables/">Printables</a> ·
+        <a href="/bridal-shower-invitations/">Bridal Shower</a> · <a href="/how-it-works/">How It Works</a> ·
+        <a href="/printing-guide/">Printing Guide</a> · <a href="/wording-etiquette/">Wording &amp; Etiquette</a> ·
+        <a href="/faq/">FAQ</a> · <a href="/custom-design-requests/">Custom Design Requests</a> ·
+        <a href={etsyShopUrl} target="_blank" rel="noopener noreferrer">Etsy</a> · <a href="/sitemap/">Sitemap</a>
       </p>
-
-      <p>
-        <a href="/wedding-invitation-suites/">Wedding Invitations</a> ·
-        <a href="/how-it-works/">How It Works</a> ·
-        <a href="/printing-guide/">Printing Guide</a> ·
-        <a href="/wording-etiquette/">Wording &amp; Etiquette</a> ·
-        <a href="/faq/">FAQ</a> ·
-        <a href="/custom-design-requests/">Custom Design Requests</a> ·
-        <a
-          href={etsyShopUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Shop on Etsy
-        </a> ·
-        <a href="/sitemap/">Sitemap</a>
-      </p>
-
-      <p>© 2026 Hummingbird Social</p>
+      <p>© 2026 Hummingbird Social Studio</p>
     </footer>
-
     <script>
       const menuButton = document.querySelector('.menu-toggle');
       const nav = document.querySelector('.nav');
-
-      menuButton?.addEventListener('click', () => {
-        const isOpen = nav?.classList.toggle('is-open');
-        menuButton.setAttribute('aria-expanded', String(isOpen));
-      });
+      menuButton?.addEventListener('click', () => { const isOpen = nav?.classList.toggle('is-open'); menuButton.setAttribute('aria-expanded', String(isOpen)); });
     </script>
   </body>
 </html>

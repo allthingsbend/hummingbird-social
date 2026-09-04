@@ -1,0 +1,53 @@
+---
+interface Props {
+  checkout: 'etsy' | 'lemonsqueezy' | 'both';
+  etsyUrl?: string;
+  lemonSqueezyUrl?: string;
+  price?: string;
+  isLive: boolean;
+  label?: string;
+}
+const { checkout, etsyUrl, lemonSqueezyUrl, price, isLive, label = 'Buy now' } = Astro.props;
+const hasDirect = Boolean(lemonSqueezyUrl) && checkout !== 'etsy';
+const hasEtsy = Boolean(etsyUrl);
+---
+
+{!isLive && (
+  <div class="buy buy--pending">
+    <p class="buy__pending">This design is in the works and is not for sale yet.</p>
+    <a class="buy__secondary" href="https://hummingbirdsocial.etsy.com" target="_blank" rel="noopener noreferrer">Shop what is live on Etsy →</a>
+  </div>
+)}
+
+{isLive && hasDirect && (
+  <div class="buy">
+    <a class="buy__primary lemonsqueezy-button" href={lemonSqueezyUrl} target="_blank" rel="noopener noreferrer">
+      {label}{price && <span class="buy__price">{price}</span>}
+    </a>
+    {hasEtsy && <a class="buy__secondary" href={etsyUrl} target="_blank" rel="noopener noreferrer">Prefer Etsy? Buy there →</a>}
+    <p class="buy__note">Digital product. Download details are provided after checkout.</p>
+  </div>
+)}
+
+{isLive && !hasDirect && hasEtsy && (
+  <div class="buy">
+    <a class="buy__primary" href={etsyUrl} target="_blank" rel="noopener noreferrer">
+      {label} on Etsy{price && <span class="buy__price">{price}</span>}
+    </a>
+    <p class="buy__note">Secure checkout and instant-download delivery are handled by Etsy.</p>
+  </div>
+)}
+
+<style>
+  .buy { display: grid; gap: .7rem; justify-items: start; margin: 1.4rem 0; }
+  .buy__primary {
+    display: inline-flex; align-items: baseline; gap: .75rem; padding: .95rem 1.45rem;
+    border-radius: 999px; text-decoration: none; font-weight: 600; background: var(--terracotta, #c98362); color: #fff;
+    transition: transform .2s ease, background .2s ease;
+  }
+  .buy__primary:hover { transform: translateY(-2px); background: var(--terracotta-dark, #ae6c4e); }
+  .buy__price { opacity: .85; font-weight: 500; }
+  .buy__secondary { font-size: .9rem; text-decoration: underline; text-underline-offset: 3px; }
+  .buy__note, .buy__pending { font-size: .86rem; color: var(--muted, #7c6d65); margin: 0; line-height: 1.55; }
+  .buy--pending { padding: 1rem 1.1rem; border: 1px solid var(--border, #eadfd4); border-radius: 16px; background: #fffaf5; }
+</style>

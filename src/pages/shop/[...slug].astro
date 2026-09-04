@@ -1,0 +1,126 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import BuyButton from '../../components/BuyButton.astro';
+import { getCollection, render } from 'astro:content';
+import { resolve, slugOf, SITE } from '../../lib/products';
+
+export async function getStaticPaths() {
+  const products = await getCollection('products');
+  return products.map((entry) => ({ params: { slug: slugOf(entry) }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const p = resolve(entry);
+const { Content } = await render(entry);
+const url = `${SITE}${p.url}`;
+const all = await getCollection('products');
+const related = all.filter((e) => slugOf(e) !== p.slug).map(resolve).sort((a, b) => {
+  const liveDiff = Number(b.isLive) - Number(a.isLive);
+  const categoryDiff = Number(a.category !== p.category) - Number(b.category !== p.category);
+  return categoryDiff || liveDiff || a.order - b.order;
+}).slice(0, 3);
+const buyUrl = p.hasDirect ? p.lemonSqueezyUrl : p.etsyUrl;
+
+const productSchema = {
+  '@context': 'https://schema.org', '@type': 'Product', name: p.title, description: p.description, url, category: p.category,
+  brand: { '@type': 'Brand', name: 'Hummingbird Social' },
+  ...(p.images.length ? { image: p.images.map((i) => i.startsWith('http') ? i : SITE + i) } : {}),
+  ...(p.isLive && p.price && buyUrl ? { offers: { '@type': 'Offer', price: p.price.replace(/[^0-9.]/g, ''), priceCurrency: 'USD', availability: p.inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock', url: buyUrl, seller: { '@type': 'Organization', name: 'Hummingbird Social' }, itemCondition: 'https://schema.org/NewCondition' } } : {}),
+};
+const faqSchema = p.faqs.length ? { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: p.faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) } : null;
+const breadcrumbSchema = { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+  { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+  { '@type': 'ListItem', position: 2, name: 'Shop', item: `${SITE}/shop/` },
+  { '@type': 'ListItem', position: 3, name: p.title, item: url },
+]};
+---
+
+<Layout title={p.metaTitle ?? p.title} description={p.description}>
+  <link rel="canonical" href={url} slot="head" />
+  <meta property="og:title" content={p.metaTitle ?? p.title} slot="head" />
+  <meta property="og:description" content={p.description} slot="head" />
+  <meta property="og:type" content="product" slot="head" />
+  <meta property="og:url" content={url} slot="head" />
+  {p.images[0] && <meta property="og:image" content={p.images[0].startsWith('http') ? p.images[0] : SITE + p.images[0]} slot="head" />}
+  <script type="application/ld+json" set:html={JSON.stringify(productSchema)} is:inline slot="head" />
+  {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} is:inline slot="head" />}
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} is:inline slot="head" />
+
+  <main class="product">
+    <nav class="product__crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/shop/">Shop</a><span aria-hidden="true">/</span><span>{p.title}</span></nav>
+    <article>
+      <div class="product__top">
+        <div class="product__gallery">
+          {p.images.length > 0 ? (<>
+            <img class="product__hero" id="product-hero" src={p.images[0]} alt={p.title} width="900" height="900" />
+            {p.images.length > 1 && <div class="product__thumbs">{p.images.map((src, i) => (
+              <button type="button" class:list={['product__thumb', i === 0 && 'is-active']} data-src={src} aria-label={`View image ${i + 1}`}><img src={src} alt="" loading="lazy" width="100" height="100" /></button>
+            ))}</div>}
+          </>) : <div class="product__hero product__hero--empty"><span>Preview coming soon</span></div>}
+        </div>
+        <div class="product__info">
+          <p class="product__category">{p.category}</p>
+          <h1>{p.h1}</h1>
+          {p.tagline && <p class="product__tagline">{p.tagline}</p>}
+          <BuyButton checkout={p.checkout} etsyUrl={p.etsyUrl} lemonSqueezyUrl={p.lemonSqueezyUrl} price={p.price} isLive={p.isLive} />
+          <dl class="product__meta">
+            {p.pageCount && <div><dt>Includes</dt><dd>{p.pageCount}</dd></div>}
+            {p.formats.length > 0 && <div><dt>Files</dt><dd>{p.formats.join(', ')}</dd></div>}
+            <div><dt>Delivery</dt><dd>{p.isLive ? 'Digital download' : 'Not for sale yet'}</dd></div>
+          </dl>
+        </div>
+      </div>
+      <div class="product__body"><Content /></div>
+      {p.faqs.length > 0 && <section class="product__faq"><h2>Questions</h2>{p.faqs.map((f) => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}</section>}
+      {p.medicalDisclaimer && <p class="product__disclaimer">These pages are organizational worksheets. They are not medical advice and are not a substitute for guidance from your own healthcare provider.</p>}
+      <section class="product__close"><BuyButton checkout={p.checkout} etsyUrl={p.etsyUrl} lemonSqueezyUrl={p.lemonSqueezyUrl} price={p.price} isLive={p.isLive} label="Get it" /></section>
+      {related.length > 0 && <section class="product__related"><p class="product__category">Keep browsing</p><h2>You might also like</h2><ul>{related.map((r) => <li><a href={r.url}>{r.title}</a><span>{r.tagline ?? r.description}</span></li>)}</ul></section>}
+    </article>
+  </main>
+</Layout>
+
+<script is:inline>
+  (() => {
+    const hero = document.getElementById('product-hero');
+    if (!hero) return;
+    document.querySelectorAll('.product__thumb').forEach((btn) => btn.addEventListener('click', () => {
+      hero.src = btn.dataset.src;
+      document.querySelectorAll('.product__thumb').forEach((b) => b.classList.toggle('is-active', b === btn));
+    }));
+  })();
+</script>
+
+<style>
+  .product { max-width: 68rem; margin: 0 auto; padding: 2rem 1.25rem 5rem; }
+  .product__crumbs { display: flex; flex-wrap: wrap; gap: .4rem; font-size: .84rem; color: var(--muted); margin-bottom: 2rem; }
+  .product__top { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 3.25rem; align-items: start; }
+  .product__hero { width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 24px; background: #fffaf5; }
+  .product__hero--empty { aspect-ratio: 1 / 1; display: grid; place-items: center; background: linear-gradient(145deg,#f6e7df,#f8f4ef 58%,#eee2d8); color: var(--muted); text-transform: uppercase; letter-spacing: .1em; font-size: .82rem; }
+  .product__thumbs { display: flex; gap: .6rem; margin-top: .7rem; overflow-x: auto; }
+  .product__thumb { width: 72px; height: 72px; padding: 0; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: #fff; cursor: pointer; opacity: .66; }
+  .product__thumb.is-active { opacity: 1; border-color: var(--terracotta); }
+  .product__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .product__category { margin: 0 0 .65rem; color: var(--terracotta); text-transform: uppercase; letter-spacing: .14em; font-size: .74rem; font-weight: 600; }
+  .product__info h1 { margin: 0 0 1rem; font-size: clamp(2.8rem, 6vw, 4.6rem); }
+  .product__tagline { font-size: 1.1rem; line-height: 1.65; }
+  .product__meta { margin-top: 1.6rem; padding-top: 1.2rem; border-top: 1px solid var(--border); font-size: .92rem; }
+  .product__meta div { display: flex; gap: 1rem; padding: .4rem 0; }
+  .product__meta dt { flex: 0 0 5.5rem; color: var(--muted); }
+  .product__meta dd { margin: 0; }
+  .product__body { margin-top: 4rem; max-width: 46rem; line-height: 1.72; }
+  .product__body :global(h2), .product__faq h2, .product__related h2 { font-size: clamp(1.9rem, 4vw, 2.8rem); margin-top: 2.5rem; }
+  .product__body :global(h3) { font-size: 1.55rem; margin-top: 2rem; }
+  .product__body :global(a) { text-decoration: underline; text-underline-offset: 3px; }
+  .product__faq { margin-top: 3rem; max-width: 46rem; }
+  .product__faq details { padding: 1rem 0; border-bottom: 1px solid var(--border); }
+  .product__faq summary { cursor: pointer; font-weight: 600; }
+  .product__faq p { margin: .75rem 0 0; }
+  .product__disclaimer { margin-top: 2rem; max-width: 46rem; padding: 1rem; border-radius: 14px; background: #fffaf5; font-size: .86rem; }
+  .product__close { margin-top: 3rem; }
+  .product__related { margin-top: 5rem; padding-top: 2.5rem; border-top: 1px solid var(--border); }
+  .product__related ul { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .product__related li { display: grid; gap: .35rem; padding: 1.2rem; border: 1px solid var(--border); border-radius: 18px; background: var(--card); }
+  .product__related a { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-weight: 600; }
+  .product__related span { color: var(--muted); font-size: .87rem; line-height: 1.5; }
+  @media (max-width: 760px) { .product__top { grid-template-columns: 1fr; gap: 2rem; } .product__related ul { grid-template-columns: 1fr; } .product__meta div { flex-direction: column; gap: .1rem; } }
+</style>

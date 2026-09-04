@@ -1,0 +1,47 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { allProducts, resolve, SITE } from '../../lib/products';
+
+const products = (await allProducts()).map(resolve).filter((p) => p.type === 'printable');
+const title = 'Printable Planners, Journals & Checklists | Hummingbird Social';
+const description = 'Explore printable wedding, pregnancy, postpartum and everyday planning tools from Hummingbird Social Studio. New digital printables are being added to the shop.';
+const listSchema = { '@context': 'https://schema.org', '@type': 'ItemList', name: 'Hummingbird Social printables', itemListElement: products.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.title, url: `${SITE}${p.url}` })) };
+---
+
+<Layout title={title} description={description}>
+  <link rel="canonical" href={`${SITE}/printables/`} slot="head" />
+  <script type="application/ld+json" set:html={JSON.stringify(listSchema)} is:inline slot="head" />
+  <main class="cat">
+    <header class="cat__header">
+      <p class="cat__eyebrow">Printable collection</p>
+      <h1>Practical planners, journals and checklists with a softer feel.</h1>
+      <p>
+        Hummingbird Social is expanding beyond wedding stationery with printable tools for pregnancy, postpartum, celebrations,
+        home buying and everyday organization. These products are previewed here while the collection is being built.
+      </p>
+    </header>
+    <div class="cat__grid">
+      {products.map((p) => <ProductCard url={p.url} title={p.title} tagline={p.tagline} description={p.description} price={p.price} image={p.images[0]} category={p.category} type={p.type} isLive={p.isLive} />)}
+    </div>
+    <section class="cat__foot">
+      <h2>Need something available today?</h2>
+      <p>Our editable wedding invitations and save the dates are already live. Browse the full shop or go straight to Etsy.</p>
+      <div class="cat__buttons"><a class="button" href="/shop/">Browse the full shop</a><a class="button secondary" href="https://hummingbirdsocial.etsy.com" target="_blank" rel="noopener noreferrer">Visit Etsy</a></div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .cat { max-width: 72rem; margin: 0 auto; padding: 0 1.25rem 5rem; }
+  .cat__header { margin: 0 -1.25rem 3rem; padding: 5rem max(1.25rem, calc((100vw - 72rem)/2 + 1.25rem)); background: linear-gradient(135deg, #fffaf5, #f2e5dc); border-bottom: 1px solid var(--border); }
+  .cat__eyebrow { margin: 0 0 .75rem; color: var(--terracotta); text-transform: uppercase; letter-spacing: .16em; font-size: .76rem; font-weight: 600; }
+  .cat__header h1 { max-width: 54rem; margin: 0 0 1rem; font-size: clamp(3rem, 7vw, 5rem); }
+  .cat__header p:last-child { max-width: 44rem; font-size: 1.08rem; }
+  .cat__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 1.5rem; }
+  .cat__foot { margin-top: 4.5rem; padding: 2.5rem; border-radius: 26px; background: #efe2d8; }
+  .cat__foot h2 { margin-top: 0; font-size: clamp(2rem, 4vw, 3rem); }
+  .cat__foot p { max-width: 42rem; }
+  .cat__buttons { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.4rem; }
+  @media (max-width: 700px) { .cat__header { padding-top: 3.5rem; padding-bottom: 3.5rem; } .cat__foot { padding: 1.4rem; } }
+</style>
