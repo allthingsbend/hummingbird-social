@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import ProductCard from '../../components/ProductCard.astro';
 import { allProducts, resolve, SITE } from '../../lib/products';
+import { seoPrintablePages } from '../../data/seo-printable-pages';
 
 const products = (await allProducts()).map(resolve).filter((p) => p.type === 'printable');
 const title = 'Printable Planners, Journals & Checklists | Hummingbird Social';
@@ -18,7 +19,7 @@ const listSchema = { '@context': 'https://schema.org', '@type': 'ItemList', name
         <p class="cat__eyebrow">Prints &amp; planners</p>
         <h1>Useful pages for the parts of life worth planning.</h1>
         <p>Hummingbird Social is growing beyond wedding stationery with printable tools for pregnancy, postpartum, celebrations, home buying and everyday organization.</p>
-        <div class="cat__buttons"><a class="button" href="#printable-collection">Preview the collection</a><a class="button secondary" href="/shop/">See everything</a></div>
+        <div class="cat__buttons"><a class="button" href="#printable-guides">Browse by need</a><a class="button secondary" href="/shop/">See everything</a></div>
       </div>
       <div class="cat__papers" aria-hidden="true">
         <div class="cat__paper cat__paper--one"><span>PLAN</span><strong>Wedding<br/>Checklist</strong><small>everything in one place</small></div>
@@ -26,6 +27,23 @@ const listSchema = { '@context': 'https://schema.org', '@type': 'ItemList', name
         <div class="cat__paper cat__paper--three"><span>ORGANIZE</span><strong>Home<br/>Tracker</strong><small>the details that matter</small></div>
       </div>
     </header>
+
+    <section id="printable-guides" class="cat__guides">
+      <div class="cat__section-head">
+        <div><p class="cat__eyebrow">Browse by what you are planning</p><h2>Printable guides &amp; specific tools.</h2></div>
+        <p>Start with the exact thing you need. Each guide explains what to include, how to use it and where to find the related Hummingbird product or current Etsy collection.</p>
+      </div>
+      <div class="cat__guide-grid">
+        {seoPrintablePages.map((guide) => (
+          <a class="cat__guide-card" href={`/printables/${guide.slug}/`}>
+            <span>{guide.eyebrow}</span>
+            <h3>{guide.h1}</h3>
+            <p>{guide.description}</p>
+            <strong>Explore this printable →</strong>
+          </a>
+        ))}
+      </div>
+    </section>
 
     <section id="printable-collection" class="cat__collection">
       <div class="cat__section-head">
@@ -66,10 +84,19 @@ const listSchema = { '@context': 'https://schema.org', '@type': 'ItemList', name
   .cat__paper--two { right: 1%; top: 0; transform: rotate(7deg); background: #f9e9e4; }
   .cat__paper--three { left: 28%; bottom: -3%; transform: rotate(1deg); background: #f1f1e9; }
 
-  .cat__collection { padding: 5rem .25rem 0; scroll-margin-top: 120px; }
+  .cat__guides, .cat__collection { padding: 5rem .25rem 0; scroll-margin-top: 120px; }
+  .cat__guides { padding-top: 5.5rem; }
   .cat__section-head { display: flex; align-items: end; justify-content: space-between; gap: 3rem; margin-bottom: 2rem; }
   .cat__section-head h2 { margin-bottom: 0; }
   .cat__section-head > p { max-width: 31rem; margin: 0 0 .5rem; text-align: right; }
+  .cat__guide-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+  .cat__guide-card { position: relative; padding: 1.6rem 1.7rem 1.7rem; overflow: hidden; background: #fffdf9; border: 1px solid var(--border); border-radius: 20px; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
+  .cat__guide-card::after { content: ''; position: absolute; width: 110px; height: 110px; right: -45px; bottom: -55px; border-radius: 50%; background: rgba(201,126,92,.08); }
+  .cat__guide-card:hover { transform: translateY(-3px); border-color: #dfc5b5; box-shadow: 0 16px 34px rgba(77,53,43,.08); }
+  .cat__guide-card > span { color: var(--terracotta); font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; }
+  .cat__guide-card h3 { max-width: 31rem; margin: .55rem 0 .7rem; font-size: clamp(1.8rem, 3vw, 2.35rem); line-height: 1; }
+  .cat__guide-card p { max-width: 37rem; margin-bottom: .8rem; font-size: .92rem; line-height: 1.6; }
+  .cat__guide-card strong { position: relative; z-index: 2; font-size: .88rem; }
   .cat__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 1.5rem; }
 
   .cat__foot { margin-top: 5rem; padding: 3rem; display: flex; align-items: end; justify-content: space-between; gap: 2rem; border: 1px solid #e2cabb; border-radius: 24px; background: linear-gradient(135deg, #f6e2d8, #efd0c2); }
@@ -83,6 +110,7 @@ const listSchema = { '@context': 'https://schema.org', '@type': 'ItemList', name
     .cat__section-head, .cat__foot { display: block; }
     .cat__section-head > p { text-align: left; }
   }
+  @media (max-width: 680px) { .cat__guide-grid { grid-template-columns: 1fr; } }
   @media (max-width: 620px) {
     .cat { width: min(100% - 1.5rem, 1240px); padding-top: .8rem; }
     .cat__header { padding: 3rem 1.35rem; }
@@ -90,7 +118,7 @@ const listSchema = { '@context': 'https://schema.org', '@type': 'ItemList', name
     .cat__papers { min-height: 280px; }
     .cat__paper { padding: .75rem; border-width: 4px; }
     .cat__paper small { display: none; }
-    .cat__collection { padding-top: 3.5rem; }
+    .cat__guides, .cat__collection { padding-top: 3.5rem; }
     .cat__foot { padding: 1.5rem; }
   }
 </style>
