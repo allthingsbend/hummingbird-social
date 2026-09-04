@@ -1,0 +1,223 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { seoPrintablePages } from '../../data/seo-printable-pages';
+import { allProducts, resolve, SITE, ETSY_SHOP } from '../../lib/products';
+
+export function getStaticPaths() {
+  return seoPrintablePages.map((page) => ({ params: { slug: page.slug }, props: { page } }));
+}
+
+const { page } = Astro.props;
+const products = (await allProducts()).map(resolve);
+const featuredProduct = page.productSlug ? products.find((p) => p.slug === page.productSlug) : undefined;
+const relatedGuides = seoPrintablePages
+  .filter((item) => item.slug !== page.slug)
+  .sort((a, b) => Number(b.cluster === page.cluster) - Number(a.cluster === page.cluster))
+  .slice(0, 3);
+const canonical = `${SITE}/printables/${page.slug}/`;
+
+const webPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: page.title,
+  description: page.description,
+  url: canonical,
+  isPartOf: { '@type': 'WebSite', name: 'Hummingbird Social Studio', url: SITE },
+};
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: page.faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.q,
+    acceptedAnswer: { '@type': 'Answer', text: faq.a },
+  })),
+};
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+    { '@type': 'ListItem', position: 2, name: 'Printables', item: `${SITE}/printables/` },
+    { '@type': 'ListItem', position: 3, name: page.h1, item: canonical },
+  ],
+};
+---
+
+<Layout title={page.title} description={page.description}>
+  <link rel="canonical" href={canonical} slot="head" />
+  <script type="application/ld+json" set:html={JSON.stringify(webPageSchema)} is:inline slot="head" />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} is:inline slot="head" />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} is:inline slot="head" />
+
+  <main class="seo-page">
+    <nav class="seo-page__crumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a><span>/</span><a href="/printables/">Printables</a><span>/</span><span>{page.eyebrow}</span>
+    </nav>
+
+    <header class="seo-page__hero">
+      <div class="seo-page__hero-copy">
+        <p class="eyebrow">{page.eyebrow}</p>
+        <h1>{page.h1}</h1>
+        <p class="seo-page__lead">{page.intro}</p>
+        <div class="button-row">
+          {featuredProduct && (
+            <a class="button" href={featuredProduct.url}>
+              {featuredProduct.isLive ? 'View the Hummingbird design' : 'Preview the Hummingbird product'}
+            </a>
+          )}
+          <a class:list={['button', featuredProduct && 'secondary']} href={ETSY_SHOP} target="_blank" rel="noopener noreferrer">Shop Hummingbird on Etsy</a>
+        </div>
+      </div>
+      <div class="seo-page__paper" aria-hidden="true">
+        <span>{page.eyebrow}</span>
+        <strong>Print.<br/>Plan.<br/>Make it yours.</strong>
+        <small>Hummingbird Social Studio</small>
+      </div>
+    </header>
+
+    <div class="seo-page__layout">
+      <article class="seo-page__content">
+        {page.sections.map((section, index) => (
+          <section class="seo-page__section">
+            <p class="seo-page__number">0{index + 1}</p>
+            <h2>{section.heading}</h2>
+            <p>{section.body}</p>
+            {section.bullets && (
+              <ul class="seo-page__checklist">
+                {section.bullets.map((item) => <li>{item}</li>)}
+              </ul>
+            )}
+          </section>
+        ))}
+
+        <section class="seo-page__etsy">
+          <p class="eyebrow">From Hummingbird Social</p>
+          <h2>Prefer to browse what is available right now?</h2>
+          <p>Hummingbird Social’s Etsy shop is where live digital products can be purchased today. New planners and printables will be added as they are finished.</p>
+          <a class="button" href={ETSY_SHOP} target="_blank" rel="noopener noreferrer">Browse the Etsy Shop</a>
+        </section>
+
+        <section class="seo-page__faq">
+          <p class="eyebrow">Common questions</p>
+          <h2>What to know before you download.</h2>
+          {page.faqs.map((faq) => (
+            <details>
+              <summary>{faq.q}</summary>
+              <p>{faq.a}</p>
+            </details>
+          ))}
+        </section>
+      </article>
+
+      <aside class="seo-page__aside">
+        {featuredProduct ? (
+          <div class="seo-page__featured">
+            <p class="eyebrow">Hummingbird pick</p>
+            <ProductCard
+              url={featuredProduct.url}
+              title={featuredProduct.title}
+              tagline={featuredProduct.tagline}
+              description={featuredProduct.description}
+              price={featuredProduct.price}
+              image={featuredProduct.images[0]}
+              category={featuredProduct.category}
+              type={featuredProduct.type}
+              isLive={featuredProduct.isLive}
+            />
+          </div>
+        ) : (
+          <div class="seo-page__aside-card">
+            <p class="eyebrow">In the works</p>
+            <h3>More printables are coming.</h3>
+            <p>We are building out the Hummingbird Social planner collection. In the meantime, the Etsy shop has the designs that are available now.</p>
+            <a href={ETSY_SHOP} target="_blank" rel="noopener noreferrer">See the Etsy shop →</a>
+          </div>
+        )}
+      </aside>
+    </div>
+
+    <section class="seo-page__related">
+      <div class="seo-page__related-head">
+        <div><p class="eyebrow">Keep planning</p><h2>Related Hummingbird guides.</h2></div>
+        <a href="/printables/">Browse all printables →</a>
+      </div>
+      <div class="seo-page__related-grid">
+        {relatedGuides.map((guide) => (
+          <a class="seo-page__guide-card" href={`/printables/${guide.slug}/`}>
+            <span>{guide.eyebrow}</span>
+            <h3>{guide.h1}</h3>
+            <p>{guide.description}</p>
+            <strong>Read the guide →</strong>
+          </a>
+        ))}
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .seo-page { width: min(1180px, calc(100% - 2.5rem)); margin: 0 auto; padding: 1.4rem 0 6rem; }
+  .seo-page__crumbs { display: flex; flex-wrap: wrap; gap: .45rem; padding: .5rem .2rem 1.35rem; color: var(--muted); font-size: .82rem; }
+  .seo-page__crumbs a:hover { color: var(--terracotta); }
+  .seo-page__hero { position: relative; display: grid; grid-template-columns: 1.15fr .55fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; min-height: 520px; padding: clamp(3rem, 6vw, 5.5rem); overflow: hidden; background: radial-gradient(circle at 90% 10%, rgba(127,141,115,.15), transparent 18rem), linear-gradient(135deg, #fff9f2, #f4ddd2); border: 1px solid var(--border); border-radius: 28px; box-shadow: 0 24px 60px rgba(77,53,43,.07); }
+  .seo-page__hero-copy { position: relative; z-index: 2; }
+  .seo-page__hero h1 { max-width: 49rem; margin: .35rem 0 1rem; font-size: clamp(3.3rem, 6vw, 5.7rem); line-height: .94; }
+  .seo-page__lead { max-width: 46rem; font-size: 1.1rem; line-height: 1.75; }
+  .seo-page__paper { justify-self: center; width: min(300px, 100%); aspect-ratio: 4 / 5.2; padding: 2rem; display: flex; flex-direction: column; justify-content: center; text-align: center; background: #fffdf9; border: 8px solid rgba(255,253,249,.96); border-radius: 10px; transform: rotate(5deg); box-shadow: 0 26px 48px rgba(68,45,37,.18); }
+  .seo-page__paper span { color: var(--terracotta); font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .18em; }
+  .seo-page__paper strong { margin: 1.25rem 0; font-family: 'Cormorant Garamond', serif; font-size: clamp(2.3rem, 4vw, 3.4rem); line-height: .88; font-weight: 600; }
+  .seo-page__paper small { color: var(--muted); font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; }
+
+  .seo-page__layout { display: grid; grid-template-columns: minmax(0, 1fr) 310px; gap: clamp(2.5rem, 6vw, 5.5rem); align-items: start; padding: 5rem .2rem 0; }
+  .seo-page__content { min-width: 0; }
+  .seo-page__section { max-width: 47rem; padding: 0 0 3.5rem; margin-bottom: 3.5rem; border-bottom: 1px solid var(--border); }
+  .seo-page__number { margin: 0 0 .5rem; color: var(--terracotta); font-size: .72rem; font-weight: 700; letter-spacing: .16em; }
+  .seo-page__section h2, .seo-page__etsy h2, .seo-page__faq h2 { margin: 0 0 1rem; font-size: clamp(2.25rem, 4vw, 3.45rem); line-height: 1; }
+  .seo-page__section > p:last-of-type { font-size: 1.05rem; line-height: 1.8; }
+  .seo-page__checklist { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: .7rem 1rem; padding: 0; margin: 1.5rem 0 0; list-style: none; }
+  .seo-page__checklist li { position: relative; padding: .85rem 1rem .85rem 2.35rem; background: #fffdf9; border: 1px solid var(--border); border-radius: 14px; color: var(--muted); }
+  .seo-page__checklist li::before { content: '✓'; position: absolute; left: .9rem; top: .8rem; color: var(--sage); font-weight: 700; }
+
+  .seo-page__etsy { max-width: 48rem; padding: 2.6rem; margin: 0 0 4rem; background: linear-gradient(135deg, #f5ded2, #efd0c1); border: 1px solid #e2c2b1; border-radius: 24px; }
+  .seo-page__etsy p:not(.eyebrow) { max-width: 40rem; }
+  .seo-page__faq { max-width: 47rem; }
+  .seo-page__faq details { padding: 1.15rem 0; border-bottom: 1px solid var(--border); }
+  .seo-page__faq summary { cursor: pointer; color: var(--text); font-weight: 700; }
+  .seo-page__faq details p { margin: .75rem 0 0; }
+
+  .seo-page__aside { position: sticky; top: 145px; }
+  .seo-page__featured > .eyebrow { margin-bottom: .85rem; }
+  .seo-page__aside-card { padding: 1.5rem; background: #fffdf9; border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow-soft); }
+  .seo-page__aside-card h3 { margin: .2rem 0 .65rem; font-size: 2rem; }
+  .seo-page__aside-card a { color: var(--terracotta-dark); font-weight: 700; }
+
+  .seo-page__related { margin-top: 6rem; padding-top: 3.5rem; border-top: 1px solid var(--border); }
+  .seo-page__related-head { display: flex; align-items: end; justify-content: space-between; gap: 2rem; margin-bottom: 1.7rem; }
+  .seo-page__related-head h2 { margin: 0; }
+  .seo-page__related-head > a { color: var(--terracotta-dark); font-weight: 700; }
+  .seo-page__related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .seo-page__guide-card { padding: 1.5rem; background: #fffdf9; border: 1px solid var(--border); border-radius: 20px; transition: transform .2s ease, box-shadow .2s ease; }
+  .seo-page__guide-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-soft); }
+  .seo-page__guide-card > span { color: var(--terracotta); font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; }
+  .seo-page__guide-card h3 { margin: .55rem 0 .75rem; font-size: 1.8rem; line-height: 1.02; }
+  .seo-page__guide-card p { font-size: .9rem; line-height: 1.6; }
+  .seo-page__guide-card strong { display: inline-block; margin-top: .4rem; font-size: .88rem; }
+
+  @media (max-width: 900px) {
+    .seo-page__hero { grid-template-columns: 1fr; }
+    .seo-page__paper { display: none; }
+    .seo-page__layout { grid-template-columns: 1fr; }
+    .seo-page__aside { position: static; max-width: 360px; }
+  }
+  @media (max-width: 680px) {
+    .seo-page { width: min(100% - 1.5rem, 1180px); }
+    .seo-page__hero { min-height: 0; padding: 3rem 1.4rem; }
+    .seo-page__hero h1 { font-size: clamp(3rem, 14vw, 4.25rem); }
+    .seo-page__layout { padding-top: 3.5rem; }
+    .seo-page__checklist, .seo-page__related-grid { grid-template-columns: 1fr; }
+    .seo-page__etsy { padding: 1.5rem; }
+    .seo-page__related-head { display: block; }
+  }
+</style>
