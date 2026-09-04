@@ -25,36 +25,83 @@ const etsyShopUrl = 'https://hummingbirdsocial.etsy.com';
     <slot name="head" />
   </head>
   <body>
+    <div class="announcement-bar">
+      <div class="announcement-inner">
+        <span>Editable wedding templates</span>
+        <span class="announcement-dot">•</span>
+        <span>Printable planners & journals</span>
+        <span class="announcement-dot">•</span>
+        <span>Digital downloads</span>
+      </div>
+    </div>
+
     <header class="site-header">
-      <a class="logo" href="/" aria-label="Hummingbird Social home"><img src="/images/hummingbird-social-studio-logo.png" alt="Hummingbird Social" /></a>
-      <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">Menu</button>
-      <nav class="nav" aria-label="Main navigation">
-        <a href="/shop/">Shop</a>
-        <a href="/wedding-invitation-suites/">Wedding Invitations</a>
-        <a href="/printables/">Printables</a>
-        <a href="/how-it-works/">How It Works</a>
-        <a href="/printing-guide/">Printing Guide</a>
-        <a href="/about/">About</a>
-        <a href="/contact/">Contact</a>
-        <a href={etsyShopUrl} target="_blank" rel="noopener noreferrer">Etsy Shop</a>
-      </nav>
+      <div class="header-inner">
+        <a class="brand-lockup" href="/" aria-label="Hummingbird Social Studio home">
+          <span class="brand-name">Hummingbird Social</span>
+          <span class="brand-subtitle">Prints &amp; Planners</span>
+        </a>
+        <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">Menu</button>
+        <nav class="nav" aria-label="Main navigation">
+          <a href="/shop/">Shop</a>
+          <a href="/wedding-invitation-suites/">Weddings</a>
+          <a href="/printables/">Printables</a>
+          <a href="/how-it-works/">How It Works</a>
+          <a href="/printing-guide/">Printing Guide</a>
+          <a href="/about/">About</a>
+          <a href="/contact/">Contact</a>
+          <a href={etsyShopUrl} target="_blank" rel="noopener noreferrer">Shop Etsy</a>
+        </nav>
+      </div>
     </header>
+
     <slot />
+
     <footer class="site-footer">
-      <p>Hummingbird Social Studio creates editable wedding stationery and thoughtful digital planning tools for celebrations and everyday life.</p>
-      <p>
-        <a href="/shop/">Shop</a> · <a href="/wedding-invitation-suites/">Wedding Invitations</a> · <a href="/printables/">Printables</a> ·
-        <a href="/bridal-shower-invitations/">Bridal Shower</a> · <a href="/how-it-works/">How It Works</a> ·
-        <a href="/printing-guide/">Printing Guide</a> · <a href="/wording-etiquette/">Wording &amp; Etiquette</a> ·
-        <a href="/faq/">FAQ</a> · <a href="/custom-design-requests/">Custom Design Requests</a> ·
-        <a href={etsyShopUrl} target="_blank" rel="noopener noreferrer">Etsy</a> · <a href="/sitemap/">Sitemap</a>
-      </p>
-      <p>© 2026 Hummingbird Social Studio</p>
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <p class="footer-kicker">Hummingbird Social Studio</p>
+          <h2>Thoughtful digital designs for celebrations and real life.</h2>
+          <p>Editable wedding stationery, printable planners and useful little things made with a warm, hand-drawn feel.</p>
+          <a class="footer-etsy" href={etsyShopUrl} target="_blank" rel="noopener noreferrer">Visit the Etsy Shop →</a>
+        </div>
+        <div class="footer-links">
+          <div>
+            <p class="footer-heading">Shop</p>
+            <a href="/shop/">All Designs</a>
+            <a href="/wedding-invitation-suites/">Wedding Invitations</a>
+            <a href="/bridal-shower-invitations/">Bridal Shower</a>
+            <a href="/printables/">Printables</a>
+          </div>
+          <div>
+            <p class="footer-heading">Helpful</p>
+            <a href="/how-it-works/">How It Works</a>
+            <a href="/printing-guide/">Printing Guide</a>
+            <a href="/wording-etiquette/">Wording &amp; Etiquette</a>
+            <a href="/faq/">FAQ</a>
+          </div>
+          <div>
+            <p class="footer-heading">Studio</p>
+            <a href="/about/">About</a>
+            <a href="/custom-design-requests/">Custom Requests</a>
+            <a href="/contact/">Contact</a>
+            <a href="/sitemap/">Sitemap</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Hummingbird Social Studio</span>
+        <span>Digital goods with a little more heart.</span>
+      </div>
     </footer>
+
     <script>
       const menuButton = document.querySelector('.menu-toggle');
       const nav = document.querySelector('.nav');
-      menuButton?.addEventListener('click', () => { const isOpen = nav?.classList.toggle('is-open'); menuButton.setAttribute('aria-expanded', String(isOpen)); });
+      menuButton?.addEventListener('click', () => {
+        const isOpen = nav?.classList.toggle('is-open');
+        menuButton.setAttribute('aria-expanded', String(isOpen));
+      });
     </script>
   </body>
 </html>
