@@ -5,7 +5,9 @@ import { allProducts, resolve, SITE } from '../../lib/products';
 
 const products = (await allProducts()).map(resolve);
 const categories = [...new Set(products.map((p) => p.category))];
-const liveCount = products.filter((p) => p.isLive).length;
+const liveProducts = products.filter((p) => p.isLive);
+const heroProducts = liveProducts.slice(0, 4);
+const liveCount = liveProducts.length;
 
 const title = 'Shop Digital Wedding Templates & Printable Planners | Hummingbird Social';
 const description = 'Shop editable wedding invitations and save the dates, plus printable planners, journals and checklists from Hummingbird Social Studio.';
@@ -22,41 +24,74 @@ const listSchema = {
   <script type="application/ld+json" set:html={JSON.stringify(listSchema)} is:inline slot="head" />
 
   <main class="shop">
-    <header class="shop__header">
-      <p class="shop__eyebrow">Hummingbird Social Studio</p>
-      <h1>Digital designs for celebrations and real life.</h1>
-      <p>
-        Shop editable wedding stationery you can personalize in Canva, plus printable planners, journals and checklists.
-        Browse everything here; products that are live finish checkout securely on Etsy.
-      </p>
-      <div class="shop__facts">
-        <span><strong>{liveCount}</strong> designs available now</span>
-        <span>Digital downloads</span>
-        <span>Nothing ships</span>
+    <section class="shop__banner" aria-labelledby="shop-title">
+      <div class="shop__visual shop__visual--left" aria-hidden="true">
+        {heroProducts[0] && <a href={heroProducts[0].url} class="shop__hero-product shop__hero-product--one"><img src={heroProducts[0].images[0]} alt="" /></a>}
+        {heroProducts[1] && <a href={heroProducts[1].url} class="shop__hero-product shop__hero-product--two"><img src={heroProducts[1].images[0]} alt="" /></a>}
       </div>
-    </header>
 
-    <div class="shop__filters" role="group" aria-label="Filter products">
-      <button type="button" class="chip is-active" data-filter="all" aria-pressed="true">Everything</button>
-      {categories.map((c) => <button type="button" class="chip" data-filter={c} aria-pressed="false">{c}</button>)}
-    </div>
+      <div class="shop__brand-copy">
+        <p class="shop__eyebrow">Hummingbird Social Studio</p>
+        <h1 id="shop-title">Prints <span>&amp;</span> Planners</h1>
+        <p class="shop__tagline">Thoughtful digital designs for weddings, celebrations and everyday life.</p>
+        <div class="shop__actions">
+          <a class="button" href="#products">Browse the collection</a>
+          <a class="button secondary" href="https://hummingbirdsocial.etsy.com" target="_blank" rel="noopener noreferrer">Shop on Etsy</a>
+        </div>
+      </div>
 
-    <div class="shop__grid" id="shop-grid">
-      {products.map((p) => (
-        <ProductCard url={p.url} title={p.title} tagline={p.tagline} description={p.description} price={p.price}
-          image={p.images[0]} category={p.category} type={p.type} isLive={p.isLive} />
-      ))}
-    </div>
-    <p class="shop__empty" id="shop-empty" hidden>Nothing in that category yet.</p>
+      <div class="shop__visual shop__visual--right" aria-hidden="true">
+        {heroProducts[2] && <a href={heroProducts[2].url} class="shop__hero-product shop__hero-product--three"><img src={heroProducts[2].images[0]} alt="" /></a>}
+        {heroProducts[3] && <a href={heroProducts[3].url} class="shop__hero-product shop__hero-product--four"><img src={heroProducts[3].images[0]} alt="" /></a>}
+      </div>
+    </section>
+
+    <section class="shop__welcome">
+      <div>
+        <p class="shop__eyebrow">Made to be useful and beautiful</p>
+        <h2>Find the design you need, then make it yours.</h2>
+      </div>
+      <div class="shop__welcome-copy">
+        <p>Wedding templates are editable in Canva, so names, dates and wording are easy to personalize. Printable planners and journals are designed to download and use without a complicated setup.</p>
+        <div class="shop__facts">
+          <span><strong>{liveCount}</strong> designs available now</span>
+          <span>Digital downloads</span>
+          <span>No physical shipping</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="products" class="shop__catalog">
+      <div class="shop__catalog-head">
+        <div>
+          <p class="shop__eyebrow">The collection</p>
+          <h2>Shop by what you need.</h2>
+        </div>
+        <p>Start with everything or narrow the collection by category.</p>
+      </div>
+
+      <div class="shop__filters" role="group" aria-label="Filter products">
+        <button type="button" class="chip is-active" data-filter="all" aria-pressed="true">Everything</button>
+        {categories.map((c) => <button type="button" class="chip" data-filter={c} aria-pressed="false">{c}</button>)}
+      </div>
+
+      <div class="shop__grid" id="shop-grid">
+        {products.map((p) => (
+          <ProductCard url={p.url} title={p.title} tagline={p.tagline} description={p.description} price={p.price}
+            image={p.images[0]} category={p.category} type={p.type} isLive={p.isLive} />
+        ))}
+      </div>
+      <p class="shop__empty" id="shop-empty" hidden>Nothing in that category yet.</p>
+    </section>
 
     <section class="shop__note">
       <div>
-        <p class="shop__eyebrow">Two ways to use the shop</p>
+        <p class="shop__eyebrow">Two kinds of digital goods</p>
         <h2>Templates you edit. Printables you simply use.</h2>
       </div>
       <div class="shop__note-grid">
-        <article><h3>Editable Canva templates</h3><p>Personalize the wording and details, then download a finished file for printing or digital sharing.</p></article>
-        <article><h3>Ready-to-print PDFs</h3><p>Planning tools and journals designed to download and use without learning a design program.</p></article>
+        <article><span class="shop__note-number">01</span><h3>Editable Canva templates</h3><p>Personalize the wording and details, then download a finished file for printing or digital sharing.</p></article>
+        <article><span class="shop__note-number">02</span><h3>Ready-to-print PDFs</h3><p>Planning tools and journals designed to download and use without learning a design program.</p></article>
       </div>
     </section>
   </main>
@@ -88,23 +123,98 @@ const listSchema = {
 </script>
 
 <style>
-  .shop { max-width: 72rem; margin: 0 auto; padding: 0 1.25rem 5rem; }
-  .shop__header { margin: 0 -1.25rem 2.25rem; padding: 5.5rem max(1.25rem, calc((100vw - 72rem)/2 + 1.25rem)); background: linear-gradient(135deg, #fffaf5, #f0dfd5); border-bottom: 1px solid var(--border); }
-  .shop__eyebrow { margin: 0 0 .75rem; color: var(--terracotta); text-transform: uppercase; letter-spacing: .16em; font-size: .76rem; font-weight: 600; }
-  .shop__header h1 { max-width: 52rem; margin: 0 0 1rem; font-size: clamp(3rem, 7vw, 5.2rem); }
-  .shop__header > p:not(.shop__eyebrow) { max-width: 44rem; font-size: 1.1rem; }
-  .shop__facts { display: flex; flex-wrap: wrap; gap: .65rem; margin-top: 1.5rem; }
-  .shop__facts span { padding: .55rem .8rem; border: 1px solid rgba(67,54,48,.13); border-radius: 999px; background: rgba(255,255,255,.6); font-size: .84rem; color: var(--muted); }
-  .shop__filters { display: flex; flex-wrap: wrap; gap: .5rem; margin: 2.25rem 0 2rem; }
-  .chip { padding: .5rem 1rem; border: 1px solid var(--border); border-radius: 999px; background: #fffaf5; color: var(--muted); font: inherit; font-size: .86rem; cursor: pointer; }
-  .chip.is-active { border-color: var(--terracotta); background: var(--terracotta); color: #fff; }
+  .shop { width: min(1240px, calc(100% - 2.5rem)); margin: 0 auto; padding: 2rem 0 6rem; }
+  .shop__banner {
+    min-height: 500px;
+    display: grid;
+    grid-template-columns: .95fr 1.15fr .95fr;
+    align-items: center;
+    gap: 1rem;
+    overflow: hidden;
+    position: relative;
+    padding: 3rem 2.4rem;
+    background:
+      radial-gradient(circle at 4% 8%, rgba(209,127,93,.2), transparent 16rem),
+      radial-gradient(circle at 96% 92%, rgba(127,141,115,.13), transparent 17rem),
+      linear-gradient(135deg, #fff7f0, #f9e7dd 55%, #f5ddd2);
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    box-shadow: 0 24px 60px rgba(77,53,43,.08);
+  }
+  .shop__banner::before {
+    content: '';
+    position: absolute;
+    inset: 18px;
+    border: 1px solid rgba(209,127,93,.13);
+    border-radius: 20px;
+    pointer-events: none;
+  }
+  .shop__visual { position: relative; min-height: 370px; z-index: 1; }
+  .shop__hero-product {
+    position: absolute;
+    display: block;
+    overflow: hidden;
+    width: 62%;
+    aspect-ratio: 4 / 5;
+    background: var(--paper);
+    border: 7px solid rgba(255,253,249,.95);
+    border-radius: 13px;
+    box-shadow: 0 18px 36px rgba(71,48,40,.16);
+  }
+  .shop__hero-product img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .shop__hero-product--one { left: 3%; top: 3%; transform: rotate(-7deg); }
+  .shop__hero-product--two { right: 1%; bottom: 0; transform: rotate(6deg); }
+  .shop__hero-product--three { left: 1%; bottom: 0; transform: rotate(-5deg); }
+  .shop__hero-product--four { right: 2%; top: 2%; transform: rotate(7deg); }
+  .shop__brand-copy { position: relative; z-index: 2; text-align: center; padding: 1rem .5rem; }
+  .shop__eyebrow { margin: 0 0 .75rem; color: var(--terracotta); text-transform: uppercase; letter-spacing: .18em; font-size: .72rem; font-weight: 700; }
+  .shop__brand-copy h1 { margin: 0; font-size: clamp(4rem, 6.2vw, 6rem); line-height: .86; letter-spacing: -.04em; }
+  .shop__brand-copy h1 span { display: block; margin: .12em 0 .02em; color: var(--terracotta); font-size: .64em; font-style: italic; font-weight: 500; }
+  .shop__tagline { max-width: 30rem; margin: 1.3rem auto 0; font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; line-height: 1.45; color: #6d5750; }
+  .shop__actions { margin-top: 1.65rem; display: flex; justify-content: center; gap: .7rem; flex-wrap: wrap; }
+
+  .shop__welcome { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end; padding: 5rem .5rem 4rem; }
+  .shop__welcome h2 { max-width: 35rem; }
+  .shop__welcome-copy > p { margin-top: 0; max-width: 35rem; }
+  .shop__facts { display: flex; flex-wrap: wrap; gap: .55rem; margin-top: 1.25rem; }
+  .shop__facts span { padding: .5rem .75rem; border: 1px solid var(--border); border-radius: 999px; background: rgba(255,253,249,.75); font-size: .78rem; color: var(--muted); }
+
+  .shop__catalog { scroll-margin-top: 120px; }
+  .shop__catalog-head { display: flex; align-items: end; justify-content: space-between; gap: 2rem; margin-bottom: 1rem; }
+  .shop__catalog-head h2 { margin-bottom: 0; }
+  .shop__catalog-head > p { max-width: 24rem; margin: 0 0 .5rem; text-align: right; }
+  .shop__filters { display: flex; flex-wrap: wrap; gap: .55rem; margin: 1.75rem 0 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+  .chip { padding: .58rem 1rem; border: 1px solid var(--border); border-radius: 999px; background: var(--paper); color: var(--muted); font: inherit; font-size: .82rem; cursor: pointer; transition: all .18s ease; }
+  .chip:hover { border-color: #d8b7a8; color: var(--text); transform: translateY(-1px); }
+  .chip.is-active { border-color: var(--terracotta); background: var(--terracotta); color: #fff; box-shadow: 0 7px 17px rgba(209,127,93,.18); }
   .chip:focus-visible { outline: 2px solid var(--terracotta); outline-offset: 2px; }
   .shop__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 1.5rem; }
   .shop__empty { padding: 3rem 0; }
-  .shop__note { margin-top: 5rem; padding: 3rem; border: 1px solid var(--border); border-radius: 28px; background: #efe2d8; }
-  .shop__note h2 { max-width: 40rem; margin-top: 0; font-size: clamp(2rem, 4vw, 3.2rem); }
-  .shop__note-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1.5rem; }
-  .shop__note-grid article { background: rgba(255,253,249,.82); border: 1px solid var(--border); border-radius: 20px; padding: 1.4rem; }
-  .shop__note-grid h3 { margin-top: 0; }
-  @media (max-width: 700px) { .shop__header { padding-top: 3.5rem; padding-bottom: 3.5rem; } .shop__note { padding: 1.4rem; } .shop__note-grid { grid-template-columns: 1fr; } }
+
+  .shop__note { margin-top: 6rem; padding: 3.5rem; border: 1px solid #e2cabb; border-radius: 26px; background: linear-gradient(135deg, #f7e4da, #f1d2c4); box-shadow: 0 18px 45px rgba(77,53,43,.06); }
+  .shop__note h2 { max-width: 42rem; }
+  .shop__note-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 2rem; }
+  .shop__note-grid article { position: relative; background: rgba(255,253,249,.88); border: 1px solid var(--border); border-radius: 18px; padding: 1.6rem; }
+  .shop__note-grid h3 { margin-top: .8rem; }
+  .shop__note-number { color: var(--terracotta); font-size: .72rem; font-weight: 700; letter-spacing: .15em; }
+
+  @media (max-width: 1000px) {
+    .shop__banner { grid-template-columns: 1fr 1.25fr 1fr; min-height: 430px; padding: 2rem 1.2rem; }
+    .shop__visual { min-height: 310px; }
+    .shop__hero-product { width: 68%; }
+    .shop__welcome { gap: 2rem; }
+  }
+  @media (max-width: 760px) {
+    .shop { width: min(100% - 1.5rem, 1240px); padding-top: .8rem; }
+    .shop__banner { grid-template-columns: 1fr; min-height: auto; padding: 3rem 1.25rem; }
+    .shop__visual { display: none; }
+    .shop__brand-copy h1 { font-size: clamp(3.7rem, 18vw, 5.3rem); }
+    .shop__welcome { grid-template-columns: 1fr; gap: 1rem; padding: 3.5rem .25rem 3rem; }
+    .shop__catalog-head { display: block; }
+    .shop__catalog-head > p { text-align: left; margin-top: .5rem; }
+    .shop__filters { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 1rem; }
+    .chip { white-space: nowrap; }
+    .shop__note { padding: 1.5rem; margin-top: 4rem; }
+    .shop__note-grid { grid-template-columns: 1fr; }
+  }
 </style>
