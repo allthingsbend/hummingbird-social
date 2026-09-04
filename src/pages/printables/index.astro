@@ -14,34 +14,83 @@ const listSchema = { '@context': 'https://schema.org', '@type': 'ItemList', name
   <script type="application/ld+json" set:html={JSON.stringify(listSchema)} is:inline slot="head" />
   <main class="cat">
     <header class="cat__header">
-      <p class="cat__eyebrow">Printable collection</p>
-      <h1>Practical planners, journals and checklists with a softer feel.</h1>
-      <p>
-        Hummingbird Social is expanding beyond wedding stationery with printable tools for pregnancy, postpartum, celebrations,
-        home buying and everyday organization. These products are previewed here while the collection is being built.
-      </p>
+      <div class="cat__copy">
+        <p class="cat__eyebrow">Prints &amp; planners</p>
+        <h1>Useful pages for the parts of life worth planning.</h1>
+        <p>Hummingbird Social is growing beyond wedding stationery with printable tools for pregnancy, postpartum, celebrations, home buying and everyday organization.</p>
+        <div class="cat__buttons"><a class="button" href="#printable-collection">Preview the collection</a><a class="button secondary" href="/shop/">See everything</a></div>
+      </div>
+      <div class="cat__papers" aria-hidden="true">
+        <div class="cat__paper cat__paper--one"><span>PLAN</span><strong>Wedding<br/>Checklist</strong><small>everything in one place</small></div>
+        <div class="cat__paper cat__paper--two"><span>JOURNAL</span><strong>Pregnancy<br/>Notes</strong><small>week by week</small></div>
+        <div class="cat__paper cat__paper--three"><span>ORGANIZE</span><strong>Home<br/>Tracker</strong><small>the details that matter</small></div>
+      </div>
     </header>
-    <div class="cat__grid">
-      {products.map((p) => <ProductCard url={p.url} title={p.title} tagline={p.tagline} description={p.description} price={p.price} image={p.images[0]} category={p.category} type={p.type} isLive={p.isLive} />)}
-    </div>
+
+    <section id="printable-collection" class="cat__collection">
+      <div class="cat__section-head">
+        <div><p class="cat__eyebrow">Coming together now</p><h2>The printable collection.</h2></div>
+        <p>These products are previewed here while the collection is being built. Live products will be clearly marked when they are ready to buy.</p>
+      </div>
+      <div class="cat__grid">
+        {products.map((p) => <ProductCard url={p.url} title={p.title} tagline={p.tagline} description={p.description} price={p.price} image={p.images[0]} category={p.category} type={p.type} isLive={p.isLive} />)}
+      </div>
+    </section>
+
     <section class="cat__foot">
-      <h2>Need something available today?</h2>
-      <p>Our editable wedding invitations and save the dates are already live. Browse the full shop or go straight to Etsy.</p>
-      <div class="cat__buttons"><a class="button" href="/shop/">Browse the full shop</a><a class="button secondary" href="https://hummingbirdsocial.etsy.com" target="_blank" rel="noopener noreferrer">Visit Etsy</a></div>
+      <div>
+        <p class="cat__eyebrow">Need something available today?</p>
+        <h2>Wedding designs are already live.</h2>
+        <p>Our editable wedding invitations and save the dates can be purchased now. Browse them here or go straight to Etsy.</p>
+      </div>
+      <div class="cat__buttons"><a class="button" href="/wedding-invitation-suites/">Browse weddings</a><a class="button secondary" href="https://hummingbirdsocial.etsy.com" target="_blank" rel="noopener noreferrer">Visit Etsy</a></div>
     </section>
   </main>
 </Layout>
 
 <style>
-  .cat { max-width: 72rem; margin: 0 auto; padding: 0 1.25rem 5rem; }
-  .cat__header { margin: 0 -1.25rem 3rem; padding: 5rem max(1.25rem, calc((100vw - 72rem)/2 + 1.25rem)); background: linear-gradient(135deg, #fffaf5, #f2e5dc); border-bottom: 1px solid var(--border); }
-  .cat__eyebrow { margin: 0 0 .75rem; color: var(--terracotta); text-transform: uppercase; letter-spacing: .16em; font-size: .76rem; font-weight: 600; }
-  .cat__header h1 { max-width: 54rem; margin: 0 0 1rem; font-size: clamp(3rem, 7vw, 5rem); }
-  .cat__header p:last-child { max-width: 44rem; font-size: 1.08rem; }
+  .cat { width: min(1240px, calc(100% - 2.5rem)); margin: 0 auto; padding: 2rem 0 6rem; }
+  .cat__header { display: grid; grid-template-columns: 1fr .9fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; min-height: 510px; padding: clamp(3rem, 6vw, 5.5rem); background: radial-gradient(circle at 85% 18%, rgba(127,141,115,.13), transparent 17rem), linear-gradient(135deg, #fff9f2, #f5ded4); border: 1px solid var(--border); border-radius: 28px; overflow: hidden; box-shadow: 0 24px 60px rgba(77,53,43,.07); }
+  .cat__copy { position: relative; z-index: 2; }
+  .cat__eyebrow { margin: 0 0 .75rem; color: var(--terracotta); text-transform: uppercase; letter-spacing: .18em; font-size: .72rem; font-weight: 700; }
+  .cat__copy h1 { margin: 0 0 1rem; font-size: clamp(3.5rem, 6vw, 5.6rem); line-height: .92; }
+  .cat__copy > p:last-of-type { max-width: 39rem; font-size: 1.08rem; }
+  .cat__buttons { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.5rem; }
+
+  .cat__papers { position: relative; min-height: 390px; }
+  .cat__paper { position: absolute; width: 48%; aspect-ratio: 4 / 5.2; padding: 1.4rem; display: flex; flex-direction: column; justify-content: center; text-align: center; background: #fffdf9; border: 7px solid rgba(255,253,249,.96); border-radius: 10px; box-shadow: 0 22px 42px rgba(68,45,37,.16); }
+  .cat__paper span { color: var(--terracotta); font-size: .63rem; font-weight: 700; letter-spacing: .17em; }
+  .cat__paper strong { margin: .8rem 0; font-family: 'Cormorant Garamond', serif; font-size: clamp(1.7rem, 3vw, 2.5rem); line-height: .95; font-weight: 600; }
+  .cat__paper small { color: var(--muted); font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: .95rem; }
+  .cat__paper--one { left: 0; top: 3%; transform: rotate(-8deg); background: #fffaf4; }
+  .cat__paper--two { right: 1%; top: 0; transform: rotate(7deg); background: #f9e9e4; }
+  .cat__paper--three { left: 28%; bottom: -3%; transform: rotate(1deg); background: #f1f1e9; }
+
+  .cat__collection { padding: 5rem .25rem 0; scroll-margin-top: 120px; }
+  .cat__section-head { display: flex; align-items: end; justify-content: space-between; gap: 3rem; margin-bottom: 2rem; }
+  .cat__section-head h2 { margin-bottom: 0; }
+  .cat__section-head > p { max-width: 31rem; margin: 0 0 .5rem; text-align: right; }
   .cat__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 1.5rem; }
-  .cat__foot { margin-top: 4.5rem; padding: 2.5rem; border-radius: 26px; background: #efe2d8; }
-  .cat__foot h2 { margin-top: 0; font-size: clamp(2rem, 4vw, 3rem); }
-  .cat__foot p { max-width: 42rem; }
-  .cat__buttons { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.4rem; }
-  @media (max-width: 700px) { .cat__header { padding-top: 3.5rem; padding-bottom: 3.5rem; } .cat__foot { padding: 1.4rem; } }
+
+  .cat__foot { margin-top: 5rem; padding: 3rem; display: flex; align-items: end; justify-content: space-between; gap: 2rem; border: 1px solid #e2cabb; border-radius: 24px; background: linear-gradient(135deg, #f6e2d8, #efd0c2); }
+  .cat__foot h2 { margin-bottom: .5rem; font-size: clamp(2.2rem, 4vw, 3.4rem); }
+  .cat__foot p { max-width: 40rem; }
+  .cat__foot .cat__buttons { flex-shrink: 0; }
+
+  @media (max-width: 850px) {
+    .cat__header { grid-template-columns: 1fr; }
+    .cat__papers { min-height: 340px; max-width: 560px; width: 100%; margin: 0 auto; }
+    .cat__section-head, .cat__foot { display: block; }
+    .cat__section-head > p { text-align: left; }
+  }
+  @media (max-width: 620px) {
+    .cat { width: min(100% - 1.5rem, 1240px); padding-top: .8rem; }
+    .cat__header { padding: 3rem 1.35rem; }
+    .cat__copy h1 { font-size: clamp(3rem, 15vw, 4.4rem); }
+    .cat__papers { min-height: 280px; }
+    .cat__paper { padding: .75rem; border-width: 4px; }
+    .cat__paper small { display: none; }
+    .cat__collection { padding-top: 3.5rem; }
+    .cat__foot { padding: 1.5rem; }
+  }
 </style>
