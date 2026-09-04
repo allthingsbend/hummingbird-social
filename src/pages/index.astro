@@ -10,69 +10,80 @@ const etsyShopUrl = 'https://hummingbirdsocial.etsy.com';
 
 <Layout title="Hummingbird Social Studio | Wedding Templates & Digital Printables" description="Shop editable wedding invitation templates, save the dates and thoughtful printable planners from Hummingbird Social Studio. Browse on our site and check out securely on Etsy.">
   <main>
-    <section class="hero">
-      <div class="hero-inner">
-        <div class="hero-copy">
-          <p class="eyebrow">Digital designs by Hummingbird Social Studio</p>
-          <h1>Thoughtful designs for celebrations and real life.</h1>
-          <p class="lead">
-            Editable wedding invitations and save the dates, plus a growing collection of printable planners, journals and checklists.
-            Browse everything here, then complete purchases securely through Etsy.
-          </p>
-          <div class="button-row"><a class="button" href="/shop/">Shop Hummingbird Social</a><a class="button secondary" href="/wedding-invitation-suites/">Browse Wedding Invitations</a></div>
-        </div>
-        <div class="hero-card">
-          <div class="hero-card-inner">
-            <p class="eyebrow">Simple by design</p>
-            <h2>{liveProducts.length} designs available now — with more in the works.</h2>
-            <p>Wedding templates are editable in Canva. New printables are being built as ready-to-use digital planning tools.</p>
-            <div class="button-row"><a class="button" href="/shop/">See the Shop</a><a class="button secondary" href="/printables/">Preview Printables</a></div>
+    <section class="home-hero">
+      <div class="home-hero__inner">
+        <div class="home-hero__copy">
+          <p class="eyebrow">Hummingbird Social Studio</p>
+          <h1>Prints, planners <span>&amp; pretty useful things.</span></h1>
+          <p class="home-hero__lead">Editable wedding stationery and thoughtful digital tools made to feel personal, polished and easy to use.</p>
+          <div class="button-row">
+            <a class="button" href="/shop/">Shop the Collection</a>
+            <a class="button secondary" href={etsyShopUrl} target="_blank" rel="noopener noreferrer">Visit Etsy</a>
           </div>
+          <p class="home-hero__note">Original hand-drawn details · Easy digital downloads · Designed for real life</p>
+        </div>
+
+        <div class="home-collage" aria-label="A selection of Hummingbird Social designs">
+          {liveProducts[0] && <a href={liveProducts[0].url} class="home-collage__item home-collage__item--one"><img src={liveProducts[0].images[0]} alt={liveProducts[0].title} /></a>}
+          {liveProducts[1] && <a href={liveProducts[1].url} class="home-collage__item home-collage__item--two"><img src={liveProducts[1].images[0]} alt={liveProducts[1].title} /></a>}
+          {liveProducts[2] && <a href={liveProducts[2].url} class="home-collage__item home-collage__item--three"><img src={liveProducts[2].images[0]} alt={liveProducts[2].title} /></a>}
+          {liveProducts[3] && <a href={liveProducts[3].url} class="home-collage__item home-collage__item--four"><img src={liveProducts[3].images[0]} alt={liveProducts[3].title} /></a>}
+          <div class="home-collage__stamp"><strong>Hummingbird</strong><span>Prints &amp; Planners</span></div>
         </div>
       </div>
     </section>
 
-    <section class="section">
+    <section class="home-strip" aria-label="Hummingbird Social product benefits">
+      <div><strong>Editable in Canva</strong><span>Personalize wedding templates yourself</span></div>
+      <div><strong>Digital by design</strong><span>Download, edit and print on your timeline</span></div>
+      <div><strong>Made with personality</strong><span>Warm details instead of generic templates</span></div>
+    </section>
+
+    <section class="section home-featured">
       <div class="container">
-        <p class="eyebrow">Available now</p>
-        <h2>Shop the current Etsy collection.</h2>
-        <p class="lead home-intro">See the product details here first. When you are ready to buy, the checkout opens in the Hummingbird Social Etsy shop.</p>
+        <div class="home-section-head">
+          <div><p class="eyebrow">Available now</p><h2>The current Hummingbird collection.</h2></div>
+          <p>Browse the details here, then check out securely in the Hummingbird Social Etsy shop.</p>
+        </div>
         <div class="home-shop-grid">
           {liveProducts.map((p) => <ProductCard url={p.url} title={p.title} tagline={p.tagline} description={p.description} price={p.price} image={p.images[0]} category={p.category} type={p.type} isLive={p.isLive} />)}
         </div>
-        <div class="button-row"><a class="button" href="/shop/">Browse the Full Shop</a><a class="button secondary" href={etsyShopUrl} target="_blank" rel="noopener noreferrer">Visit Etsy</a></div>
+        <div class="button-row"><a class="button" href="/shop/">Browse the Full Shop</a><a class="button secondary" href={etsyShopUrl} target="_blank" rel="noopener noreferrer">Shop on Etsy</a></div>
       </div>
     </section>
 
     <section class="feature-band">
       <div class="container">
-        <p class="eyebrow">Shop your way</p>
-        <h2>Wedding stationery now. More printable life tools next.</h2>
+        <p class="eyebrow">More than invitations</p>
+        <h2>One little studio for celebrations, planning and life on paper.</h2>
         <div class="grid">
-          <a class="card" href="/wedding-invitation-suites/"><h3>Wedding Invitations</h3><p>Editable invitation and save-the-date designs with hand-drawn destination and venue details.</p><strong>Browse wedding designs →</strong></a>
-          <a class="card" href="/printables/"><h3>Printable Planners</h3><p>Preview the growing collection of wedding, pregnancy, postpartum, home and organization printables.</p><strong>Explore printables →</strong></a>
-          <a class="card" href="/how-it-works/"><h3>How It Works</h3><p>Understand what you receive, how Canva templates work, and the easiest ways to download and print.</p><strong>See the process →</strong></a>
+          <a class="card" href="/wedding-invitation-suites/"><h3>Wedding Invitations</h3><p>Editable invitations and save the dates with hand-drawn destination, venue and landscape details.</p><strong>Browse wedding designs →</strong></a>
+          <a class="card" href="/printables/"><h3>Prints &amp; Planners</h3><p>A growing collection of wedding, pregnancy, postpartum, home and organization printables.</p><strong>Explore printables →</strong></a>
+          <a class="card" href="/how-it-works/"><h3>Easy to Use</h3><p>Clear instructions for editing Canva templates, downloading your files and getting everything printed.</p><strong>See how it works →</strong></a>
         </div>
       </div>
     </section>
 
-    <section class="section">
-      <div class="container content">
-        <p class="eyebrow">Made to feel personal</p>
-        <h2>Soft romance, clean typography and thoughtful details.</h2>
-        <p>Hummingbird Social is for people who want digital designs that feel elevated without making the process complicated. Wedding pieces mix original hand-drawn artwork with simple typography; the printable collection carries that same calm, useful approach into planning and everyday life.</p>
-        <div class="button-row"><a class="button" href="/about/">About Hummingbird Social</a><a class="button secondary" href="/custom-design-requests/">Custom Design Requests</a></div>
+    <section class="section home-story">
+      <div class="container home-story__grid">
+        <div class="home-story__accent" aria-hidden="true"><span>H</span></div>
+        <div class="home-story__copy">
+          <p class="eyebrow">The Hummingbird feel</p>
+          <h2>Soft romance, hand-drawn details and less fuss.</h2>
+          <p>Hummingbird Social is for people who want digital designs that feel considered—not like something pulled from a giant template library. Wedding pieces pair original illustration with simple typography, while the printable collection brings that same calm, useful approach to planning and everyday life.</p>
+          <div class="button-row"><a class="button" href="/about/">Meet the Studio</a><a class="button secondary" href="/custom-design-requests/">Custom Design Requests</a></div>
+        </div>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section home-guides">
       <div class="container">
         <p class="eyebrow">Helpful before you print</p>
-        <h2>Guides for the details that come after choosing a design.</h2>
+        <h2>Good design is only useful if the next step is clear.</h2>
         <div class="grid">
-          <a class="card" href="/printing-guide/"><h3>Printing Guide</h3><p>Cardstock, paper finishes, envelope sizes, online printers, local print shops and home printing.</p></a>
-          <a class="card" href="/wording-etiquette/"><h3>Wording &amp; Etiquette</h3><p>Invitation wording ideas for adult-only weddings, cash bars, intimate celebrations and more.</p></a>
-          <a class="card" href="/faq/"><h3>Common Questions</h3><p>Answers about editing, downloading, printing, digital products and custom requests.</p></a>
+          <a class="card" href="/printing-guide/"><h3>Printing Guide</h3><p>Cardstock, paper finishes, envelope sizes, online printers, local print shops and home printing.</p><strong>Get printing help →</strong></a>
+          <a class="card" href="/wording-etiquette/"><h3>Wording &amp; Etiquette</h3><p>Invitation wording ideas for adult-only weddings, cash bars, intimate celebrations and more.</p><strong>Find wording ideas →</strong></a>
+          <a class="card" href="/faq/"><h3>Common Questions</h3><p>Answers about editing, downloading, printing, digital products and custom requests.</p><strong>Read the FAQ →</strong></a>
         </div>
       </div>
     </section>
@@ -80,9 +91,77 @@ const etsyShopUrl = 'https://hummingbirdsocial.etsy.com';
 </Layout>
 
 <style>
+  .home-hero {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(4.5rem, 7vw, 7rem) 5%;
+    background:
+      radial-gradient(circle at 6% 12%, rgba(240,199,183,.32), transparent 19rem),
+      radial-gradient(circle at 93% 82%, rgba(127,141,115,.16), transparent 22rem),
+      linear-gradient(135deg, #fffaf3, #f9e8df 58%, #f4dace);
+    border-bottom: 1px solid var(--border);
+  }
+  .home-hero__inner { width: min(1220px, 100%); margin: 0 auto; display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(2rem, 6vw, 5.5rem); align-items: center; }
+  .home-hero__copy { position: relative; z-index: 2; max-width: 610px; }
+  .home-hero__copy h1 { font-size: clamp(4rem, 7vw, 6.8rem); line-height: .86; }
+  .home-hero__copy h1 span { display: block; margin-top: .2em; color: var(--terracotta); font-style: italic; font-weight: 500; font-size: .62em; line-height: 1; }
+  .home-hero__lead { max-width: 35rem; margin-top: 1.5rem; font-size: 1.15rem; line-height: 1.75; }
+  .home-hero__note { margin-top: 1.2rem; color: #8b7065; font-size: .78rem; letter-spacing: .035em; }
+
+  .home-collage { position: relative; min-height: 560px; }
+  .home-collage::before { content: ''; position: absolute; inset: 6% 5% 5% 8%; border: 1px solid rgba(209,127,93,.18); border-radius: 48% 52% 45% 55% / 54% 44% 56% 46%; transform: rotate(-3deg); }
+  .home-collage__item { position: absolute; overflow: hidden; background: var(--paper); border: 8px solid rgba(255,253,249,.96); border-radius: 13px; box-shadow: 0 24px 44px rgba(63,42,35,.17); transition: transform .25s ease; }
+  .home-collage__item:hover { z-index: 8; }
+  .home-collage__item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .home-collage__item--one { width: 42%; aspect-ratio: 1; left: 0; top: 4%; transform: rotate(-7deg); }
+  .home-collage__item--two { width: 43%; aspect-ratio: 1; right: 3%; top: 0; transform: rotate(6deg); }
+  .home-collage__item--three { width: 43%; aspect-ratio: 1; left: 6%; bottom: 1%; transform: rotate(5deg); }
+  .home-collage__item--four { width: 42%; aspect-ratio: 1; right: 0; bottom: 5%; transform: rotate(-6deg); }
+  .home-collage__stamp { position: absolute; z-index: 5; left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(-2deg); width: 210px; aspect-ratio: 1; display: grid; place-content: center; text-align: center; background: #fff9f2; border: 1px solid #dfc5b8; border-radius: 50%; box-shadow: 0 16px 30px rgba(77,53,43,.13); }
+  .home-collage__stamp strong { font-family: 'Cormorant Garamond', serif; font-size: 1.9rem; line-height: .95; }
+  .home-collage__stamp span { margin-top: .45rem; color: var(--terracotta); font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem; }
+
+  .home-strip { max-width: 1160px; margin: -1px auto 0; padding: 1.5rem 1.25rem; display: grid; grid-template-columns: repeat(3, 1fr); background: var(--paper); border-left: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .home-strip div { padding: .4rem 1.6rem; border-right: 1px solid var(--border); }
+  .home-strip div:last-child { border-right: 0; }
+  .home-strip strong { display: block; font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; }
+  .home-strip span { display: block; margin-top: .18rem; color: var(--muted); font-size: .8rem; line-height: 1.45; }
+
+  .home-section-head { display: flex; justify-content: space-between; align-items: end; gap: 3rem; }
+  .home-section-head > p { max-width: 25rem; margin-bottom: .8rem; text-align: right; }
   .home-shop-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; margin-top: 2rem; }
-  .home-intro { max-width: 48rem; }
-  .feature-band .card strong { display: inline-block; margin-top: .75rem; color: var(--text); }
-  @media (max-width: 1050px) { .home-shop-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 620px) { .home-shop-grid { grid-template-columns: 1fr; } }
+  .home-story { background: var(--paper); }
+  .home-story__grid { display: grid; grid-template-columns: .65fr 1.35fr; gap: clamp(2rem, 7vw, 6rem); align-items: center; }
+  .home-story__accent { min-height: 360px; display: grid; place-items: center; background: linear-gradient(145deg, #f2c9b8, #f7e7df); border: 1px solid #e5c9bb; border-radius: 50% 50% 43% 57% / 55% 42% 58% 45%; transform: rotate(-4deg); }
+  .home-story__accent span { font-family: 'Cormorant Garamond', serif; font-size: 9rem; color: rgba(173,98,71,.52); font-style: italic; }
+  .home-story__copy { max-width: 700px; }
+  .home-guides { background: #f7f0e8; }
+
+  @media (max-width: 1050px) {
+    .home-hero__inner { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .home-collage { min-height: 470px; }
+    .home-collage__stamp { width: 165px; }
+    .home-shop-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 760px) {
+    .home-hero__inner { grid-template-columns: 1fr; }
+    .home-hero__copy h1 { font-size: clamp(3.6rem, 17vw, 5.4rem); }
+    .home-collage { min-height: 420px; margin-top: 1rem; }
+    .home-collage__stamp { width: 145px; }
+    .home-strip { grid-template-columns: 1fr; margin: 0; }
+    .home-strip div { border-right: 0; border-bottom: 1px solid var(--border); padding: .9rem .2rem; }
+    .home-strip div:last-child { border-bottom: 0; }
+    .home-section-head { display: block; }
+    .home-section-head > p { text-align: left; }
+    .home-story__grid { grid-template-columns: 1fr; }
+    .home-story__accent { min-height: 220px; max-width: 320px; }
+  }
+  @media (max-width: 620px) {
+    .home-shop-grid { grid-template-columns: 1fr; }
+    .home-collage { min-height: 350px; }
+    .home-collage__item { border-width: 5px; }
+    .home-collage__stamp { width: 118px; }
+    .home-collage__stamp strong { font-size: 1.35rem; }
+    .home-collage__stamp span { font-size: .82rem; }
+  }
 </style>
