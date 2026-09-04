@@ -1,235 +1,124 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { allProducts, resolve } from '../lib/products';
+
+const products = (await allProducts()).map(resolve);
+const weddingProducts = products.filter((p) => p.type === 'template' && p.isLive).slice(0, 4);
 ---
 
 <Layout
   title="Wedding Invitation Suites | Editable Wedding Invitation Templates"
-  description="Browse editable wedding invitation suites, downloadable invitation templates, RSVP cards, details cards, and printable wedding stationery for modern celebrations."
+  description="Browse editable wedding invitation suites, downloadable invitation templates, RSVP cards, details cards, save the dates, and printable wedding stationery for modern celebrations."
 >
   <main>
-    <section class="page-hero">
-      <div class="container content">
-        <p class="eyebrow">Wedding invitation suites</p>
-
-        <h1>
-          Editable wedding invitation templates designed to feel polished,
-          personal, and easy to use.
-        </h1>
-
-        <p class="lead">
-          Explore downloadable wedding invitation suites with matching RSVP
-          cards, details cards, menus, signage, thank you cards, and coordinated
-          wedding stationery designed for modern celebrations.
-        </p>
-
-        <div class="button-row">
-          <a class="button" href="/how-it-works/">
-            How It Works
-          </a>
-
-          <a class="button secondary" href="/printing-guide/">
-            Printing Guide
-          </a>
+    <section class="wedding-hero">
+      <div class="wedding-hero__inner">
+        <div class="wedding-hero__copy">
+          <p class="eyebrow">Wedding invitations &amp; save the dates</p>
+          <h1>Wedding stationery with a sense of place.</h1>
+          <p class="lead">Editable Canva templates built around hand-drawn venues, destinations and details that make the design feel a little more like your wedding—and a little less like a template.</p>
+          <div class="button-row"><a class="button" href="#wedding-designs">Shop Wedding Designs</a><a class="button secondary" href="/how-it-works/">How It Works</a></div>
+        </div>
+        <div class="wedding-hero__collage" aria-label="Hummingbird Social wedding designs">
+          {weddingProducts[0] && <a href={weddingProducts[0].url} class="wedding-shot wedding-shot--one"><img src={weddingProducts[0].images[0]} alt={weddingProducts[0].title} /></a>}
+          {weddingProducts[1] && <a href={weddingProducts[1].url} class="wedding-shot wedding-shot--two"><img src={weddingProducts[1].images[0]} alt={weddingProducts[1].title} /></a>}
+          {weddingProducts[2] && <a href={weddingProducts[2].url} class="wedding-shot wedding-shot--three"><img src={weddingProducts[2].images[0]} alt={weddingProducts[2].title} /></a>}
         </div>
       </div>
     </section>
 
-    <section class="section">
-      <div class="container content">
-        <p class="eyebrow">What is included?</p>
-
-        <h2>
-          A coordinated wedding invitation suite makes your entire celebration
-          feel cohesive.
-        </h2>
-
-        <p>
-          A wedding invitation suite includes more than just the invitation
-          itself. Matching stationery pieces help create a consistent visual
-          experience from the moment guests open the envelope through the day of
-          the wedding.
-        </p>
-
-        <p>
-          Most downloadable wedding invitation suites include editable files
-          that allow you to personalize names, dates, locations, wording, and
-          event details before printing.
-        </p>
-
-        <ul class="list">
-          <li>Main wedding invitation template</li>
-          <li>RSVP card template</li>
-          <li>Details or information card</li>
-          <li>Save the date templates</li>
-          <li>Menus and wedding programs</li>
-          <li>Welcome signs and seating charts</li>
-          <li>Thank you cards and day-of stationery</li>
-          <li>Editable digital files for customization</li>
-        </ul>
+    <section id="wedding-designs" class="section wedding-shop">
+      <div class="container">
+        <div class="wedding-section-head">
+          <div><p class="eyebrow">Available now</p><h2>Start with the current collection.</h2></div>
+          <p>Personalize the wording and details in Canva, then print wherever you prefer. Checkout is handled securely through Etsy.</p>
+        </div>
+        <div class="wedding-products">
+          {weddingProducts.map((p) => <ProductCard url={p.url} title={p.title} tagline={p.tagline} description={p.description} price={p.price} image={p.images[0]} category={p.category} type={p.type} isLive={p.isLive} />)}
+        </div>
+        <div class="button-row"><a class="button" href="/shop/">Browse the Full Shop</a><a class="button secondary" href="https://hummingbirdsocial.etsy.com" target="_blank" rel="noopener noreferrer">Shop on Etsy</a></div>
       </div>
     </section>
 
     <section class="feature-band">
       <div class="container content">
-        <p class="eyebrow">Why couples choose editable templates</p>
-
-        <h2>
-          Beautiful wedding stationery without the long custom design process.
-        </h2>
-
-        <p>
-          Editable wedding templates give couples flexibility while still
-          creating a polished and intentional final result. Instead of waiting
-          through multiple rounds of revisions, you can personalize your wording,
-          update your details, and print on your own timeline.
-        </p>
-
-        <p>
-          Whether you print at home, through a local print shop, or with an
-          online printing service, downloadable invitation suites make it easier
-          to create coordinated wedding stationery that feels elevated without
-          feeling overwhelming.
-        </p>
+        <p class="eyebrow">A coordinated suite</p>
+        <h2>More than one pretty invitation.</h2>
+        <p>A wedding invitation suite can carry the same visual idea from the first save the date through the details card, invitation, signage and day-of paper. Editable templates make it easier to keep everything cohesive without waiting through a long custom-design process.</p>
+        <ul class="list">
+          <li>Main wedding invitation template</li>
+          <li>Save the date designs</li>
+          <li>RSVP and details cards</li>
+          <li>Menus, programs and welcome signs</li>
+          <li>Seating charts, place cards and bar menus</li>
+          <li>Thank you cards and matching day-of stationery</li>
+        </ul>
       </div>
     </section>
 
     <section class="section">
       <div class="container">
         <p class="eyebrow">Shop by style</p>
-
-        <h2>Popular wedding invitation aesthetics</h2>
-
+        <h2>Find a look that feels like your day.</h2>
         <div class="grid">
-          <a
-            class="card"
-            href="/wedding-invitation-suites/minimalist-weddings/"
-          >
-            <h3>Minimalist Wedding Invitations</h3>
-
-            <p>
-              Clean layouts, timeless typography, soft spacing, and modern
-              details designed for elegant celebrations with a refined feel.
-            </p>
-          </a>
-
-          <a
-            class="card"
-            href="/wedding-invitation-suites/mid-century-modern-weddings/"
-          >
-            <h3>Mid-Century Modern Wedding Invitations</h3>
-
-            <p>
-              Warm tones, retro-inspired design elements, playful typography,
-              and vintage-inspired layouts for stylish modern weddings.
-            </p>
-          </a>
-
-          <a
-            class="card"
-            href="/wedding-invitation-suites/black-and-white-weddings/"
-          >
-            <h3>Black & White Wedding Invitations</h3>
-
-            <p>
-              Classic downloadable invitation suites with timeless contrast,
-              elegant typography, and a sophisticated modern look.
-            </p>
-          </a>
+          <a class="card" href="/wedding-invitation-suites/minimalist-weddings/"><h3>Minimalist Weddings</h3><p>Clean layouts, timeless typography, soft spacing and restrained details for modern, refined celebrations.</p><strong>Explore minimalist invitations →</strong></a>
+          <a class="card" href="/wedding-invitation-suites/mid-century-modern-weddings/"><h3>Mid-Century Modern</h3><p>Warm tones, retro-inspired details and playful typography for weddings with a little personality.</p><strong>Explore mid-century invitations →</strong></a>
+          <a class="card" href="/wedding-invitation-suites/black-and-white-weddings/"><h3>Black &amp; White</h3><p>Classic contrast, elegant typography and a timeless look that works across venues and seasons.</p><strong>Explore black &amp; white invitations →</strong></a>
         </div>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section wedding-destinations">
       <div class="container">
-        <p class="eyebrow">Matching stationery</p>
-
-        <h2>Create a cohesive wedding suite from start to finish.</h2>
-
+        <p class="eyebrow">Destination-inspired</p>
+        <h2>Designed around places people remember.</h2>
         <div class="grid">
-          <div class="card">
-            <h3>Save the dates</h3>
-
-            <p>
-              Coordinate your wedding branding early with matching save the date
-              templates that pair seamlessly with your invitation suite.
-            </p>
-          </div>
-
-          <div class="card">
-            <h3>Day-of stationery</h3>
-
-            <p>
-              Match your invitations with menus, wedding programs, seating
-              charts, place cards, bar menus, and welcome signage.
-            </p>
-          </div>
-
-          <div class="card">
-            <h3>Thank you cards</h3>
-
-            <p>
-              Carry your wedding aesthetic through the final details with
-              matching thank you templates and coordinated post-wedding pieces.
-            </p>
-          </div>
+          <a class="card" href="/wedding-invitation-suites/palm-springs-wedding-invitations/"><h3>Palm Springs</h3><p>Desert-modern wedding stationery inspired by architecture, warm sun and iconic Southern California details.</p></a>
+          <a class="card" href="/wedding-invitation-suites/joshua-tree-wedding-invitations/"><h3>Joshua Tree</h3><p>Hand-drawn desert landscapes and organic details for outdoor and destination weddings.</p></a>
+          <a class="card" href="/wedding-invitation-suites/bend-oregon-wedding-invitations/"><h3>Bend, Oregon</h3><p>Mountain-inspired designs for Central Oregon weddings, lodge celebrations and outdoor weekends.</p></a>
         </div>
       </div>
     </section>
 
     <section class="feature-band">
       <div class="container content">
-        <p class="eyebrow">Helpful wedding planning resources</p>
-
-        <h2>
-          Everything you need to confidently edit, print, and style your
-          stationery.
-        </h2>
-
-        <p>
-          Not sure what paper to use, how editable templates work, or what to
-          include on a details card? Explore the wedding stationery resource
-          guides designed to make the process easier.
-        </p>
-
-        <div class="button-row">
-          <a class="button" href="/how-it-works/">
-            How It Works
-          </a>
-
-          <a class="button secondary" href="/printing-guide/">
-            Wedding Printing Guide
-          </a>
-
-          <a class="button secondary" href="/wording-etiquette/">
-            Wording & Etiquette
-          </a>
-        </div>
+        <p class="eyebrow">From edit to print</p>
+        <h2>Everything you need to confidently finish the stationery.</h2>
+        <p>Not sure what paper to use, how Canva templates work, or what to put on a details card? The Hummingbird guides are here for the practical part too.</p>
+        <div class="button-row"><a class="button" href="/how-it-works/">How It Works</a><a class="button secondary" href="/printing-guide/">Printing Guide</a><a class="button secondary" href="/wording-etiquette/">Wording &amp; Etiquette</a></div>
       </div>
     </section>
 
     <section class="section">
       <div class="container content">
         <p class="eyebrow">Need something custom?</p>
-
-        <h2>
-          Love a design but need a matching piece or different layout?
-        </h2>
-
-        <p>
-          If you need coordinated signage, additional event pieces, alternate
-          sizes, or custom wording layouts, custom design requests are welcome.
-        </p>
-
-        <div class="button-row">
-          <a class="button" href="/custom-design-requests/">
-            Request a Custom Design
-          </a>
-
-          <a class="button secondary" href="/contact/">
-            Contact the Studio
-          </a>
-        </div>
+        <h2>Love a design but need another piece to match?</h2>
+        <p>If you need coordinated signage, an alternate size, another event card or a different wording layout, custom design requests are welcome.</p>
+        <div class="button-row"><a class="button" href="/custom-design-requests/">Request a Custom Design</a><a class="button secondary" href="/contact/">Contact the Studio</a></div>
       </div>
     </section>
   </main>
 </Layout>
+
+<style>
+  .wedding-hero { overflow: hidden; padding: clamp(4rem, 7vw, 6.5rem) 5%; background: radial-gradient(circle at 7% 12%, rgba(240,199,183,.28), transparent 18rem), radial-gradient(circle at 90% 85%, rgba(127,141,115,.14), transparent 20rem), linear-gradient(135deg, #fffaf4, #f8e5dc); border-bottom: 1px solid var(--border); }
+  .wedding-hero__inner { width: min(1220px, 100%); margin: 0 auto; display: grid; grid-template-columns: .95fr 1.05fr; gap: clamp(2rem, 6vw, 5rem); align-items: center; }
+  .wedding-hero__copy { position: relative; z-index: 2; max-width: 650px; }
+  .wedding-hero__copy h1 { font-size: clamp(4rem, 7vw, 6.5rem); line-height: .88; }
+  .wedding-hero__collage { position: relative; min-height: 520px; }
+  .wedding-hero__collage::before { content: ''; position: absolute; width: 74%; aspect-ratio: 1; left: 13%; top: 8%; border: 1px solid rgba(209,127,93,.2); border-radius: 50%; }
+  .wedding-shot { position: absolute; overflow: hidden; background: white; border: 8px solid rgba(255,253,249,.96); border-radius: 12px; box-shadow: 0 22px 44px rgba(67,44,36,.16); }
+  .wedding-shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .wedding-shot--one { width: 47%; aspect-ratio: 1; left: 0; top: 4%; transform: rotate(-7deg); }
+  .wedding-shot--two { width: 48%; aspect-ratio: 1; right: 1%; top: 0; transform: rotate(6deg); }
+  .wedding-shot--three { width: 49%; aspect-ratio: 1; left: 26%; bottom: 0; transform: rotate(1deg); z-index: 3; }
+  .wedding-shop { scroll-margin-top: 120px; }
+  .wedding-section-head { display: flex; align-items: end; justify-content: space-between; gap: 3rem; }
+  .wedding-section-head > p { max-width: 30rem; margin: 0 0 .7rem; text-align: right; }
+  .wedding-products { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; margin-top: 2rem; }
+  .wedding-destinations { background: #f7f0e8; }
+  @media (max-width: 1050px) { .wedding-products { grid-template-columns: repeat(2, 1fr); } .wedding-hero__collage { min-height: 440px; } }
+  @media (max-width: 780px) { .wedding-hero__inner { grid-template-columns: 1fr; } .wedding-hero__collage { min-height: 420px; max-width: 620px; width: 100%; } .wedding-section-head { display: block; } .wedding-section-head > p { text-align: left; } }
+  @media (max-width: 620px) { .wedding-hero__copy h1 { font-size: clamp(3.5rem, 17vw, 5rem); } .wedding-hero__collage { min-height: 330px; } .wedding-shot { border-width: 5px; } .wedding-products { grid-template-columns: 1fr; } }
+</style>
