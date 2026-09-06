@@ -4,9 +4,16 @@ import { supportGuides } from '../../data/support-guides';
 import { ETSY_SHOP } from '../../lib/products';
 
 const title = 'Practical Planning Guides | Moving, Hosting, Travel & More';
-const description = 'Browse useful step-by-step guides for moving, group travel, dinner parties, Christmas planning, bridal showers, caregiving and creator media kits.';
+const description = 'Browse useful step-by-step guides for moving, group travel, dinner parties, Christmas planning, newsletters, school-year organization, caregiving and creator media kits.';
 const categoryLabels: Record<string,string> = { moving:'Moving', travel:'Group travel', hosting:'Hosting', holiday:'Holiday planning', wedding:'Wedding events', family:'Family organization', creator:'Creator business' };
 const categories = [...new Set(supportGuides.map((guide) => guide.category))];
+const additionalGuides = [
+  { href:'/guides/first-night-box-moving-checklist/', category:'Moving', title:'What to pack in a first-night box so you do not unpack the whole house on moving day.', description:'A practical first-night moving box checklist for toiletries, chargers, medication, cleaning basics, tools and breakfast items.' },
+  { href:'/guides/group-trip-packing-list/', category:'Group travel', title:'A group trip packing list that separates personal gear from shared gear.', description:'Use a personal, shared and destination-specific system to prevent duplicate gear and forgotten supplies.' },
+  { href:'/guides/christmas-planning-timeline/', category:'Holiday planning', title:'A Christmas planning timeline that moves the busy work out of the final week.', description:'What to do in October, November, early December and the final week for gifts, travel, hosting and meals.' },
+  { href:'/guides/newsletter-content-calendar/', category:'Newsletter planning', title:'How to build a newsletter content calendar that does not start from a blank page every week.', description:'A practical monthly system for cadence, topics, launches, calls to action, idea banks and post-send notes.' },
+  { href:'/guides/school-year-organization-checklist/', category:'Family organization', title:'A school year organization checklist for getting the family calendar out of everyone’s head.', description:'A simple shared calendar, weekly reset and landing-zone system for school, activities, forms and meals.' },
+];
 ---
 
 <Layout title={title} description={description}>
@@ -17,6 +24,20 @@ const categories = [...new Set(supportGuides.map((guide) => guide.category))];
       <p>These are problem-solving guides first: timelines, systems, checklists and realistic ways to organize the work. When a Hummingbird printable fits the job, we link it naturally instead of making the whole page a sales pitch.</p>
       <div class="actions"><a class="button" href="/digital-downloads/">Browse digital download guides</a><a class="button secondary" href={ETSY_SHOP} target="_blank" rel="noopener noreferrer">Shop Hummingbird on Etsy</a></div>
     </header>
+
+    <section class="category-block featured-block">
+      <div class="category-head"><p class="eyebrow">New practical guides</p><h2>More specific problems, more useful answers.</h2></div>
+      <div class="grid">
+        {additionalGuides.map((guide) => (
+          <a class="card" href={guide.href}>
+            <span>{guide.category}</span>
+            <h3>{guide.title}</h3>
+            <p>{guide.description}</p>
+            <strong>Read the guide →</strong>
+          </a>
+        ))}
+      </div>
+    </section>
 
     {categories.map((category) => {
       const items = supportGuides.filter((guide) => guide.category === category);
@@ -40,5 +61,5 @@ const categories = [...new Set(supportGuides.map((guide) => guide.category))];
 </Layout>
 
 <style>
-  .hub{width:min(1180px,calc(100% - 2.5rem));margin:0 auto;padding:2rem 0 6rem}.hero{max-width:940px;padding:clamp(2.5rem,6vw,5rem) 0 4rem}.hero h1{max-width:920px;margin:.4rem 0 1rem;font-size:clamp(3.4rem,7vw,6.2rem);line-height:.92}.hero>p:not(.eyebrow){max-width:780px;font-size:1.12rem;line-height:1.75}.actions{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.5rem}.category-block{padding:3.2rem 0;border-top:1px solid var(--border)}.category-head{margin-bottom:1.5rem}.category-head h2{margin:.25rem 0 0;font-size:clamp(2.4rem,4vw,3.6rem)}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.card{padding:1.7rem;background:#fffdf9;border:1px solid var(--border);border-radius:20px;transition:transform .2s ease,box-shadow .2s ease}.card:hover{transform:translateY(-3px);box-shadow:var(--shadow-soft)}.card span{color:var(--terracotta);font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em}.card h3{margin:.55rem 0 .75rem;font-size:2rem;line-height:1.02}.card p{font-size:.94rem;line-height:1.65}.card strong{display:inline-block;margin-top:.35rem}@media(max-width:720px){.hub{width:min(100% - 1.5rem,1180px)}.grid{grid-template-columns:1fr}}
+  .hub{width:min(1180px,calc(100% - 2.5rem));margin:0 auto;padding:2rem 0 6rem}.hero{max-width:940px;padding:clamp(2.5rem,6vw,5rem) 0 4rem}.hero h1{max-width:920px;margin:.4rem 0 1rem;font-size:clamp(3.4rem,7vw,6.2rem);line-height:.92}.hero>p:not(.eyebrow){max-width:780px;font-size:1.12rem;line-height:1.75}.actions{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.5rem}.category-block{padding:3.2rem 0;border-top:1px solid var(--border)}.featured-block{padding-top:2.6rem}.category-head{margin-bottom:1.5rem}.category-head h2{margin:.25rem 0 0;font-size:clamp(2.4rem,4vw,3.6rem)}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.card{padding:1.7rem;background:#fffdf9;border:1px solid var(--border);border-radius:20px;transition:transform .2s ease,box-shadow .2s ease}.card:hover{transform:translateY(-3px);box-shadow:var(--shadow-soft)}.card span{color:var(--terracotta);font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em}.card h3{margin:.55rem 0 .75rem;font-size:2rem;line-height:1.02}.card p{font-size:.94rem;line-height:1.65}.card strong{display:inline-block;margin-top:.35rem}@media(max-width:720px){.hub{width:min(100% - 1.5rem,1180px)}.grid{grid-template-columns:1fr}}
 </style>
