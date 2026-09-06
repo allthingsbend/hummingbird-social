@@ -1,0 +1,44 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { supportGuides } from '../../data/support-guides';
+import { ETSY_SHOP } from '../../lib/products';
+
+const title = 'Practical Planning Guides | Moving, Hosting, Travel & More';
+const description = 'Browse useful step-by-step guides for moving, group travel, dinner parties, Christmas planning, bridal showers, caregiving and creator media kits.';
+const categoryLabels: Record<string,string> = { moving:'Moving', travel:'Group travel', hosting:'Hosting', holiday:'Holiday planning', wedding:'Wedding events', family:'Family organization', creator:'Creator business' };
+const categories = [...new Set(supportGuides.map((guide) => guide.category))];
+---
+
+<Layout title={title} description={description}>
+  <main class="hub">
+    <header class="hero">
+      <p class="eyebrow">Hummingbird practical guides</p>
+      <h1>Useful planning advice before you ever need a printable.</h1>
+      <p>These are problem-solving guides first: timelines, systems, checklists and realistic ways to organize the work. When a Hummingbird printable fits the job, we link it naturally instead of making the whole page a sales pitch.</p>
+      <div class="actions"><a class="button" href="/digital-downloads/">Browse digital download guides</a><a class="button secondary" href={ETSY_SHOP} target="_blank" rel="noopener noreferrer">Shop Hummingbird on Etsy</a></div>
+    </header>
+
+    {categories.map((category) => {
+      const items = supportGuides.filter((guide) => guide.category === category);
+      return (
+        <section class="category-block">
+          <div class="category-head"><p class="eyebrow">{categoryLabels[category]}</p><h2>{categoryLabels[category]} guides</h2></div>
+          <div class="grid">
+            {items.map((guide) => (
+              <a class="card" href={`/guides/${guide.slug}/`}>
+                <span>{categoryLabels[guide.category]}</span>
+                <h3>{guide.h1}</h3>
+                <p>{guide.description}</p>
+                <strong>Read the guide →</strong>
+              </a>
+            ))}
+          </div>
+        </section>
+      );
+    })}
+  </main>
+</Layout>
+
+<style>
+  .hub{width:min(1180px,calc(100% - 2.5rem));margin:0 auto;padding:2rem 0 6rem}.hero{max-width:940px;padding:clamp(2.5rem,6vw,5rem) 0 4rem}.hero h1{max-width:920px;margin:.4rem 0 1rem;font-size:clamp(3.4rem,7vw,6.2rem);line-height:.92}.hero>p:not(.eyebrow){max-width:780px;font-size:1.12rem;line-height:1.75}.actions{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.5rem}.category-block{padding:3.2rem 0;border-top:1px solid var(--border)}.category-head{margin-bottom:1.5rem}.category-head h2{margin:.25rem 0 0;font-size:clamp(2.4rem,4vw,3.6rem)}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.card{padding:1.7rem;background:#fffdf9;border:1px solid var(--border);border-radius:20px;transition:transform .2s ease,box-shadow .2s ease}.card:hover{transform:translateY(-3px);box-shadow:var(--shadow-soft)}.card span{color:var(--terracotta);font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em}.card h3{margin:.55rem 0 .75rem;font-size:2rem;line-height:1.02}.card p{font-size:.94rem;line-height:1.65}.card strong{display:inline-block;margin-top:.35rem}@media(max-width:720px){.hub{width:min(100% - 1.5rem,1180px)}.grid{grid-template-columns:1fr}}
+</style>
