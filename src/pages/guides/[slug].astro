@@ -1,0 +1,138 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { supportGuides } from '../../data/support-guides';
+import { ETSY_SHOP, SITE } from '../../lib/products';
+
+export function getStaticPaths() {
+  return supportGuides.map((guide) => ({ params: { slug: guide.slug }, props: { guide } }));
+}
+
+const { guide } = Astro.props;
+const canonical = `${SITE}/guides/${guide.slug}/`;
+const related = supportGuides
+  .filter((item) => item.slug !== guide.slug)
+  .sort((a, b) => Number(b.category === guide.category) - Number(a.category === guide.category))
+  .slice(0, 3);
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: guide.h1,
+  description: guide.description,
+  url: canonical,
+  mainEntityOfPage: canonical,
+  author: { '@type': 'Organization', name: 'Hummingbird Social Studio' },
+  publisher: { '@type': 'Organization', name: 'Hummingbird Social Studio', url: SITE },
+};
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: guide.faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.q,
+    acceptedAnswer: { '@type': 'Answer', text: faq.a },
+  })),
+};
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+    { '@type': 'ListItem', position: 2, name: 'Practical Guides', item: `${SITE}/guides/` },
+    { '@type': 'ListItem', position: 3, name: guide.h1, item: canonical },
+  ],
+};
+---
+
+<Layout title={guide.title} description={guide.description}>
+  <link rel="canonical" href={canonical} slot="head" />
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} is:inline slot="head" />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} is:inline slot="head" />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} is:inline slot="head" />
+
+  <main class="guide-page">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a><span>/</span><a href="/guides/">Guides</a><span>/</span><span>{guide.category}</span>
+    </nav>
+
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Practical {guide.category} guide</p>
+        <h1>{guide.h1}</h1>
+        <p class="lead">{guide.intro}</p>
+      </div>
+      <aside class="quick-answer">
+        <span>Quick answer</span>
+        <p>{guide.quickAnswer}</p>
+      </aside>
+    </header>
+
+    <div class="layout">
+      <article>
+        {guide.sections.map((section, index) => (
+          <section class="content-section">
+            <p class="section-no">0{index + 1}</p>
+            <h2>{section.heading}</h2>
+            <p>{section.body}</p>
+            {section.bullets && <ul class="detail-list">{section.bullets.map((item) => <li>{item}</li>)}</ul>}
+          </section>
+        ))}
+
+        <section class="checklist-block">
+          <p class="eyebrow">Practical checklist</p>
+          <h2>Keep this part simple.</h2>
+          <ul>{guide.checklist.map((item) => <li>{item}</li>)}</ul>
+        </section>
+
+        <section class="mistakes-block">
+          <p class="eyebrow">Common mistakes</p>
+          <h2>What tends to make this harder than it needs to be.</h2>
+          <ul>{guide.mistakes.map((item) => <li>{item}</li>)}</ul>
+        </section>
+
+        <section class="product-bridge">
+          <p class="eyebrow">Want it organized on paper?</p>
+          <h2>{guide.relatedLabel}</h2>
+          <p>This guide covers the method. The related Hummingbird page shows what to look for in a printable or digital planning tool for the same job.</p>
+          <div class="actions">
+            <a class="button" href={`/digital-downloads/${guide.relatedDownload}/`}>See the related printable guide</a>
+            <a class="button secondary" href={ETSY_SHOP} target="_blank" rel="noopener noreferrer">Shop Hummingbird on Etsy</a>
+          </div>
+        </section>
+
+        <section class="faq">
+          <p class="eyebrow">Common questions</p>
+          <h2>Quick answers before you start.</h2>
+          {guide.faqs.map((faq) => <details><summary>{faq.q}</summary><p>{faq.a}</p></details>)}
+        </section>
+      </article>
+
+      <aside class="side">
+        <div class="side-card">
+          <p class="eyebrow">The Hummingbird approach</p>
+          <h3>Useful before decorative.</h3>
+          <p>These guides are built to solve a real planning problem first. If a printable helps, we link you to the related Hummingbird resource after the useful part.</p>
+          <a href="/digital-downloads/">Browse digital download guides →</a>
+        </div>
+      </aside>
+    </div>
+
+    <section class="related-section">
+      <div class="related-head"><div><p class="eyebrow">Keep going</p><h2>Related practical guides.</h2></div><a href="/guides/">View all guides →</a></div>
+      <div class="related-grid">
+        {related.map((item) => (
+          <a class="related-card" href={`/guides/${item.slug}/`}>
+            <span>{item.category}</span>
+            <h3>{item.h1}</h3>
+            <p>{item.description}</p>
+            <strong>Read the guide →</strong>
+          </a>
+        ))}
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .guide-page{width:min(1180px,calc(100% - 2.5rem));margin:0 auto;padding:1.4rem 0 6rem}.crumbs{display:flex;flex-wrap:wrap;gap:.45rem;padding:.5rem .2rem 1.35rem;color:var(--muted);font-size:.82rem}.hero{display:grid;grid-template-columns:1.35fr .65fr;gap:clamp(2rem,5vw,5rem);align-items:center;padding:clamp(3rem,6vw,5.5rem);background:linear-gradient(135deg,#fffaf4,#f2e2d8);border:1px solid var(--border);border-radius:28px;box-shadow:0 24px 60px rgba(77,53,43,.07)}.hero h1{max-width:55rem;margin:.35rem 0 1rem;font-size:clamp(3.2rem,6vw,5.7rem);line-height:.94}.lead{max-width:49rem;font-size:1.1rem;line-height:1.75}.quick-answer{padding:1.8rem;background:#fffdf9;border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow-soft)}.quick-answer span{color:var(--terracotta);font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.15em}.quick-answer p{margin:.7rem 0 0;font-size:1.05rem;line-height:1.65;color:var(--text)}.layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:clamp(2.5rem,6vw,5.5rem);align-items:start;padding:5rem .2rem 0}.content-section{max-width:49rem;padding-bottom:3.2rem;margin-bottom:3.2rem;border-bottom:1px solid var(--border)}.section-no{margin:0 0 .5rem;color:var(--terracotta);font-size:.72rem;font-weight:700;letter-spacing:.16em}.content-section h2,.checklist-block h2,.mistakes-block h2,.product-bridge h2,.faq h2{margin:.35rem 0 1rem;font-size:clamp(2.2rem,4vw,3.4rem);line-height:1}.content-section>p:last-of-type{font-size:1.05rem;line-height:1.8}.detail-list,.checklist-block ul,.mistakes-block ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem 1rem;padding:0;margin:1.5rem 0 0;list-style:none}.detail-list li,.checklist-block li,.mistakes-block li{padding:.9rem 1rem;background:#fffdf9;border:1px solid var(--border);border-radius:14px;color:var(--muted)}.checklist-block,.mistakes-block,.product-bridge,.faq{max-width:49rem;margin:0 0 4rem}.checklist-block{padding:2.3rem;background:#f4f2ea;border:1px solid var(--border);border-radius:22px}.mistakes-block{padding:2.3rem;background:#fffaf5;border:1px solid var(--border);border-radius:22px}.product-bridge{padding:2.6rem;background:linear-gradient(135deg,#f5ded2,#efd0c1);border:1px solid #e2c2b1;border-radius:24px}.actions{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.5rem}.faq details{padding:1.1rem 0;border-bottom:1px solid var(--border)}.faq summary{cursor:pointer;font-weight:700}.side{position:sticky;top:145px}.side-card{padding:1.5rem;background:#fffdf9;border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow-soft)}.side-card h3{margin:.3rem 0 .7rem;font-size:2rem}.side-card a{color:var(--terracotta-dark);font-weight:700}.related-section{margin-top:6rem;padding-top:3.5rem;border-top:1px solid var(--border)}.related-head{display:flex;align-items:end;justify-content:space-between;gap:2rem;margin-bottom:1.7rem}.related-head h2{margin:0}.related-head>a{color:var(--terracotta-dark);font-weight:700}.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}.related-card{padding:1.5rem;background:#fffdf9;border:1px solid var(--border);border-radius:20px}.related-card>span{color:var(--terracotta);font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em}.related-card h3{margin:.55rem 0 .75rem;font-size:1.8rem;line-height:1.02}.related-card p{font-size:.9rem;line-height:1.6}@media(max-width:900px){.hero,.layout{grid-template-columns:1fr}.side{position:static}}@media(max-width:680px){.guide-page{width:min(100% - 1.5rem,1180px)}.hero{padding:3rem 1.4rem}.hero h1{font-size:clamp(3rem,14vw,4.25rem)}.detail-list,.checklist-block ul,.mistakes-block ul,.related-grid{grid-template-columns:1fr}.related-head{display:block}.product-bridge,.checklist-block,.mistakes-block{padding:1.5rem}}
+</style>
