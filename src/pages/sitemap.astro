@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { seoPrintablePages } from '../data/seo-printable-pages';
+import { etsyGuidePages } from '../data/etsy-guide-pages';
 const title = 'HTML Sitemap | Hummingbird Social Studio';
 const description = 'Browse Hummingbird Social Studio shop pages, wedding invitation collections, printables and planning resources.';
 ---
@@ -8,47 +9,19 @@ const description = 'Browse Hummingbird Social Studio shop pages, wedding invita
   <section class="page-hero"><div class="container"><p class="eyebrow">Hummingbird Social Studio</p><h1>Site Map</h1><p>Browse the shop, collections and helpful resources across the site.</p></div></section>
   <section class="content-section"><div class="container sitemap-grid">
     <div><h2>Shop & Main Pages</h2><ul>
-      <li><a href="/">Home</a></li><li><a href="/shop/">Shop</a></li><li><a href="/printables/">Printables</a></li>
+      <li><a href="/">Home</a></li><li><a href="/shop/">Shop</a></li><li><a href="/printables/">Printables</a></li><li><a href="/digital-downloads/">Digital Download Guides</a></li>
       <li><a href="/how-it-works/">How It Works</a></li><li><a href="/custom-design-requests/">Custom Design Requests</a></li>
       <li><a href="/printing-guide/">Printing Guide</a></li><li><a href="/wording-etiquette/">Wording &amp; Etiquette</a></li>
       <li><a href="/bridal-shower-invitations/">Bridal Shower Invitations</a></li><li><a href="/faq/">FAQ</a></li><li><a href="/about/">About</a></li><li><a href="/contact/">Contact</a></li>
     </ul></div>
-
-    <div><h2>Printable Guides</h2><ul>
-      {seoPrintablePages.map((page) => <li><a href={`/printables/${page.slug}/`}>{page.h1}</a></li>)}
-    </ul></div>
-
+    <div><h2>Printable Guides</h2><ul>{seoPrintablePages.map((page) => <li><a href={`/printables/${page.slug}/`}>{page.h1}</a></li>)}</ul></div>
+    <div><h2>Digital Download Guides</h2><ul>{etsyGuidePages.map((page) => <li><a href={`/digital-downloads/${page.slug}/`}>{page.h1}</a></li>)}</ul></div>
     <div><h2>Shop Products</h2><ul>
-      <li><a href="/shop/adhd-planner/">ADHD Planner</a></li>
-      <li><a href="/shop/baby-shower-planner/">Printable Baby Shower Planner</a></li>
-      <li><a href="/shop/birth-plan/">Printable Birth Plan Template</a></li>
-      <li><a href="/shop/first-time-home-buyer-budget-tracker/">First-Time Home Buyer Budget Tracker</a></li>
-      <li><a href="/shop/hand-sketched-wedding-invitation/">Hand Sketched Wedding Invitation</a></li>
-      <li><a href="/shop/joshua-tree-wedding-invitation/">Joshua Tree Wedding Invitation Template</a></li>
-      <li><a href="/shop/napa-valley-save-the-date/">Napa Valley Save the Date Card</a></li>
-      <li><a href="/shop/palm-springs-save-the-date/">Palm Springs Save the Date Card</a></li>
-      <li><a href="/shop/postpartum-journal/">Postpartum Journal</a></li>
-      <li><a href="/shop/pregnancy-journal-planner/">Pregnancy Journal & Planner</a></li>
-      <li><a href="/shop/wedding-checklist/">Printable Wedding Planning Checklist</a></li>
+      <li><a href="/shop/adhd-planner/">ADHD Planner</a></li><li><a href="/shop/baby-shower-planner/">Printable Baby Shower Planner</a></li><li><a href="/shop/birth-plan/">Printable Birth Plan Template</a></li><li><a href="/shop/first-time-home-buyer-budget-tracker/">First-Time Home Buyer Budget Tracker</a></li><li><a href="/shop/hand-sketched-wedding-invitation/">Hand Sketched Wedding Invitation</a></li><li><a href="/shop/joshua-tree-wedding-invitation/">Joshua Tree Wedding Invitation Template</a></li><li><a href="/shop/napa-valley-save-the-date/">Napa Valley Save the Date Card</a></li><li><a href="/shop/palm-springs-save-the-date/">Palm Springs Save the Date Card</a></li><li><a href="/shop/postpartum-journal/">Postpartum Journal</a></li><li><a href="/shop/pregnancy-journal-planner/">Pregnancy Journal & Planner</a></li><li><a href="/shop/wedding-checklist/">Printable Wedding Planning Checklist</a></li>
     </ul></div>
-
     <div><h2>Wedding Invitation Collections</h2><ul>
-      <li><a href="/wedding-invitation-suites/">Wedding Invitation Suites</a></li>
-      <li><a href="/wedding-invitation-suites/bend-oregon-wedding-invitations/">Bend Oregon Wedding Invitations</a></li>
-      <li><a href="/wedding-invitation-suites/black-and-white-weddings/">Black &amp; White Wedding Invitations</a></li>
-      <li><a href="/wedding-invitation-suites/boho-weddings/">Boho Wedding Invitations</a></li>
-      <li><a href="/wedding-invitation-suites/mid-century-modern-weddings/">Mid-Century Modern Wedding Invitations</a></li>
-      <li><a href="/wedding-invitation-suites/minimalist-weddings/">Minimalist Wedding Invitations</a></li>
-      <li><a href="/wedding-invitation-suites/mountain-weddings/">Mountain Wedding Invitations</a></li>
-      <li><a href="/wedding-invitation-suites/vintage-weddings/">Vintage Wedding Invitations</a></li>
-      <li><a href="/wedding-invitation-suites/joshua-tree-wedding-invitations/">Joshua Tree Wedding Invitations</a></li>
-      <li><a href="/wedding-invitation-suites/palm-springs-wedding-invitations/">Palm Springs Wedding Invitations</a></li>
-      <li><a href="/wedding-invitation-suites/san-diego-wedding-invitations/">San Diego Wedding Invitations</a></li>
+      <li><a href="/wedding-invitation-suites/">Wedding Invitation Suites</a></li><li><a href="/wedding-invitation-suites/bend-oregon-wedding-invitations/">Bend Oregon Wedding Invitations</a></li><li><a href="/wedding-invitation-suites/black-and-white-weddings/">Black &amp; White Wedding Invitations</a></li><li><a href="/wedding-invitation-suites/boho-weddings/">Boho Wedding Invitations</a></li><li><a href="/wedding-invitation-suites/mid-century-modern-weddings/">Mid-Century Modern Wedding Invitations</a></li><li><a href="/wedding-invitation-suites/minimalist-weddings/">Minimalist Wedding Invitations</a></li><li><a href="/wedding-invitation-suites/mountain-weddings/">Mountain Wedding Invitations</a></li><li><a href="/wedding-invitation-suites/vintage-weddings/">Vintage Wedding Invitations</a></li><li><a href="/wedding-invitation-suites/joshua-tree-wedding-invitations/">Joshua Tree Wedding Invitations</a></li><li><a href="/wedding-invitation-suites/palm-springs-wedding-invitations/">Palm Springs Wedding Invitations</a></li><li><a href="/wedding-invitation-suites/san-diego-wedding-invitations/">San Diego Wedding Invitations</a></li>
     </ul></div>
   </div></section>
 </Layout>
-<style>
-  .sitemap-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:3rem 4rem; }
-  .sitemap-grid h2 { font-size:2rem; } .sitemap-grid ul { padding-left:1.15rem; } .sitemap-grid li { margin:.55rem 0; } .sitemap-grid a { text-decoration:underline; text-underline-offset:3px; }
-  @media (max-width:800px) { .sitemap-grid { grid-template-columns:1fr; } }
-</style>
+<style>.sitemap-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3rem 4rem}.sitemap-grid h2{font-size:2rem}.sitemap-grid ul{padding-left:1.15rem}.sitemap-grid li{margin:.55rem 0}.sitemap-grid a{text-decoration:underline;text-underline-offset:3px}@media(max-width:800px){.sitemap-grid{grid-template-columns:1fr}}</style>
