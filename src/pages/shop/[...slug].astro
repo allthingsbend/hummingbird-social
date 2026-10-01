@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import ProductCard from '../../components/ProductCard.astro';
 import BuyButton from '../../components/BuyButton.astro';
 import { getCollection, render } from 'astro:content';
 import { resolve, slugOf, SITE } from '../../lib/products';
@@ -46,36 +47,40 @@ const breadcrumbSchema = { '@context': 'https://schema.org', '@type': 'Breadcrum
   {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} is:inline slot="head" />}
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} is:inline slot="head" />
 
-  <main class="product">
+  <main class:list={["product", p.isLive && buyUrl && "product--purchasable"]}>
     <nav class="product__crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/shop/">Shop</a><span aria-hidden="true">/</span><span>{p.title}</span></nav>
     <article>
       <div class="product__top">
         <div class="product__gallery">
           {p.images.length > 0 ? (<>
-            <img class="product__hero" id="product-hero" src={p.images[0]} alt={p.title} width="900" height="900" />
+            <button class="product__zoom" type="button" aria-label={`Enlarge ${p.title} photo`}><img class="product__hero" id="product-hero" src={p.images[0]} alt={p.title} width="900" height="900" fetchpriority="high" /><span>View larger photo ↗</span></button>
             {p.images.length > 1 && <div class="product__thumbs">{p.images.map((src, i) => (
-              <button type="button" class:list={['product__thumb', i === 0 && 'is-active']} data-src={src} aria-label={`View image ${i + 1}`}><img src={src} alt="" loading="lazy" width="100" height="100" /></button>
+              <button type="button" class:list={['product__thumb', i === 0 && 'is-active']} data-src={src} aria-label={`View ${p.title}, photo ${i + 1}`} aria-pressed={i === 0 ? "true" : "false"}><img src={src} alt="" loading="lazy" width="100" height="100" /></button>
             ))}</div>}
           </>) : <div class="product__hero product__hero--empty"><span>Preview coming soon</span></div>}
         </div>
         <div class="product__info">
-          <p class="product__category">{p.category}</p>
+          <p class="product__category">{p.category} · {p.type === "template" ? "Editable digital template" : "Digital printable"}</p>
           <h1>{p.h1}</h1>
           {p.tagline && <p class="product__tagline">{p.tagline}</p>}
-          <BuyButton checkout={p.checkout} etsyUrl={p.etsyUrl} lemonSqueezyUrl={p.lemonSqueezyUrl} price={p.price} isLive={p.isLive} />
+          <div class="product__chips"><span>{p.type === 'template' ? 'Personalize your details' : 'Organize at your pace'}</span><span>Download &amp; print</span><span>Digital files</span></div>
+          <BuyButton checkout={p.checkout} etsyUrl={p.etsyUrl} lemonSqueezyUrl={p.lemonSqueezyUrl} price={p.price} isLive={p.isLive} label="Get this design" />
           <dl class="product__meta">
             {p.pageCount && <div><dt>Includes</dt><dd>{p.pageCount}</dd></div>}
             {p.formats.length > 0 && <div><dt>Files</dt><dd>{p.formats.join(', ')}</dd></div>}
-            <div><dt>Delivery</dt><dd>{p.isLive ? 'Digital download' : 'Not for sale yet'}</dd></div>
+            <div><dt>Delivery</dt><dd>{p.isLive ? 'Digital download — no physical item shipped' : 'Not for sale yet'}</dd></div>
           </dl>
         </div>
       </div>
-      <div class="product__body"><Content /></div>
-      {p.faqs.length > 0 && <section class="product__faq"><h2>Questions</h2>{p.faqs.map((f) => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}</section>}
+      <nav class="jump-links" aria-label="Product page sections"><a href="#design-details">Design &amp; what is included</a><a href="#product-questions">Questions before buying</a><a href="#more-designs">More designs</a></nav>
+      <div class="product__editorial"><div class="product__body" id="design-details"><Content /></div><aside class="product__help"><p class="eyebrow">A clear next step</p><h2>Choose. Personalize. Print.</h2><p>{p.type === 'template' ? 'Start with the design, use its editing instructions, then prepare the file for your chosen printer.' : 'Review the included formats, download your files and choose the pages that fit your routine.'}</p><a href="/how-it-works/">How digital downloads work →</a><a href="/printing-guide/">Paper &amp; printing help →</a><a href="/contact/">Ask the studio a question →</a></aside></div>
+      {p.faqs.length > 0 && <section class="product__faq" id="product-questions"><p class="eyebrow">Before you buy</p><h2>Answers that make the next step easier.</h2>{p.faqs.map((f) => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}</section>}
       {p.medicalDisclaimer && <p class="product__disclaimer">These pages are organizational worksheets. They are not medical advice and are not a substitute for guidance from your own healthcare provider.</p>}
       <section class="product__close"><BuyButton checkout={p.checkout} etsyUrl={p.etsyUrl} lemonSqueezyUrl={p.lemonSqueezyUrl} price={p.price} isLive={p.isLive} label="Get it" /></section>
-      {related.length > 0 && <section class="product__related"><p class="product__category">Keep browsing</p><h2>You might also like</h2><ul>{related.map((r) => <li><a href={r.url}>{r.title}</a><span>{r.tagline ?? r.description}</span></li>)}</ul></section>}
+      {related.length > 0 && <section class="product__related" id="more-designs"><p class="product__category">Keep browsing</p><h2>You might also like</h2><div class="product__related-grid">{related.map((r) => <ProductCard url={r.url} title={r.title} tagline={r.tagline} description={r.description} price={r.price} image={r.images[0]} category={r.category} type={r.type} isLive={r.isLive} />)}</div></section>}
     </article>
+    {p.images.length > 0 && <dialog class="product__dialog" aria-label={`${p.title} enlarged photo`}><form method="dialog"><button class="product__dialog-close" aria-label="Close enlarged photo">Close ×</button></form><img id="product-enlarged" src={p.images[0]} alt={p.title} width="900" height="900" loading="lazy" /></dialog>}
+    {p.isLive && buyUrl && <div class="product__mobile-buy"><span>{p.type === 'template' ? 'Digital template' : 'Digital download'}<strong>{p.price}</strong></span><a href={buyUrl} target="_blank" rel="noopener noreferrer">{p.hasDirect ? 'Get this design' : 'Get it on Etsy'} ↗</a></div>}
   </main>
 </Layout>
 
@@ -83,8 +88,12 @@ const breadcrumbSchema = { '@context': 'https://schema.org', '@type': 'Breadcrum
   (() => {
     const hero = document.getElementById('product-hero');
     if (!hero) return;
+    const dialog = document.querySelector('.product__dialog');
+    document.querySelector('.product__zoom')?.addEventListener('click', () => { document.getElementById('product-enlarged').src = hero.src; dialog.showModal(); });
+    dialog?.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
     document.querySelectorAll('.product__thumb').forEach((btn) => btn.addEventListener('click', () => {
       hero.src = btn.dataset.src;
+      document.querySelectorAll('.product__thumb').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
       document.querySelectorAll('.product__thumb').forEach((b) => b.classList.toggle('is-active', b === btn));
     }));
   })();
@@ -104,14 +113,14 @@ const breadcrumbSchema = { '@context': 'https://schema.org', '@type': 'Breadcrum
   .product__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .product__info { position: sticky; top: 122px; padding: clamp(1rem, 2vw, 1.6rem) 0; }
   .product__category { margin: 0 0 .65rem; color: var(--terracotta); text-transform: uppercase; letter-spacing: .16em; font-size: .7rem; font-weight: 700; }
-  .product__info h1 { margin: 0 0 1rem; font-size: clamp(3rem, 5.4vw, 4.8rem); line-height: .95; }
+  .product__info h1 { margin: 0 0 1rem; font-size: clamp(3rem, 5.4vw, 4.8rem); line-height: 1.04; }
   .product__tagline { max-width: 32rem; font-size: 1.08rem; line-height: 1.7; }
   .product__meta { margin-top: 1.6rem; padding-top: 1.2rem; border-top: 1px solid var(--border); font-size: .86rem; }
   .product__meta div { display: flex; gap: 1rem; padding: .45rem 0; }
   .product__meta dt { flex: 0 0 5.5rem; color: var(--muted); }
   .product__meta dd { margin: 0; color: var(--text); }
 
-  .product__body { margin: 5rem 0 0; max-width: 50rem; padding: 2.6rem; background: rgba(255,253,249,.75); border: 1px solid var(--border); border-radius: 22px; box-shadow: 0 14px 36px rgba(77,53,43,.045); line-height: 1.75; }
+  .product__body { margin: 0; max-width: 50rem; padding: 2.6rem; background: rgba(255,253,249,.75); border: 1px solid var(--border); border-radius: 22px; box-shadow: 0 14px 36px rgba(77,53,43,.045); line-height: 1.75; }
   .product__body :global(h2), .product__faq h2, .product__related h2 { font-size: clamp(2.15rem, 4vw, 3rem); margin-top: 2.5rem; }
   .product__body :global(h2:first-child) { margin-top: 0; }
   .product__body :global(h3) { font-size: 1.65rem; margin-top: 2rem; }
@@ -132,4 +141,13 @@ const breadcrumbSchema = { '@context': 'https://schema.org', '@type': 'Breadcrum
   .product__related span { color: var(--muted); font-size: .85rem; line-height: 1.5; }
   @media (max-width: 820px) { .product__top { grid-template-columns: 1fr; } .product__info { position: static; padding-bottom: .25rem; } .product__related ul { grid-template-columns: 1fr; } .product__body { padding: 1.5rem; } }
   @media (max-width: 620px) { .product { width: min(100% - 1.5rem, 1160px); padding-top: .8rem; } .product__top { padding: .8rem; border-radius: 20px; } .product__hero { border-width: 4px; } .product__meta div { flex-direction: column; gap: .1rem; } }
+
+  .product__zoom{display:block;position:relative;width:100%;padding:0;border:0;background:none;cursor:zoom-in;font:inherit}.product__zoom>span{position:absolute;bottom:1rem;right:1rem;padding:.5rem .8rem;background:var(--paper);border-radius:999px;font-size:.8rem;color:var(--text)}
+  .product__hero{aspect-ratio:1;object-fit:contain}.product__thumb{flex:0 0 72px}.product__chips{display:flex;flex-wrap:wrap;gap:.5rem;margin:1.25rem 0}.product__chips span{padding:.4rem .7rem;background:var(--paper);border:1px solid var(--border);border-radius:999px;font-size:.75rem}
+  .product__editorial{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:2rem;align-items:start;margin-top:2.5rem}.product__help{position:sticky;top:120px;background:#efece2;border:1px solid var(--border);border-radius:20px;padding:1.5rem}.product__help h2{font-size:2.1rem}.product__help p{font-size:.95rem}.product__help a{display:block;padding:.7rem 0;color:var(--terracotta-dark);text-decoration:underline;text-underline-offset:3px;font-size:.9rem}
+  .product__body :global(blockquote){margin:1.5rem 0;padding:1.5rem;border-left:3px solid var(--terracotta);background:#f6eee5;border-radius:0 12px 12px 0}.product__related-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+  .product__dialog{width:min(950px,95vw);max-height:92dvh;padding:3.5rem 1rem 1rem;border:1px solid var(--border);border-radius:20px;background:var(--paper)}.product__dialog::backdrop{background:rgba(35,27,23,.75)}.product__dialog img{display:block;width:100%;max-height:78dvh;object-fit:contain}.product__dialog-close{position:absolute;right:1rem;top:.6rem;padding:.6rem 1rem;min-height:44px;border:1px solid var(--border);border-radius:999px;background:white;color:var(--text);cursor:pointer}.product__mobile-buy{display:none}
+  @media(max-width:900px){.product__editorial{grid-template-columns:1fr}.product__help{position:static}.product__related-grid{grid-template-columns:1fr}}
+  @media(max-width:620px){.product--purchasable{padding-bottom:7rem}.product__info h1{font-size:clamp(2.6rem,11vw,3.5rem)}.product__mobile-buy{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:105;justify-content:space-between;align-items:center;gap:1rem;padding:.8rem 1rem calc(.8rem + env(safe-area-inset-bottom));background:var(--paper);border-top:1px solid var(--border);box-shadow:0 -5px 20px #33292512}.product__mobile-buy span{font-size:.75rem;color:var(--muted)}.product__mobile-buy strong{display:block;font-size:1rem;color:var(--text)}.product__mobile-buy a{padding:.8rem 1.2rem;background:var(--terracotta);color:white;border-radius:999px;font-size:.9rem;font-weight:600;min-height:44px}.product__dialog{padding:3.5rem .5rem .5rem}}
+  @media print{.product__mobile-buy,.product__help,.product__zoom>span{display:none}}
 </style>
