@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import EtsyGallery from '../../components/EtsyGallery.astro';
 
 const title = 'Minimalist Wedding Invitations | Downloadable Wedding Invitation Templates';
 const description = 'Shop minimalist wedding invitations from Hummingbird Social Studio. Explore clean, modern, downloadable wedding invitation templates for simple, elegant celebrations.';
@@ -106,4 +107,5 @@ const schema = {
   </main>
 
   <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+<EtsyGallery productSlug="hand-sketched-wedding-invitation" />
 </Layout>

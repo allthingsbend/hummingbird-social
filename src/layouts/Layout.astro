@@ -2,7 +2,10 @@
 import '../styles/global.css';
 import '../styles/hss-phase1.css';
 import '../styles/refinements.css';
+import EtsyGallery from '../components/EtsyGallery.astro';
 const { title, description } = Astro.props;
+const path = Astro.url.pathname;
+const showCollection = path !== '/' && !path.startsWith('/shop') && !path.startsWith('/wedding-invitation-suites') && path !== '/sitemap/';
 const etsyShopUrl = 'https://hummingbirdsocial.etsy.com';
 ---
 <!doctype html>
@@ -74,6 +77,8 @@ const etsyShopUrl = 'https://hummingbirdsocial.etsy.com';
     </header>
 
     <div id="main-content" tabindex="-1"><slot /></div>
+
+    {showCollection && <EtsyGallery />}
 
     <footer class="site-footer">
       <div class="footer-inner">

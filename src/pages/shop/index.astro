@@ -26,8 +26,8 @@ const listSchema = {
   <main class="shop">
     <section class="shop__banner" aria-labelledby="shop-title">
       <div class="shop__visual shop__visual--left" aria-hidden="true">
-        {heroProducts[0] && <a href={heroProducts[0].url} class="shop__hero-product shop__hero-product--one"><img src={heroProducts[0].images[0]} alt="" /></a>}
-        {heroProducts[1] && <a href={heroProducts[1].url} class="shop__hero-product shop__hero-product--two"><img src={heroProducts[1].images[0]} alt="" /></a>}
+        {heroProducts[0] && <a href={heroProducts[0].url} class="shop__hero-product shop__hero-product--one"><img src={heroProducts[0].images[0]} alt={heroProducts[0].title} width="600" height="600" /></a>}
+        {heroProducts[1] && <a href={heroProducts[1].url} class="shop__hero-product shop__hero-product--two"><img src={heroProducts[1].images[0]} alt={heroProducts[1].title} width="600" height="600" /></a>}
       </div>
 
       <div class="shop__brand-copy">
@@ -41,8 +41,8 @@ const listSchema = {
       </div>
 
       <div class="shop__visual shop__visual--right" aria-hidden="true">
-        {heroProducts[2] && <a href={heroProducts[2].url} class="shop__hero-product shop__hero-product--three"><img src={heroProducts[2].images[0]} alt="" /></a>}
-        {heroProducts[3] && <a href={heroProducts[3].url} class="shop__hero-product shop__hero-product--four"><img src={heroProducts[3].images[0]} alt="" /></a>}
+        {heroProducts[2] && <a href={heroProducts[2].url} class="shop__hero-product shop__hero-product--three"><img src={heroProducts[2].images[0]} alt={heroProducts[2].title} width="600" height="600" /></a>}
+        {heroProducts[3] && <a href={heroProducts[3].url} class="shop__hero-product shop__hero-product--four"><img src={heroProducts[3].images[0]} alt={heroProducts[3].title} width="600" height="600" /></a>}
       </div>
     </section>
 

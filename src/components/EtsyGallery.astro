@@ -1,0 +1,28 @@
+---
+import { allProducts, resolve } from '../lib/products';
+const { productSlug } = Astro.props;
+const products = (await allProducts()).map(resolve).filter(p => p.isLive && p.images.length && p.etsyUrl);
+const selected = productSlug ? products.find(p => p.slug === productSlug) : undefined;
+const photos = selected ? selected.images.map((image, index) => ({ image, title: selected.title, alt: `${selected.title} — Etsy listing photo ${index + 1}`, url: selected.url, etsyUrl: selected.etsyUrl })) : products.map(p => ({image: p.images[0], title:p.title, alt:p.title, url:p.url, etsyUrl:p.etsyUrl}));
+---
+{photos.length > 0 && <section class="etsy-gallery" aria-label={selected ? `${selected.title} photo gallery` : 'Hummingbird wedding design collection'}>
+  <div class="container">
+    <div class="etsy-gallery__heading"><div><p class="eyebrow">From the studio</p><h2>{selected ? 'A closer look at the design.' : 'Explore our wedding designs.'}</h2></div><p>{selected ? 'See the details in the listing photos, then explore the editable template.' : 'Hand-drawn invitations and save the dates from the Hummingbird Social Etsy collection.'}</p></div>
+    <div class:list={['etsy-gallery__grid', selected && 'etsy-gallery__grid--detail']}>
+      {photos.map((photo, index) => <figure>
+        <a class="etsy-gallery__image" href={photo.url} aria-label={`View ${photo.title}${selected ? `, photo ${index + 1}` : ''}`}><img src={photo.image} alt={photo.alt} width="600" height="600" loading="lazy" decoding="async" /></a>
+        <figcaption>{selected ? <span>{index === 0 ? 'Design preview' : `Additional design view ${index + 1}`}</span> : <><a href={photo.url}>{photo.title}</a><a class="etsy-gallery__etsy" href={photo.etsyUrl} target="_blank" rel="noopener noreferrer">View on Etsy ↗</a></>}</figcaption>
+      </figure>)}
+    </div>
+    {selected && <div class="button-row"><a class="button" href={selected.url}>Template details &amp; editing help</a><a class="button secondary" href={selected.etsyUrl} target="_blank" rel="noopener noreferrer">View this design on Etsy ↗</a></div>}
+  </div>
+</section>}
+<style>
+.etsy-gallery{padding:clamp(2.5rem,5vw,4.5rem) 5%;background:#f5ece4;border-top:1px solid var(--border)}
+.etsy-gallery__heading{display:flex;justify-content:space-between;align-items:end;gap:2rem;margin-bottom:1.6rem}.etsy-gallery__heading h2{font-size:clamp(2rem,4vw,3.2rem);margin:0}.etsy-gallery__heading>p{max-width:24rem;font-size:.95rem;margin:0}
+.etsy-gallery__grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem}.etsy-gallery__grid--detail{grid-template-columns:repeat(3,minmax(0,1fr))}
+figure{margin:0;min-width:0;background:var(--paper);border:1px solid var(--border);border-radius:16px;overflow:hidden}.etsy-gallery__image{display:block;aspect-ratio:1;background:#f2e5dc;overflow:hidden}.etsy-gallery__image img{display:block;width:100%;height:100%;object-fit:contain;transition:transform .2s ease}.etsy-gallery__image:hover img{transform:scale(1.025)}
+figcaption{padding:1rem;font-size:.9rem;line-height:1.5}figcaption>a:first-child{font-weight:600}.etsy-gallery__etsy{display:block;margin-top:.5rem;color:var(--terracotta-dark);padding:.5rem 0;text-decoration:underline;text-underline-offset:3px}
+@media(max-width:800px){.etsy-gallery__heading{display:block}.etsy-gallery__heading>p{margin-top:.8rem}.etsy-gallery__grid,.etsy-gallery__grid--detail{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:480px){.etsy-gallery{padding:2.5rem 1rem}.etsy-gallery__grid--detail{grid-template-columns:1fr}.etsy-gallery__grid{gap:.65rem}figcaption{padding:.8rem;font-size:.82rem}.etsy-gallery__grid--detail figcaption{font-size:.9rem}}
+</style>
