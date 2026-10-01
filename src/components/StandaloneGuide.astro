@@ -75,16 +75,17 @@ const breadcrumbSchema = {
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><a href="/guides/">Guides</a><span>/</span><span>{category}</span></nav>
     <header class="hero"><div><p class="eyebrow">Practical {category} guide</p><h1>{h1}</h1><p class="lead">{intro}</p></div><aside class="quick-answer"><span>Quick answer</span><p>{quickAnswer}</p></aside></header>
 
+    <nav class="jump-links" aria-label="On this page">{sections.map((section, index) => <a href={`#step-${index + 1}`}>{section.heading}</a>)}<a href="#checklist">Checklist</a><a href="#questions">FAQs</a></nav>
     <div class="layout">
       <article>
-        {sections.map((section, index) => <section class="content-section"><p class="section-no">0{index + 1}</p><h2>{section.heading}</h2><p>{section.body}</p>{section.bullets && <ul class="detail-list">{section.bullets.map((item) => <li>{item}</li>)}</ul>}</section>)}
+        {sections.map((section, index) => <section class="content-section" id={`step-${index + 1}`}><p class="section-no">0{index + 1}</p><h2>{section.heading}</h2><p>{section.body}</p>{section.bullets && <ul class="detail-list">{section.bullets.map((item) => <li>{item}</li>)}</ul>}</section>)}
 
-        <section class="checklist-block"><p class="eyebrow">Practical checklist</p><h2>The short version to keep nearby.</h2><ul>{checklist.map((item) => <li>{item}</li>)}</ul></section>
+        <section class="checklist-block" id="checklist"><p class="eyebrow">Practical checklist</p><h2>The short version to keep nearby.</h2><ul>{checklist.map((item) => <li>{item}</li>)}</ul></section>
         <section class="mistakes-block"><p class="eyebrow">Common mistakes</p><h2>What usually makes this harder than it needs to be.</h2><ul>{mistakes.map((item) => <li>{item}</li>)}</ul></section>
 
         <section class="product-bridge"><p class="eyebrow">Want the planning pages too?</p><h2>{relatedLabel}</h2><p>This article gives you the method. The related Hummingbird guide shows the printable or digital planning format built around the same job.</p><div class="actions"><a class="button" href={`/digital-downloads/${relatedDownload}/`}>See the related printable guide</a><a class="button secondary" href={ETSY_SHOP} target="_blank" rel="noopener noreferrer">Shop Hummingbird on Etsy</a></div></section>
 
-        <section class="faq"><p class="eyebrow">Common questions</p><h2>Quick answers before you start.</h2>{faqs.map((faq) => <details><summary>{faq.q}</summary><p>{faq.a}</p></details>)}</section>
+        <section class="faq" id="questions"><p class="eyebrow">Common questions</p><h2>Quick answers before you start.</h2>{faqs.map((faq) => <details><summary>{faq.q}</summary><p>{faq.a}</p></details>)}</section>
       </article>
 
       <aside class="side"><div class="side-card"><p class="eyebrow">Related reading</p><h3>Keep the system connected.</h3><p>Use the deeper guides when you need the next piece of the plan.</p>{relatedGuides.map((item) => <a class="side-link" href={item.href}>{item.label} →</a>)}<a class="side-link" href="/guides/">Browse all practical guides →</a></div></aside>

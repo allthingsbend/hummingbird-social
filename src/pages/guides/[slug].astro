@@ -67,10 +67,11 @@ const breadcrumbSchema = {
       </aside>
     </header>
 
+    <nav class="jump-links" aria-label="On this page">{guide.sections.map((section, index) => <a href={`#step-${index + 1}`}>{section.heading}</a>)}<a href="#checklist">Checklist</a><a href="#questions">FAQs</a></nav>
     <div class="layout">
       <article>
         {guide.sections.map((section, index) => (
-          <section class="content-section">
+          <section class="content-section" id={`step-${index + 1}`}>
             <p class="section-no">0{index + 1}</p>
             <h2>{section.heading}</h2>
             <p>{section.body}</p>
@@ -78,7 +79,7 @@ const breadcrumbSchema = {
           </section>
         ))}
 
-        <section class="checklist-block">
+        <section class="checklist-block" id="checklist">
           <p class="eyebrow">Practical checklist</p>
           <h2>Keep this part simple.</h2>
           <ul>{guide.checklist.map((item) => <li>{item}</li>)}</ul>
@@ -100,7 +101,7 @@ const breadcrumbSchema = {
           </div>
         </section>
 
-        <section class="faq">
+        <section class="faq" id="questions">
           <p class="eyebrow">Common questions</p>
           <h2>Quick answers before you start.</h2>
           {guide.faqs.map((faq) => <details><summary>{faq.q}</summary><p>{faq.a}</p></details>)}

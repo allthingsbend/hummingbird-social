@@ -116,16 +116,19 @@ export const supportGuides: SupportGuide[] = [
     category: 'hosting',
     title: 'Dinner Party Timeline | 48 Hours to Guests Arriving',
     description: 'A practical dinner party timeline covering what to prep 48 hours before, the day before, the morning of and in the final hour before guests arrive.',
-    h1: 'A dinner party timeline that keeps the final hour for finishing, not starting.',
+    h1: 'Dinner party timeline: what to do 48 hours before guests arrive.',
     intro: 'A calm dinner party is usually won before the guests arrive. The trick is moving every task that can be done early out of the final two hours, leaving only cooking steps that truly need to happen close to serving.',
     quickAnswer: 'Shop and make stable components 24–48 hours ahead, set the table and finish cold prep the morning of, then reserve the final hour for reheating, garnishing, lighting and welcoming guests.',
     relatedDownload: 'dinner-party-planner-printable',
     relatedLabel: 'Dinner Party Planner Printable',
     sections: [
+      { heading: 'Start with arrival time and dinner time', body: 'Write down two separate times: when guests arrive and when you want to serve dinner. A 30-minute drinks window gives late arrivals some room and lets you finish a main dish without making everyone wait at the table. Work backward from serving time using the actual recipe timings, including preheating and resting.' },
       { heading: '48 hours before', body: 'Finalize the guest count, menu and grocery list. Buy everything except highly perishable items if needed. Make sauces, dressings, desserts or braises that improve after resting.' },
       { heading: 'The day before', body: 'Prep vegetables, marinate proteins, chill drinks, pull out serving dishes and set any table elements that will not get in the way of normal household use.' },
       { heading: 'Morning and afternoon of the party', body: 'Do the work that creates clutter now: chop, wash, assemble cold dishes, clear counters, empty the dishwasher and confirm oven temperatures and cook times.' },
-      { heading: 'The final hour', body: 'Avoid any recipe step that requires a new cutting board or major cleanup. Focus on cooking, reheating, garnishing and atmosphere.', bullets: ['T - 60: start final cooking', 'T - 40: set out drinks and water', 'T - 25: warm serving dishes if needed', 'T - 15: light candles, music on, kitchen reset', 'T - 5: pour yourself something and stop cleaning'] }
+      { heading: 'The final hour', body: 'Avoid any recipe step that requires a new cutting board or major cleanup. Focus on cooking, reheating, garnishing and atmosphere.', bullets: ['T - 60: start final cooking', 'T - 40: set out drinks and water', 'T - 25: warm serving dishes if needed', 'T - 15: light candles, music on, kitchen reset', 'T - 5: put away the prep list and welcome guests'] },
+      { heading: 'Example: guests at 6:30 p.m., dinner at 7 p.m.', body: 'This sample works for a make-ahead dessert, a salad dressed at the last minute and a main with a 45-minute cook plus 15-minute rest. Adjust every cooking step to your own recipe; the times are a planning example.', bullets: ['4:30 p.m.: set the table, lay out serving utensils and clear the sink', '5:30 p.m.: preheat the oven and prepare the main', '6 p.m.: start the main; finish the drinks station', '6:15 p.m.: put out appetizers and water; set music and lighting', '6:30 p.m.: guests arrive; serve drinks', '6:45 p.m.: rest the main; dress the salad and finish sides', '7 p.m.: serve dinner; leave dessert ready for later'] },
+      { heading: 'If you are running late', body: 'Drop an optional garnish or extra side before moving dinner much later. Put out a ready-to-eat appetizer, tell guests the updated plan and finish one task at a time. A simple menu served calmly works better than several unfinished dishes.' }
     ],
     checklist: ['Menu finalized', 'Groceries purchased', 'Serving dishes assigned', 'Drinks chilled', 'Table set', 'Dishwasher empty', 'Trash emptied', 'Final-hour cooking list visible'],
     mistakes: ['Choosing multiple dishes that need the oven at different temperatures', 'Leaving dessert to make after guests arrive', 'Using every burner at the same time', 'Forgetting serving utensils', 'Cleaning while the first guests are at the door'],
