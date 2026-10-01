@@ -91,6 +91,8 @@ const breadcrumbSchema = {
           <ul>{guide.mistakes.map((item) => <li>{item}</li>)}</ul>
         </section>
 
+        {guide.relatedGuides && <section class="checklist-block"><p class="eyebrow">Your next step</p><h2>Put the rest of the plan together.</h2><div class="jump-links">{guide.relatedGuides.map((item) => <a href={item.href}>{item.label} →</a>)}</div></section>}
+
         <section class="product-bridge">
           <p class="eyebrow">Want it organized on paper?</p>
           <h2>{guide.relatedLabel}</h2>

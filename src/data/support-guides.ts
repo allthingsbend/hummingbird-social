@@ -11,58 +11,267 @@ export type SupportGuide = {
   sections: { heading: string; body: string; bullets?: string[] }[];
   checklist: string[];
   mistakes: string[];
+  relatedGuides?: { href: string; label: string }[];
   faqs: { q: string; a: string }[];
 };
 
 export const supportGuides: SupportGuide[] = [
   {
-    slug: 'moving-checklist-8-weeks',
-    category: 'moving',
-    title: '8-Week Moving Checklist | What to Do Before Moving Day',
-    description: 'A practical 8-week moving checklist with a week-by-week timeline for decluttering, packing, utilities, address changes, cleaning and move-day prep.',
-    h1: 'An 8-week moving checklist that keeps the last week from becoming chaos.',
-    intro: 'The easiest move is the one where administrative tasks, packing and cleaning do not all land in the same three days. This timeline works backward from moving day and separates decisions you can make early from tasks that truly need to wait.',
-    quickAnswer: 'Start with decisions and paperwork 6–8 weeks out, pack low-use rooms 3–5 weeks out, confirm services and address changes 1–2 weeks out, then protect the final 48 hours for essentials, cleaning and actual moving.',
-    relatedDownload: 'moving-planner-printable',
-    relatedLabel: 'Moving Planner Printable',
-    sections: [
-      { heading: '6–8 weeks before: reduce what you are moving', body: 'Before buying boxes, decide what is worth transporting. Moving is one of the few times every object has to justify the effort of packing, carrying and finding a new home.', bullets: ['Walk room by room and mark donate, sell, recycle and keep', 'Measure large furniture against the new space', 'Create one moving folder for quotes, receipts and confirmations', 'Reserve movers, truck or helpers if your date is fixed', 'Start using frozen and pantry food you do not want to move'] },
-      { heading: '3–5 weeks before: pack by frequency of use', body: 'Pack the things you use least first rather than packing an entire room just because it is convenient. Seasonal clothing, books, decor, guest-room items and extra kitchenware can usually go early without affecting daily life.', bullets: ['Label every box with room and short contents', 'Keep hardware from disassembled furniture in labeled bags', 'Photograph cable setups before unplugging electronics', 'Create a running list of boxes that contain valuables or fragile items'] },
-      { heading: '1–2 weeks before: handle the admin work', body: 'This is when service transfers and address updates become real. Put confirmation numbers and activation dates in one place so you are not searching email on moving day.', bullets: ['Electric, gas and water transfer dates', 'Internet installation or transfer', 'USPS mail forwarding', 'Insurance address change', 'Bank, employer, subscriptions and delivery accounts', 'Medication refills and pet records if needed'] },
-      { heading: 'Final 48 hours: stop packing normal life', body: 'The last two days should be about moving, not searching for toothpaste, chargers or clean clothes. Pack a first-night bag for each person and one clearly marked household essentials box.' }
+    "slug": "moving-checklist-8-weeks",
+    "relatedGuides": [{"href": "/guides/how-to-label-moving-boxes/", "label": "How to label moving boxes"}, {"href": "/guides/first-night-box-moving-checklist/", "label": "What to put in a first-night box"}],
+    "category": "moving",
+    "title": "8-Week Moving Checklist | Week-by-Week Packing Timeline",
+    "description": "Use this eight-week moving checklist to plan packing, utilities, address changes and moving day, with a two-week catch-up plan and essentials list.",
+    "h1": "8-week moving checklist: a week-by-week plan for a calmer move.",
+    "intro": "Use moving day as your anchor, then work backward. This checklist separates bookings, packing and household admin so you can see what needs a decision now and what can wait. If you have less than eight weeks, start with the catch-up plan below.",
+    "quickAnswer": "Confirm your date and transport first. Declutter before packing, schedule service transfers before the final week, and keep documents, medication and first-night supplies with you.",
+    "relatedDownload": "moving-planner-printable",
+    "relatedLabel": "Moving Planner Printable",
+    "sections": [
+        {
+            "heading": "Week 8: confirm the date and the moving method",
+            "body": "Write down the dates you can access the new home and must leave the old one. Choose movers, a rental truck or a self-move based on the actual load and available help. For an uncertain closing date, ask providers how changes affect your reservation before booking.",
+            "bullets": [
+                "Create one folder for estimates, contact numbers and confirmations",
+                "Get written moving estimates and compare what is included",
+                "Check stairs, lifts, parking and loading access at both homes",
+                "Measure doorways and large furniture",
+                "Set a budget for transport, supplies, cleaning and overlapping services"
+            ]
+        },
+        {
+            "heading": "Week 7: sort before you buy boxes",
+            "body": "Work through one room at a time and make keep, donate, sell and disposal piles. Start with closets, storage areas and duplicate kitchenware. A smaller load means fewer boxes to carry and unpack.",
+            "bullets": [
+                "Schedule collection or drop-off for donations",
+                "List larger items early so collection is not left to moving day",
+                "Ask the mover which items they cannot transport",
+                "Use up food you would rather not move"
+            ]
+        },
+        {
+            "heading": "Week 6: make a simple inventory",
+            "body": "List large furniture and give boxes a destination room before packing. Photograph electronics and furniture condition where useful. Keep the inventory in your moving folder rather than creating separate lists nobody can reconcile.",
+            "bullets": [
+                "Gather boxes, tape, labels, padding and a marker",
+                "Use small boxes for books and other heavy items",
+                "Create a room-name key that matches the new home",
+                "Keep valuables and sensitive documents separate"
+            ]
+        },
+        {
+            "heading": "Week 5: pack the things you will not miss",
+            "body": "Begin with seasonal decor, spare linens, books and guest-room items. Label room, contents and unpacking priority on the top and at least one side. Leave a small set of everyday supplies in use.",
+            "bullets": [
+                "Bag and label furniture hardware; note which piece it belongs to",
+                "Photograph cable connections before dismantling them",
+                "Mark fragile boxes clearly and pack them securely",
+                "Keep a separate box of items to return or donate"
+            ]
+        },
+        {
+            "heading": "Week 4: schedule transfers and practical help",
+            "body": "Contact utility and internet providers to arrange dates that suit your actual move. Confirm appointments, equipment-return requirements and any access the installer needs. Put the answers in one place.",
+            "bullets": [
+                "Schedule electricity, gas and water service as applicable",
+                "Confirm internet activation and router return instructions",
+                "Arrange childcare or pet care for the busiest moving hours",
+                "Confirm building or parking arrangements",
+                "Reserve time for cleaning the old home"
+            ]
+        },
+        {
+            "heading": "Week 3: update addresses and pack a little each day",
+            "body": "Make an address-change list before sending updates. Include mail forwarding, employer, banks, insurance, subscriptions and delivery accounts. Use the appropriate provider process and effective date rather than assuming one change updates every account.",
+            "bullets": [
+                "Update shopping defaults before placing orders for the new home",
+                "Record old-service end dates and new-service start dates",
+                "Pack decorative items and extra kitchenware",
+                "Keep important correspondence and confirmations accessible"
+            ]
+        },
+        {
+            "heading": "Week 2: confirm people, times and access",
+            "body": "Reconfirm your transport, helpers and access arrangements. Decide where essentials will travel and who is responsible for keys. Give helpers the destination room names so boxes land in the right places.",
+            "bullets": [
+                "Confirm arrival windows and contact numbers",
+                "Plan bed assembly and the first meal",
+                "Arrange lawful disposal of items your mover will not take",
+                "Keep one cleaning kit unpacked"
+            ]
+        },
+        {
+            "heading": "Final week and moving day",
+            "body": "Finish ordinary packing before moving day where possible. Carry essentials yourself and do a last walk-through of cupboards, drawers, sheds and storage areas. At the new home, prioritize beds, bathroom basics and a clear walking route.",
+            "bullets": [
+                "Pack an overnight bag for each person",
+                "Carry keys, ID, documents, medication, chargers and valuables",
+                "Record meter readings or condition photos where useful",
+                "Check that every room is empty before leaving",
+                "Confirm doors and windows are secured and follow the agreed key handover"
+            ]
+        },
+        {
+            "heading": "Only two weeks left? Use this catch-up order",
+            "body": "Focus on tasks that depend on other people first, then pack around your daily needs. Skip elaborate inventories if a room-and-priority label will do the job.",
+            "bullets": [
+                "Today: confirm transport, access dates and utility appointments",
+                "Next two days: sort obvious donations and gather supplies",
+                "Days 3–9: pack low-use items, then room by room",
+                "Days 10–12: confirm logistics, address changes and cleaning",
+                "Final two days: pack essentials separately and finish only the daily-use items"
+            ]
+        }
     ],
-    checklist: ['First-night clothing and toiletries', 'Chargers and basic electronics', 'Medications', 'Paper towels, trash bags and cleaning spray', 'Coffee or breakfast basics', 'Basic tools and scissors', 'Important documents', 'Keys, wallet and moving paperwork'],
-    mistakes: ['Packing every frequently used item too early', 'Leaving utilities and internet until moving day', 'Using vague box labels like “misc.”', 'Filling large boxes with heavy books', 'Forgetting to reserve cleaning time at the old home'],
-    faqs: [
-      { q: 'When should I start packing for a move?', a: 'For most homes, start low-use items about 3–5 weeks before the move and leave everyday essentials until the final week.' },
-      { q: 'What should I do first when preparing to move?', a: 'Start by decluttering, confirming the move date, reserving transportation or help and creating one place for all moving paperwork.' },
-      { q: 'What should not go in the moving truck?', a: 'Keep identification, medication, valuables, important documents, keys and anything you will need immediately with you.' }
+    "checklist": [
+        "Move and access dates confirmed",
+        "Transport reserved",
+        "Service start and end dates recorded",
+        "Address-change list completed",
+        "Boxes labeled for new rooms",
+        "First-night box separated",
+        "Personal overnight bags ready",
+        "Cleaning and key handover arranged"
+    ],
+    "mistakes": [
+        "Booking around an unconfirmed access date without checking change terms",
+        "Packing essentials into the main load",
+        "Stopping services before you finish cleaning",
+        "Leaving donation disposal until moving day",
+        "Labeling boxes only with the old room name"
+    ],
+    "faqs": [
+        {
+            "q": "When should I start packing for a move?",
+            "a": "Start with low-use items several weeks ahead if you have the time. Keep everyday essentials available, then pack them in the final days. The order matters more than a rigid date."
+        },
+        {
+            "q": "What if I only have two weeks to move?",
+            "a": "Confirm transport, access and service appointments immediately. Gather supplies, remove obvious clutter and pack low-use items first. Use the two-week catch-up sequence above."
+        },
+        {
+            "q": "What should go in a first-night moving box?",
+            "a": "Bedding, towels, toilet paper, soap, basic cleaning supplies, a few utensils, scissors and simple breakfast items. Keep each person’s medication, documents and overnight bag with them."
+        },
+        {
+            "q": "When should utilities be transferred?",
+            "a": "Schedule transfers in advance, using the dates you have access to each home. Confirm provider requirements and allow for any period when both homes need service."
+        }
     ]
-  },
+},
   {
-    slug: 'how-to-label-moving-boxes',
-    category: 'moving',
-    title: 'How to Label Moving Boxes | Simple Room + Priority System',
-    description: 'A simple moving box labeling system using room, contents and priority so boxes are easier to load, unload and unpack without over-organizing.',
-    h1: 'How to label moving boxes so you know where they go and which ones to open first.',
-    intro: 'A useful label answers three questions in a few seconds: where does this box go, what is roughly inside and how soon do I need it? Anything more elaborate can become harder to maintain than it is worth.',
-    quickAnswer: 'Write the destination room, a 3–5 word contents summary and a priority such as OPEN FIRST, NORMAL or STORAGE on the top and at least one side of every box.',
-    relatedDownload: 'moving-planner-printable',
-    relatedLabel: 'Moving Planner Printable',
-    sections: [
-      { heading: 'Use a three-part label', body: 'Keep the system readable from across a room. A label like “KITCHEN — pots + pans — NORMAL” is more useful than a box number with no context.', bullets: ['Destination room', 'Short contents description', 'Priority level'] },
-      { heading: 'Label the top and one side', body: 'Top-only labels disappear as soon as boxes are stacked. Put the same room name on one side so movers or friends can route boxes without rearranging the pile.' },
-      { heading: 'Use OPEN FIRST sparingly', body: 'If half the boxes are marked urgent, none of them are. Reserve the label for things you are likely to need in the first 24 hours: bedding, coffee gear, basic cookware, bathroom supplies, baby items or work equipment.' },
-      { heading: 'Add box numbers only when they solve a real problem', body: 'Numbering is helpful for long-distance moves, storage units or detailed inventories. For a short local move, room + contents + priority is often faster and perfectly adequate.' }
+    "slug": "how-to-label-moving-boxes",
+    "relatedGuides": [{"href": "/guides/moving-checklist-8-weeks/", "label": "The eight-week moving checklist"}, {"href": "/guides/first-night-box-moving-checklist/", "label": "Your first-night essentials box"}],
+    "category": "moving",
+    "title": "How to Label Moving Boxes | Examples & Room Priority System",
+    "description": "Label moving boxes with destination room, contents and unpacking priority. Includes sample labels, a room-color key and a simple numbered inventory.",
+    "h1": "How to label moving boxes: a simple room, contents and priority system.",
+    "intro": "A good label lets someone route a box without asking you a question. Use the same room names throughout the move, add a short contents summary and make the first-night boxes easy to spot.",
+    "quickAnswer": "Write destination room, short contents and priority on the top and at least one side. Add a box number only when you also have a matching inventory.",
+    "relatedDownload": "moving-planner-printable",
+    "relatedLabel": "Moving Planner Printable",
+    "sections": [
+        {
+            "heading": "Write a three-part label",
+            "body": "Use large, readable letters and the room in the new home. Add enough detail to avoid opening five boxes to find one item.",
+            "bullets": [
+                "KITCHEN | everyday plates + bowls | NORMAL",
+                "MAIN BEDROOM | sheets + pillows | OPEN FIRST",
+                "BATHROOM | towels + soap | OPEN FIRST",
+                "STORAGE | winter decorations | STORAGE"
+            ]
+        },
+        {
+            "heading": "Put the label where it survives stacking",
+            "body": "Label the top and at least one side before a box joins the pile. Two adjacent sides help when boxes may face different directions. Keep the label away from seams and handles that will be covered or damaged.",
+            "bullets": [
+                "Write on a flat area with a dark marker",
+                "Repeat the destination room on the side",
+                "Use the same label wording in every place",
+                "Remove or cover old room names on reused boxes"
+            ]
+        },
+        {
+            "heading": "Use three priorities, not ten",
+            "body": "OPEN FIRST means useful in the first day. NORMAL means unpack after essentials. STORAGE means it can stay boxed until daily living is working. Marking everything urgent defeats the purpose.",
+            "bullets": [
+                "OPEN FIRST: bedding, towels and basic kitchen supplies",
+                "NORMAL: everyday clothing, cookware and books",
+                "STORAGE: seasonal decor and archived household items"
+            ]
+        },
+        {
+            "heading": "Use colors as a backup to written room names",
+            "body": "A color key helps helpers scan a stack, but the text still does the work. Make one key and post it near the entrance of the new home. Use room names everyone can recognize.",
+            "bullets": [
+                "Blue = Kitchen",
+                "Green = Main bedroom",
+                "Orange = Living room",
+                "Purple = Bathroom",
+                "Write the room name too; do not rely on color alone"
+            ]
+        },
+        {
+            "heading": "Add numbers when you need an inventory",
+            "body": "For storage or a larger move, assign a unique number and record its room and contents in one note. Do not number a box without updating the log. Keep sensitive details out of the exterior label.",
+            "bullets": [
+                "K-01 | Kitchen | mugs and coffee gear | OPEN FIRST",
+                "K-02 | Kitchen | serving platters | NORMAL",
+                "B-01 | Main bedroom | spare blankets | NORMAL",
+                "Check boxes against the list at loading and unloading"
+            ]
+        },
+        {
+            "heading": "Mark handling instructions separately",
+            "body": "FRAGILE, THIS SIDE UP and HEAVY should stand out from the room label. These notes help handlers but do not replace appropriate padding or manageable box weights. Put heavier items in smaller boxes and avoid overfilling.",
+            "bullets": [
+                "Place fragile notes where they are visible when stacked",
+                "Use arrows on the sides for orientation",
+                "Keep valuables and private documents with you",
+                "Bag furniture hardware and label the matching furniture name"
+            ]
+        },
+        {
+            "heading": "Give helpers a one-minute briefing",
+            "body": "Tell everyone to route boxes by the written destination room and keep OPEN FIRST boxes accessible. Put room signs on doors if the layout is unfamiliar. Choose one person to answer questions so instructions stay consistent."
+        }
     ],
-    checklist: ['Room name in large letters', 'Short contents summary', 'Priority mark', 'Fragile note when relevant', 'Top label', 'Side label'],
-    mistakes: ['Writing only the room name', 'Putting labels on just the top', 'Using color alone with no text', 'Making every box high priority', 'Writing a full inventory on the cardboard instead of keeping it brief'],
-    faqs: [
-      { q: 'What is the best way to label boxes for moving?', a: 'Use the destination room, a brief contents description and a priority level on the top and at least one side.' },
-      { q: 'Should I number moving boxes?', a: 'Numbering can help with detailed inventories or long-distance moves, but it is optional for simpler local moves.' },
-      { q: 'Should I use colored tape for each room?', a: 'It can help visually, but still write the room name because colors are easy to forget and can be hard to distinguish.' }
+    "checklist": [
+        "Destination room in large letters",
+        "Short contents summary",
+        "OPEN FIRST, NORMAL or STORAGE",
+        "Top and side labels",
+        "Old labels removed",
+        "Handling notes where needed",
+        "Color key posted if used",
+        "Inventory updated if numbered"
+    ],
+    "mistakes": [
+        "Using “miscellaneous” as the only description",
+        "Using colors with no written room name",
+        "Reusing boxes with conflicting labels",
+        "Writing private details on the exterior",
+        "Numbering boxes without recording their contents"
+    ],
+    "faqs": [
+        {
+            "q": "Should I label the top or side of moving boxes?",
+            "a": "Label both. A top label helps during packing; a side label remains visible when boxes are stacked."
+        },
+        {
+            "q": "What does OPEN FIRST mean?",
+            "a": "Reserve it for supplies you expect to need in the first 24 hours, such as bedding, towels and basic kitchenware. Personal essentials should travel with you."
+        },
+        {
+            "q": "Do I need to number every moving box?",
+            "a": "No. Room, contents and priority usually suffice for a simple local move. Numbers help when you need a storage or moving inventory."
+        },
+        {
+            "q": "How should I label boxes for storage?",
+            "a": "Use a short contents summary, a unique box number if you have an inventory, and the intended room. Put the inventory somewhere you can access without entering the storage unit."
+        }
     ]
-  },
+},
   {
     slug: 'group-trip-budget-split',
     category: 'travel',
@@ -88,29 +297,121 @@ export const supportGuides: SupportGuide[] = [
     ]
   },
   {
-    slug: 'group-trip-itinerary-planning',
-    category: 'travel',
-    title: 'How to Plan a Group Trip Itinerary | Flexible Schedule Template',
-    description: 'Build a group trip itinerary that balances reservations, travel time and free time using anchor plans, optional blocks and clear meeting details.',
-    h1: 'How to plan a group trip itinerary people will actually want to follow.',
-    intro: 'The worst group itinerary is either completely empty or scheduled down to the minute. A better plan uses a few fixed anchors, leaves breathing room and makes it obvious where people need to be when something is truly time-sensitive.',
-    quickAnswer: 'Build each day around one or two anchor plans, add realistic travel and reset time, then keep the rest as optional blocks rather than mandatory appointments.',
-    relatedDownload: 'group-trip-planner-printable',
-    relatedLabel: 'Group Trip Planner Printable',
-    sections: [
-      { heading: 'Start with the non-negotiable anchors', body: 'Flights, ticketed events, dinner reservations and tours go on the itinerary first. These are the pieces that can create real consequences if the group is late.' },
-      { heading: 'Add travel time before adding more activities', body: 'A 2 p.m. reservation is not a 2 p.m. commitment if you need 45 minutes to get there, park and meet the group. Put departure time on the plan, not just arrival time.' },
-      { heading: 'Limit most days to two anchor activities', body: 'A morning anchor and an evening anchor often leave enough space for lunch, naps, shopping, weather changes or people splitting up for a few hours.', bullets: ['Morning anchor', 'Flexible midday block', 'Reset or travel time', 'Evening anchor', 'Optional late-night plan'] },
-      { heading: 'Put addresses and booking names where people can see them', body: 'The useful itinerary is not just a list of activity names. Include the address, reservation name, confirmation note and any “meet here” detail that prevents a 15-message group chat.' }
+    "slug": "group-trip-itinerary-planning",
+    "relatedGuides": [{"href": "/guides/group-trip-packing-list/", "label": "Personal and shared packing checklist"}, {"href": "/guides/group-trip-budget-split/", "label": "How to split shared trip expenses"}],
+    "category": "travel",
+    "title": "Group Trip Itinerary Planning | Sample Weekend & Template",
+    "description": "Plan a group trip itinerary with a sample three-day weekend, realistic travel buffers, optional activities and a copyable reservation template.",
+    "h1": "How to plan a group trip itinerary, with a sample weekend schedule.",
+    "intro": "The best shared itinerary makes the fixed details easy to find and leaves room for people to do different things. Start with arrival, accommodation and reservations, then add optional ideas around them.",
+    "quickAnswer": "Choose one or two fixed plans each day, include departure and meeting details, and clearly label everything else optional. Share one current itinerary with the whole group.",
+    "relatedDownload": "group-trip-planner-printable",
+    "relatedLabel": "Group Trip Planner Printable",
+    "sections": [
+        {
+            "heading": "Ask five questions before booking activities",
+            "body": "Collect the answers in one shared note. Planning around assumptions creates more rework than spending a few minutes on everyone’s practical limits.",
+            "bullets": [
+                "When does each person arrive and leave?",
+                "What is the agreed activity budget?",
+                "What are the must-do plans and definite no-thanks?",
+                "Does anyone need step-free routes, shorter walks or extra rest time?",
+                "Does the group want most meals together or only a few?"
+            ]
+        },
+        {
+            "heading": "Put the fixed commitments in first",
+            "body": "Add arrival and departure details, accommodation check-in, ticketed events and reservations. Give each commitment an owner who can update the group if it changes. Avoid placing plans before everyone can reasonably arrive.",
+            "bullets": [
+                "Arrival window and transport to accommodation",
+                "Check-in and luggage-storage arrangements",
+                "Reservation time, address and booking name",
+                "Departure time and airport or station plans"
+            ]
+        },
+        {
+            "heading": "Write departure times, not just reservation times",
+            "body": "Work backward from the time you need to be there. Include the actual journey, parking or walking, check-in and a buffer suitable for the plan. Treat this as a planning estimate, then check routes closer to travel.",
+            "bullets": [
+                "Example: 2 p.m. tour start",
+                "Allow 25 minutes for the journey",
+                "Allow 15 minutes for parking and walking",
+                "Allow 10 minutes for checking in",
+                "Leave by 1:10 p.m.; adjust if the venue gives different instructions"
+            ]
+        },
+        {
+            "heading": "Example: a three-day friends weekend",
+            "body": "This is a flexible structure rather than a destination-specific schedule. Replace the placeholders with confirmed times and keep travel days lighter.",
+            "bullets": [
+                "Friday afternoon: staggered arrivals and check-in",
+                "Friday evening: one welcome dinner; optional drinks afterward",
+                "Saturday morning: one booked activity with a clear departure time",
+                "Saturday midday: lunch and free time in smaller groups",
+                "Saturday late afternoon: return to lodging and reset",
+                "Saturday evening: dinner reservation; optional late-night plan",
+                "Sunday morning: easy breakfast and packing",
+                "Sunday midday: check-out and individual departures"
+            ]
+        },
+        {
+            "heading": "Copy this format for each booked plan",
+            "body": "Keep the same fields so a traveler can find the address or booking name quickly. Use a shared note or document with offline access where available. Keep private booking codes out of publicly shared versions.",
+            "bullets": [
+                "Plan: [activity or meal]",
+                "Status: [confirmed / optional / awaiting booking]",
+                "Date and time: [date, start time and expected finish]",
+                "Leave by: [time] | Meet at: [location]",
+                "Address: [full address] | Booking name: [name]",
+                "Participants: [who is going] | Owner: [person managing it]",
+                "Cost notes: [included / paid separately / still to confirm]"
+            ]
+        },
+        {
+            "heading": "Give optional plans a real opt-out",
+            "body": "Label flexible blocks clearly and choose a meeting point for the next shared plan. People should be able to skip an activity without losing access to the rest of the itinerary. Leave space for meals, slower mornings and unexpected delays."
+        },
+        {
+            "heading": "Prepare one fallback and one update channel",
+            "body": "For a weather-dependent activity, record an alternative that does not require a last-minute scramble. Choose who will update the shared document and use the group chat to announce changes rather than keeping a second unofficial schedule."
+        }
     ],
-    checklist: ['Arrival and departure details', 'One or two anchor plans per day', 'Departure time for reservations', 'Addresses', 'Reservation names', 'Flexible blocks', 'Bad-weather fallback when relevant'],
-    mistakes: ['Scheduling every hour', 'Ignoring travel and parking time', 'Making optional plans look mandatory', 'Leaving reservation details in one person’s email', 'Planning every meal as a group event'],
-    faqs: [
-      { q: 'How much should you plan on a group trip?', a: 'One or two anchor activities per day is a good starting point, with flexible time around them.' },
-      { q: 'What should a group trip itinerary include?', a: 'Include arrival details, fixed reservations, departure times, addresses, confirmation information and flexible or optional blocks.' },
-      { q: 'Should every meal be planned on a group vacation?', a: 'Not necessarily. A few group meals can be anchors while breakfasts, lunches or some dinners remain flexible.' }
+    "checklist": [
+        "Arrival windows collected",
+        "Check-in and check-out confirmed",
+        "Fixed bookings labeled",
+        "Departure and meeting times included",
+        "Addresses and booking names recorded",
+        "Optional blocks clearly marked",
+        "Plan owner assigned",
+        "Fallback and update channel chosen"
+    ],
+    "mistakes": [
+        "Scheduling before late arrivals can join",
+        "Treating an optional plan as a group obligation",
+        "Forgetting transit and check-in time",
+        "Keeping the only copy in one person’s inbox",
+        "Copying booking codes into public documents"
+    ],
+    "faqs": [
+        {
+            "q": "How many activities should I plan per day?",
+            "a": "One or two fixed plans is a useful starting point for a relaxed group trip. Add travel and meal time before deciding whether there is room for more."
+        },
+        {
+            "q": "What should a group itinerary include?",
+            "a": "Arrival and departure windows, accommodation details, confirmed reservations, departure times, meeting points, addresses, booking names and optional blocks."
+        },
+        {
+            "q": "How do I handle different interests in a group trip?",
+            "a": "Agree on a few shared anchors and keep other blocks optional. Include a clear next meeting point so smaller groups can reconnect."
+        },
+        {
+            "q": "Who should update the itinerary?",
+            "a": "Choose one editor or a clearly agreed editing process. Each booking should have an owner who reports changes to that person."
+        }
     ]
-  },
+},
   {
     slug: 'dinner-party-timeline',
     category: 'hosting',
@@ -139,29 +440,128 @@ export const supportGuides: SupportGuide[] = [
     ]
   },
   {
-    slug: 'dinner-party-menu-planning',
-    category: 'hosting',
-    title: 'How to Plan a Dinner Party Menu | Practical Host Formula',
-    description: 'Plan a dinner party menu around oven space, make-ahead dishes, dietary needs and realistic cooking capacity with a simple host-friendly formula.',
-    h1: 'How to plan a dinner party menu your kitchen can actually execute.',
-    intro: 'A menu can look perfect on paper and still fail when three dishes need the oven at three temperatures, the host is sautéing during cocktails and every plate requires last-second assembly. Plan around your kitchen, not just the recipes.',
-    quickAnswer: 'Choose one centerpiece dish, one make-ahead side, one low-maintenance vegetable or salad and a dessert that is already finished before guests arrive.',
-    relatedDownload: 'dinner-party-planner-printable',
-    relatedLabel: 'Dinner Party Planner Printable',
-    sections: [
-      { heading: 'Start with the bottleneck: oven, burners or attention', body: 'Identify the thing your kitchen has least of. In a small kitchen it may be oven racks; with a complicated main it may be your attention. Do not build the rest of the menu around the same bottleneck.' },
-      { heading: 'Use the 1 + 1 + 1 + 1 formula', body: 'A reliable structure is one main, one substantial side, one fresh or simple vegetable and one dessert. Add bread, olives or a purchased appetizer if people need something on arrival.', bullets: ['1 centerpiece main', '1 make-ahead or low-touch side', '1 salad or simple vegetable', '1 fully finished dessert'] },
-      { heading: 'Make at least half the menu ahead', body: 'A component counts as make-ahead if it is fully finished or only needs a simple reheat. Chopping ingredients early helps, but it still leaves cooking work for later.' },
-      { heading: 'Write the menu in cooking order', body: 'List each dish with oven temperature, burner needs and final active minutes. Conflicts become obvious before you buy groceries.' }
+    "slug": "dinner-party-menu-planning",
+    "relatedGuides": [{"href": "/guides/dinner-party-timeline/", "label": "Build your 48-hour dinner timeline"}, {"href": "/guides/christmas-hosting-checklist/", "label": "Plan a holiday meal for guests"}],
+    "category": "hosting",
+    "title": "How to Plan a Dinner Party Menu | 3 Sample Menus & Prep Plan",
+    "description": "Build an easy dinner party menu with three sample menus, a kitchen-capacity checklist, make-ahead tasks and a recipe timing worksheet.",
+    "h1": "How to plan a dinner party menu your kitchen can actually handle.",
+    "intro": "Plan around what you can cook and serve comfortably, not just which recipes look appealing. One main, one supporting side, something fresh and a finished dessert can make a generous meal without keeping you in the kitchen all evening.",
+    "quickAnswer": "Choose one main, one easy side, one salad or vegetable and a dessert prepared ahead. Check dietary needs, oven conflicts and serving space before shopping.",
+    "relatedDownload": "dinner-party-planner-printable",
+    "relatedLabel": "Dinner Party Planner Printable",
+    "sections": [
+        {
+            "heading": "Check the guest list before choosing recipes",
+            "body": "Confirm headcount, preferences and dietary needs first. Ask guests what works for them rather than guessing substitutions. Choose a menu where guests can enjoy a complete meal without relying on one token side dish.",
+            "bullets": [
+                "How many people are eating?",
+                "Which ingredients need to be avoided?",
+                "Are there vegetarian or vegan guests?",
+                "Will you serve at the table, buffet-style or family-style?",
+                "How much fridge, oven and counter space is available?"
+            ]
+        },
+        {
+            "heading": "Use a four-part menu formula",
+            "body": "Choose a main, a substantial side, a salad or vegetable and a dessert. Add a simple welcome snack only if it helps with arrival timing. Bread or a purchased component can remove work without making the meal feel incomplete.",
+            "bullets": [
+                "Main: the centerpiece that sets the cooking schedule",
+                "Side: something that shares the main’s oven setting or can be made separately",
+                "Fresh element: salad or a simply prepared vegetable",
+                "Dessert: finished before guests arrive"
+            ]
+        },
+        {
+            "heading": "Menu 1: a relaxed pasta dinner",
+            "body": "A pasta meal works well when the sauce and dessert are finished early. Leave the pasta itself until serving and use a sauce recipe that scales to your guest count.",
+            "bullets": [
+                "Main: pasta with a tomato-based sauce",
+                "Fresh element: a green salad dressed just before serving",
+                "Side: bread, purchased or prepared ahead",
+                "Dessert: a cake or cookies prepared earlier",
+                "Prep plan: finish sauce and dessert ahead; organize pasta water and serving bowls before arrival"
+            ]
+        },
+        {
+            "heading": "Menu 2: a roast-centered dinner",
+            "body": "Let the main set the oven schedule. Choose a compatible side and a cold salad so every component does not compete for a different temperature. Follow the actual recipe for cooking and resting times.",
+            "bullets": [
+                "Main: your preferred roast recipe",
+                "Side: potatoes cooked at a compatible temperature or a stovetop alternative",
+                "Fresh element: a crisp salad",
+                "Dessert: a purchased tart or an already-finished cake",
+                "Prep plan: write the oven sequence, set out serving pieces and prepare salad components before guests arrive"
+            ]
+        },
+        {
+            "heading": "Menu 3: a flexible vegetarian table",
+            "body": "A meal served in separate components lets guests build their own plate. Check the chosen recipes and packaged ingredients against the needs your guests have shared.",
+            "bullets": [
+                "Main: a lentil or bean-based dish",
+                "Side: rice, couscous or another grain suited to the group",
+                "Fresh element: chopped salad or seasonal vegetables",
+                "Dessert: a make-ahead dessert suited to the guest list",
+                "Prep plan: cook the main in advance where the recipe allows; keep toppings and dressings separate"
+            ]
+        },
+        {
+            "heading": "Write a kitchen-capacity worksheet",
+            "body": "For each dish, record the equipment and the final active work. If two dishes need your hands at the same moment, simplify one of them before buying ingredients.",
+            "bullets": [
+                "Dish: [name] | Servings: [recipe yield]",
+                "Oven temperature and time: [if needed]",
+                "Burner or appliance: [what it uses]",
+                "Make ahead: [what can be completed earlier]",
+                "Finish before serving: [active steps and minutes]",
+                "Serving dish and utensil: [assign them now]"
+            ]
+        },
+        {
+            "heading": "Build the shopping list from confirmed servings",
+            "body": "Scale each recipe to the number of people eating it and consolidate repeated ingredients into one list. Check the pantry before buying. Add drinks, ice, napkins and any serving supplies so they do not become a second shopping trip."
+        },
+        {
+            "heading": "Simplify the final thirty minutes",
+            "body": "Keep only the time-sensitive cooking and finishing steps for the last half hour. If the menu is too ambitious, buy dessert, remove an extra side or switch one hot dish to a cold salad. Link the menu to a visible cooking timeline so each recipe has a place."
+        }
     ],
-    checklist: ['Dietary restrictions checked', 'Oven temperature conflicts checked', 'At least half the menu make-ahead', 'One low-effort first bite', 'Serving dishes assigned', 'Dessert finished before dinner', 'Backup ice and drinks planned'],
-    mistakes: ['Choosing recipes based only on how impressive they look', 'Making multiple last-minute sautéed dishes', 'Serving a heavy appetizer before a heavy meal', 'Ignoring dietary needs until guests arrive', 'Planning dessert that requires a clean kitchen after dinner'],
-    faqs: [
-      { q: 'How many dishes should I serve at a dinner party?', a: 'For many home dinner parties, a main, a side, a vegetable or salad and dessert is enough, with a simple snack or appetizer if desired.' },
-      { q: 'How much of a dinner party menu should be make-ahead?', a: 'Aim for at least half of the menu to be finished or nearly finished before guests arrive.' },
-      { q: 'What is the easiest dessert for a dinner party?', a: 'Choose something fully prepared in advance, such as a cake, tart, pudding, cookies or purchased dessert with a simple garnish.' }
+    "checklist": [
+        "Guest count and dietary needs confirmed",
+        "Menu fits available equipment",
+        "Recipes scaled to actual servings",
+        "Repeated ingredients consolidated",
+        "Serving dishes and utensils assigned",
+        "Dessert ready early",
+        "Final cooking order written",
+        "One optional task to drop if needed"
+    ],
+    "mistakes": [
+        "Choosing several dishes with incompatible oven settings",
+        "Trying every recipe for the first time on the night",
+        "Leaving salad, dessert and drinks all to the final minutes",
+        "Treating chopped ingredients as fully finished dishes",
+        "Buying groceries before confirming the guest count"
+    ],
+    "faqs": [
+        {
+            "q": "What is an easy dinner party menu?",
+            "a": "Try one main, one simple side, one salad or vegetable and a dessert prepared in advance. The sample pasta menu above is one low-complexity starting point."
+        },
+        {
+            "q": "How much food should I make?",
+            "a": "Use each recipe’s stated yield and scale to the guests eating that dish. Consider the rest of the menu rather than treating every side as a full meal."
+        },
+        {
+            "q": "Can I serve a bought dessert?",
+            "a": "Yes. A purchased dessert can free your attention for the main meal. Plate it simply and check that it suits the guest list."
+        },
+        {
+            "q": "How do I keep a menu manageable in a small kitchen?",
+            "a": "Plan around the scarcest resource: oven space, burners, fridge space or your attention. Use make-ahead and cold components to reduce conflicts."
+        }
     ]
-  },
+},
   {
     slug: 'christmas-gift-budget',
     category: 'holiday',
@@ -187,29 +587,130 @@ export const supportGuides: SupportGuide[] = [
     ]
   },
   {
-    slug: 'christmas-hosting-checklist',
-    category: 'holiday',
-    title: 'Christmas Hosting Checklist | Two Weeks to Christmas Dinner',
-    description: 'A Christmas hosting checklist organized from two weeks out through the final hour, covering menu, groceries, guest space, table setup and cooking.',
-    h1: 'A Christmas hosting checklist that moves the work out of Christmas morning.',
-    intro: 'Holiday hosting becomes stressful when every task is treated as a day-of task. The best plan moves decisions, shopping, guest setup and make-ahead cooking earlier so the holiday itself is mostly finishing and serving.',
-    quickAnswer: 'Finalize the guest count and menu two weeks out, shop nonperishables and prep the house one week out, complete make-ahead cooking 1–3 days out and reserve Christmas Day for reheating, roasting and final assembly.',
-    relatedDownload: 'christmas-planner-printable',
-    relatedLabel: 'Christmas Planner Printable',
-    sections: [
-      { heading: 'Two weeks out: lock the big decisions', body: 'Confirm who is coming, what time people will arrive and whether there are dietary restrictions. Decide whether guests are bringing anything so the menu is not duplicated.' },
-      { heading: 'One week out: prep the house and nonperishables', body: 'Buy shelf-stable ingredients, beverages and household supplies. Check chairs, serving dishes, linens and overnight guest needs before the stores get busier.' },
-      { heading: '1–3 days out: cook what improves with time', body: 'Desserts, sauces, dressings, casseroles and many side dishes can be made or assembled ahead. Set the table when practical and stage serving pieces with sticky notes for each dish.' },
-      { heading: 'Christmas Day: follow one visible cooking order', body: 'Write the oven temperature and finish time for every hot dish. A simple sequence prevents the classic problem of discovering three dishes all need the same oven at the same time.' }
+    "slug": "christmas-hosting-checklist",
+    "relatedGuides": [{"href": "/guides/dinner-party-menu-planning/", "label": "Choose a manageable dinner menu"}, {"href": "/guides/dinner-party-timeline/", "label": "Work backward from serving time"}],
+    "category": "holiday",
+    "title": "Christmas Hosting Checklist | 2-Week Plan & Dinner Schedule",
+    "description": "Plan Christmas hosting with a two-week checklist, guest dish assignments, an oven worksheet, a sample dinner schedule and a smaller-menu fallback.",
+    "h1": "Christmas hosting checklist: from two weeks out to dinner on the table.",
+    "intro": "Christmas dinner is easier when the house, shopping and cooking each have a place in the plan. Use your serving time as the anchor, confirm what guests are bringing and move the work that can be done early out of the holiday itself.",
+    "quickAnswer": "Confirm guests and menu two weeks out, check supplies and shop ahead, then write an oven schedule using your recipes. Keep Christmas Day focused on the main dish and finishing tasks.",
+    "relatedDownload": "christmas-planner-printable",
+    "relatedLabel": "Christmas Planner Printable",
+    "sections": [
+        {
+            "heading": "Two weeks before: confirm the people and the meal",
+            "body": "Decide what time guests should arrive and what time dinner will be served. Ask about dietary needs and confirm who is bringing food before finalizing the menu. Check whether overnight visitors need bedding or a separate breakfast plan.",
+            "bullets": [
+                "Guest count and arrival window",
+                "Serving time and meal format",
+                "Menu and dietary preferences",
+                "Guest contributions and named owners",
+                "Seats, table space and overnight arrangements"
+            ]
+        },
+        {
+            "heading": "One week before: check the house and supplies",
+            "body": "Work through a short household list while you still have time to solve missing-chair or serving-dish problems. Shop shelf-stable ingredients and household supplies, then leave a separate list for fresher ingredients.",
+            "bullets": [
+                "Count chairs, plates, glasses and cutlery",
+                "Assign serving dishes and utensils to each menu item",
+                "Check table linens and guest towels",
+                "Buy drinks, napkins, bin bags and wrapping supplies as needed",
+                "Make fridge space before the final grocery shop"
+            ]
+        },
+        {
+            "heading": "Three days before: organize the cooking order",
+            "body": "Review each recipe for what can be prepared ahead and what must be finished close to serving. Write the required oven temperature, equipment and finish time. Do not assume every make-ahead dish has the same reheating instructions.",
+            "bullets": [
+                "Dish | recipe | oven or burner | cooking duration",
+                "Make-ahead task | planned day | person responsible",
+                "Serving dish | utensil | final finishing step",
+                "Check that overlapping recipes can use the same oven setting"
+            ]
+        },
+        {
+            "heading": "The day before: finish the setup",
+            "body": "Set the table if it will not interfere with daily life. Prepare approved make-ahead components, chill drinks and put labels on serving dishes so helpers know where everything goes. Keep a short day-of list somewhere visible.",
+            "bullets": [
+                "Confirm guests’ dish quantities and arrival times",
+                "Ask whether contributed dishes need oven or fridge space",
+                "Set out coffee, tea and dessert plates",
+                "Check the kitchen cleaning supplies and empty bins",
+                "Lay out the day-of cooking list"
+            ]
+        },
+        {
+            "heading": "Example schedule: guests at 2 p.m., dinner at 3 p.m.",
+            "body": "This example assumes the main needs two hours of cooking and thirty minutes of rest. It is a planning illustration, not a cooking instruction. Shift the main’s start time and every dependent step to match your recipe.",
+            "bullets": [
+                "Morning: complete cold prep, set the table and stage serving dishes",
+                "12:30 p.m.: start the main according to its recipe",
+                "1:30 p.m.: ready drinks and a simple welcome snack",
+                "2 p.m.: guests arrive; confirm any contributed dishes",
+                "2:30 p.m.: rest the main and finish compatible hot sides",
+                "2:45 p.m.: prepare the final serving steps and fill water glasses",
+                "3 p.m.: serve dinner; leave dessert ready for later"
+            ]
+        },
+        {
+            "heading": "Give each helper a complete, small job",
+            "body": "Use a named task with a finish time instead of asking everyone to help generally. Keep one person coordinating the kitchen and assign jobs that do not all need the same counter or oven.",
+            "bullets": [
+                "Alex: drinks and water glasses by arrival time",
+                "Jordan: bread and butter on the table before dinner",
+                "Casey: welcome coats and show guests where to sit",
+                "Taylor: dessert plates and coffee after the meal",
+                "Guest bringing a side: confirm ready-to-serve status or the exact reheating need"
+            ]
+        },
+        {
+            "heading": "If you need a smaller Christmas menu",
+            "body": "Keep the main, two useful accompaniments and one dessert, then remove optional extras. A simple arrival snack can buy time. Let guests know if dinner moves later and focus on one finishing step at a time instead of adding more dishes."
+        },
+        {
+            "heading": "After dinner: make the reset easy",
+            "body": "Stage containers before the meal so cleanup does not begin with a cupboard search. Decide which food guests would like to take home and who will handle dishes. Leave the hosting checklist with notes about quantities and timing for next year."
+        }
     ],
-    checklist: ['Guest count confirmed', 'Dietary needs checked', 'Menu assigned', 'Nonperishable groceries purchased', 'Serving dishes identified', 'Table set early', 'Beverages chilled', 'Oven schedule written', 'Leftover containers ready'],
-    mistakes: ['Leaving grocery shopping until the final day', 'Not confirming what guests are bringing', 'Planning too many oven-dependent side dishes', 'Forgetting fridge space for leftovers', 'Cleaning guest areas after cooking has already started'],
-    faqs: [
-      { q: 'When should I start preparing to host Christmas?', a: 'Start guest and menu planning about two weeks out, then move shopping and house prep earlier than the final few days.' },
-      { q: 'What food can I make ahead for Christmas dinner?', a: 'Many desserts, sauces, dressings, casseroles and side dishes can be fully or partially prepared in advance depending on the recipe.' },
-      { q: 'How do I keep Christmas dinner cooking organized?', a: 'Write a single cooking order with oven temperatures, cook times and finish times for every hot dish.' }
+    "checklist": [
+        "Guests and serving time confirmed",
+        "Food contributions assigned",
+        "Dietary needs included in the menu",
+        "Chairs and place settings counted",
+        "Fridge and oven space planned",
+        "Serving dishes and utensils ready",
+        "Recipe-based cooking order visible",
+        "Drinks and simple welcome snack ready",
+        "Containers and cleanup plan prepared"
+    ],
+    "mistakes": [
+        "Accepting extra dishes without checking oven space",
+        "Starting all cooking on Christmas morning",
+        "Giving helpers unclear tasks",
+        "Forgetting dessert and drink supplies",
+        "Making the guest arrival time and serving time identical"
+    ],
+    "faqs": [
+        {
+            "q": "When should I start planning Christmas dinner?",
+            "a": "Two weeks ahead gives time to confirm guests, contributions and supplies. If you have less time, handle the menu and cooking-capacity decisions first."
+        },
+        {
+            "q": "What can I do the day before Christmas dinner?",
+            "a": "Set the table, chill drinks, stage serving pieces and complete tasks that your recipes specifically allow ahead of time. Keep final cooking steps on a separate day-of list."
+        },
+        {
+            "q": "How do I manage one oven for Christmas dinner?",
+            "a": "Write each dish’s temperature and time, check which can share space, and choose stovetop or cold sides where helpful. Build the sequence around the main dish’s actual recipe."
+        },
+        {
+            "q": "How do I organize guests bringing food?",
+            "a": "Assign one person to each dish and confirm quantity, arrival time and whether it needs refrigeration or reheating. Avoid asking several people for an unspecified side."
+        }
     ]
-  },
+},
   {
     slug: 'bridal-shower-games-for-groups',
     category: 'wedding',
