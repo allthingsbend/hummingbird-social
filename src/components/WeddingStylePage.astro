@@ -1,0 +1,71 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { allProducts, resolve, SITE } from '../lib/products';
+interface Page {
+  slug: string; title: string; description: string; h1: string; intro: string;
+  decision: string; product: string; caption: string;
+  sections: { heading: string; body: string; bullets: string[] }[];
+  wording: string; checklist: string[]; faqs: { q: string; a: string }[];
+  related: string[];
+}
+const { page } = Astro.props as { page: Page };
+const product = (await allProducts()).map(resolve).find(p => p.slug === page.product);
+const canonical = `${SITE}/wedding-invitation-suites/${page.slug}/`;
+const schemas = [
+  { '@context': 'https://schema.org', '@type': 'WebPage', name: page.h1, description: page.description, url: canonical, isPartOf: { '@type': 'WebSite', name: 'Hummingbird Social Studio', url: SITE } },
+  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: page.faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+  { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+    { '@type': 'ListItem', position: 2, name: 'Wedding invitations', item: `${SITE}/wedding-invitation-suites/` },
+    { '@type': 'ListItem', position: 3, name: page.h1, item: canonical },
+  ] },
+];
+const relatedLabels: Record<string,string> = {
+  'bend-oregon-wedding-invitations': 'Bend & Central Oregon',
+  'joshua-tree-wedding-invitations': 'Joshua Tree & desert weddings',
+  'san-diego-wedding-invitations': 'San Diego & coastal weddings',
+  'boho-weddings': 'Boho invitation style',
+  'mountain-weddings': 'Mountain & outdoor weddings',
+  'black-and-white-weddings': 'Black & white invitation style',
+};
+---
+<Layout title={page.title} description={page.description}>
+  <link slot="head" rel="canonical" href={canonical} />
+  <meta slot="head" property="og:title" content={page.title} />
+  <meta slot="head" property="og:description" content={page.description} />
+  <meta slot="head" property="og:type" content="website" />
+  <meta slot="head" property="og:url" content={canonical} />
+  {schemas.map(schema => <script slot="head" is:inline type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g, '\\u003c')} />)}
+  <main class="wedding-guide">
+    <nav class="wg-crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/wedding-invitation-suites/">Wedding invitations</a><span aria-hidden="true">/</span><span>{page.h1}</span></nav>
+    <header class="wg-hero">
+      <div class="wg-intro"><p class="wg-label">Invitations / Style & planning</p><h1>{page.h1}</h1><p class="wg-lead">{page.intro}</p><div class="wg-actions">{product && <a class="wg-button" href={product.url}>See the template</a>}<a class="wg-text-link" href="#wording">Start with the wording</a></div><div class="wg-note"><strong>Before you choose</strong><p>{page.decision}</p></div></div>
+      {product?.images[0] && <figure class="wg-hero-photo"><a href={product.url} aria-label={`View ${product.title}`}><img src={product.images[0]} alt={`${product.title}, showing the existing illustrated design`} width="794" height="1000" fetchpriority="high" /></a><figcaption>{page.caption}</figcaption></figure>}
+    </header>
+    <nav class="wg-jumps" aria-label="On this page"><a href="#design-guide">Design & details</a><a href="#wording">Wording example</a><a href="#print-check">Before printing</a><a href="#questions">FAQs</a></nav>
+    <div class="wg-body">
+      <article id="design-guide">
+        {page.sections.map((section,i) => <section class="wg-section"><p class="wg-label">0{i+1}</p><h2>{section.heading}</h2><p>{section.body}</p><ul>{section.bullets.map(item => <li>{item}</li>)}</ul></section>)}
+        <section class="wg-wording" id="wording"><p class="wg-label">Make it your own</p><h2>A starting point for your invitation wording</h2><p>Replace the placeholders with your confirmed details. Adjust the hosting line and tone to fit your celebration.</p><blockquote>{page.wording.split('\n').map(line => <span>{line}</span>)}</blockquote><a class="wg-text-link" href="/wording-etiquette/">More wedding invitation wording guidance</a></section>
+        <section class="wg-check" id="print-check"><p class="wg-label">Final pass</p><h2>Before you download or print</h2><ol>{page.checklist.map(item => <li>{item}</li>)}</ol><a class="wg-text-link" href="/printing-guide/">Read the printing guide</a></section>
+        <section class="wg-faq" id="questions"><p class="wg-label">Questions before choosing</p><h2>{page.h1}: FAQs</h2>{page.faqs.map(f => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}</section>
+      </article>
+      <aside class="wg-side">
+        {product && <section class="wg-product"><p class="wg-label">From the current shop</p>{product.images[1] && <a href={product.url}><img src={product.images[1]} alt={`Additional preview of ${product.title}`} width="794" height="794" loading="lazy" /></a>}<h2>{product.title}</h2><p>Review the design gallery, included files and editing guidance before purchasing.</p><a class="wg-button" href={product.url}>View design details</a><p class="wg-small">Digital template. Printing is arranged separately.</p></section>}
+        <section class="wg-custom"><h2>Need a different drawing or matching piece?</h2><p>Share the design you like, your event date, the pieces you need and any venue reference. Confirm scope, pricing and timing before ordering.</p><a class="wg-text-link" href="/custom-design-requests/">Discuss a custom request</a></section>
+        <section class="wg-reading"><h2>Related styles & places</h2>{page.related.map(slug => <a href={`/wedding-invitation-suites/${slug}/`}>{relatedLabels[slug]}</a>)}<a href="/how-it-works/">How Canva templates work</a></section>
+      </aside>
+    </div>
+    <section class="wg-close"><div><p class="wg-label">Ready to compare designs?</p><h2>Choose the artwork. Check the details.</h2><p>Browse the current templates, then use the product page to confirm exactly what your purchase includes.</p></div><a class="wg-button" href="/shop/">Browse the templates</a></section>
+  </main>
+</Layout>
+<style>
+  .wedding-guide{width:min(1180px,calc(100% - 3rem));margin:auto;padding:1.5rem 0 4rem;font-size:1rem;color:var(--text)}
+  .wg-crumbs{display:flex;flex-wrap:wrap;gap:.5rem;font-size:.875rem;margin-bottom:2rem;color:#65544b}.wg-crumbs a{text-decoration:underline;text-underline-offset:3px}
+  .wg-hero{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(2rem,5vw,5rem);align-items:center}.wg-label{font-size:.875rem;letter-spacing:.07em;color:#80503b;font-weight:600;margin:0 0 .7rem}.wg-intro h1{font-size:clamp(2.7rem,5.5vw,4.8rem);line-height:1.04;max-width:13ch;margin:0 0 1.4rem}.wg-lead{font-size:1.125rem;line-height:1.75;max-width:52ch}.wg-actions{display:flex;flex-wrap:wrap;align-items:center;gap:1rem;margin:1.75rem 0}.wg-button{display:inline-flex;justify-content:center;align-items:center;min-height:48px;padding:.8rem 1.3rem;background:#663c2c;color:#fff;border-radius:6px;font-weight:600;line-height:1.4;text-align:center}.wg-button:hover{background:#40251b}.wg-text-link{text-decoration:underline;text-underline-offset:4px;font-weight:600;color:#663c2c;display:inline-block;padding:.65rem 0}.wg-note{border-left:3px solid #ad6247;padding:.2rem 0 .2rem 1rem;margin:1.5rem 0}.wg-note p{margin:.4rem 0 0}.wg-hero-photo{margin:0;padding:1rem;background:var(--paper);border:1px solid var(--border);border-radius:12px;transform:rotate(1deg)}.wg-hero-photo img{display:block;width:100%;height:auto;max-height:560px;object-fit:contain;background:#f7f0e8}.wg-hero-photo figcaption{font-size:.875rem;line-height:1.6;margin:.9rem .2rem .2rem;color:#65544b}
+  .wg-jumps{display:flex;flex-wrap:wrap;gap:.65rem;border-block:1px solid var(--border);padding:1.1rem 0;margin:3rem 0}.wg-jumps a{border:1px solid #d4bbaa;border-radius:5px;padding:.6rem .9rem;min-height:44px;font-size:.9375rem;background:var(--paper)}.wg-jumps a:hover{background:#f0dfd1}
+  .wg-body{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:clamp(2rem,5vw,5rem);align-items:start}.wg-body article,.wg-side{min-width:0}.wg-section{padding:0 0 2rem;margin:0 0 2rem;border-bottom:1px solid var(--border)}.wg-body h2{font-size:clamp(1.9rem,3vw,2.6rem);line-height:1.15;margin:.5rem 0 1.1rem}.wg-body p{line-height:1.8}.wg-section ul{padding-left:1.3rem;display:grid;gap:.7rem}.wg-section li::marker{color:#80503b}.wg-wording{background:#fffdfa;border:1px solid var(--border);padding:2rem;border-radius:12px;margin-bottom:2rem}.wg-wording blockquote{margin:1.5rem 0;padding:1.6rem 1rem;border-block:1px solid var(--border);text-align:center;font-family:'Cormorant Garamond',serif;font-size:1.5rem;line-height:1.5}.wg-wording blockquote span{display:block}.wg-check{background:#efe6dd;padding:2rem;border-radius:12px;margin-bottom:3rem}.wg-check ol{padding-left:1.5rem;display:grid;gap:.8rem}.wg-check li{padding-left:.4rem}.wg-faq details{border-bottom:1px solid #d7c3b5}.wg-faq summary{cursor:pointer;padding:1.1rem 1.4rem 1.1rem 0;font-weight:600;line-height:1.6}.wg-faq details p{margin:0 0 1.3rem}.wg-side{display:grid;gap:1.5rem}.wg-side section{background:var(--paper);padding:1.5rem;border:1px solid var(--border);border-radius:12px}.wg-side h2{font-size:1.9rem}.wg-product img{display:block;width:100%;height:auto;max-height:320px;object-fit:contain}.wg-product .wg-button{width:100%}.wg-small{font-size:.875rem;color:#65544b}.wg-reading a{display:block;text-decoration:underline;text-underline-offset:3px;padding:.75rem 0;border-top:1px solid var(--border)}.wg-close{display:flex;align-items:center;justify-content:space-between;gap:2rem;border-top:1px solid var(--border);margin-top:4rem;padding-top:2rem}.wg-close h2{font-size:2.4rem;line-height:1.1;margin:.5rem 0}.wg-close p{max-width:65ch}.wg-close .wg-button{flex-shrink:0}.wedding-guide [id]{scroll-margin-top:150px}.wedding-guide a:focus-visible,.wedding-guide summary:focus-visible{outline:3px solid #663c2c;outline-offset:4px}
+  @media(max-width:900px){.wg-body{grid-template-columns:minmax(0,1fr)}.wg-side{grid-template-columns:repeat(2,minmax(0,1fr))}.wg-product{grid-row:span 2}.wg-hero{gap:2rem}.wg-intro h1{font-size:clamp(2.6rem,5.5vw,4rem)}}
+  @media(max-width:640px){.wedding-guide{width:calc(100% - 2rem);padding-top:1rem}.wg-crumbs{margin-bottom:1.5rem}.wg-hero{grid-template-columns:minmax(0,1fr);gap:1.5rem}.wg-intro h1{font-size:clamp(2.6rem,11vw,3.5rem);max-width:18ch}.wg-lead{font-size:1rem}.wg-hero-photo{transform:none;max-width:420px;width:100%;margin:auto}.wg-hero-photo img{max-height:410px}.wg-jumps{margin:2rem 0}.wg-side{grid-template-columns:minmax(0,1fr)}.wg-product{grid-row:auto}.wg-wording,.wg-check{padding:1.3rem}.wg-close{flex-direction:column;align-items:flex-start}.wg-close .wg-button{width:100%}.wg-actions .wg-button{width:100%}.wedding-guide [id]{scroll-margin-top:110px}}
+  @media(prefers-reduced-motion:reduce){.wedding-guide{scroll-behavior:auto}}
+</style>
