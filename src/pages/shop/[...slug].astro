@@ -22,11 +22,23 @@ const related = all.filter((e) => slugOf(e) !== p.slug).map(resolve).sort((a, b)
 }).slice(0, 3);
 const buyUrl = p.hasDirect ? p.lemonSqueezyUrl : p.etsyUrl;
 
-const productSchema = {
+// Ratings and reviews must stay omitted until genuine product-specific feedback
+// is displayed on this page. A supported Offer is sufficient for Product snippets.
+const offerPrice = /^\$?(\d+(?:\.\d{1,2})?)$/.exec(p.price.trim())?.[1];
+const hasProductOffer = Boolean(p.isLive && buyUrl && offerPrice && p.images.length);
+const pageSchema = hasProductOffer ? {
   '@context': 'https://schema.org', '@type': 'Product', name: p.title, description: p.description, url, category: p.category,
   brand: { '@type': 'Brand', name: 'Hummingbird Social' },
-  ...(p.images.length ? { image: p.images.map((i) => i.startsWith('http') ? i : SITE + i) } : {}),
-  ...(p.isLive && p.price && buyUrl ? { offers: { '@type': 'Offer', price: p.price.replace(/[^0-9.]/g, ''), priceCurrency: 'USD', availability: p.inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock', url: buyUrl, seller: { '@type': 'Organization', name: 'Hummingbird Social' }, itemCondition: 'https://schema.org/NewCondition' } } : {}),
+  image: p.images.map((i) => new URL(i, SITE).href),
+  offers: {
+    '@type': 'Offer', price: offerPrice, priceCurrency: 'USD',
+    availability: p.inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+    url: buyUrl, seller: { '@type': 'Organization', name: 'Hummingbird Social' },
+  },
+} : {
+  '@context': 'https://schema.org', '@type': 'WebPage',
+  name: p.title, description: p.description, url,
+  isPartOf: { '@type': 'WebSite', name: 'Hummingbird Social Studio', url: SITE },
 };
 const faqSchema = p.faqs.length ? { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: p.faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) } : null;
 const breadcrumbSchema = { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
@@ -40,10 +52,10 @@ const breadcrumbSchema = { '@context': 'https://schema.org', '@type': 'Breadcrum
   <link rel="canonical" href={url} slot="head" />
   <meta property="og:title" content={p.metaTitle ?? p.title} slot="head" />
   <meta property="og:description" content={p.description} slot="head" />
-  <meta property="og:type" content="product" slot="head" />
+  <meta property="og:type" content={hasProductOffer ? 'product' : 'website'} slot="head" />
   <meta property="og:url" content={url} slot="head" />
   {p.images[0] && <meta property="og:image" content={p.images[0].startsWith('http') ? p.images[0] : SITE + p.images[0]} slot="head" />}
-  <script type="application/ld+json" set:html={JSON.stringify(productSchema)} is:inline slot="head" />
+  <script type="application/ld+json" set:html={JSON.stringify(pageSchema)} is:inline slot="head" />
   {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} is:inline slot="head" />}
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} is:inline slot="head" />
 
@@ -62,10 +74,12 @@ const breadcrumbSchema = { '@context': 'https://schema.org', '@type': 'Breadcrum
         <div class="product__info">
           <p class="product__category">{p.category} · {p.type === "template" ? "Editable digital template" : "Digital printable"}</p>
           <h1>{p.h1}</h1>
+          <p>{p.description}</p>
           {p.tagline && <p class="product__tagline">{p.tagline}</p>}
           <div class="product__chips"><span>{p.type === 'template' ? 'Personalize your details' : 'Organize at your pace'}</span><span>Download &amp; print</span><span>Digital files</span></div>
           <BuyButton checkout={p.checkout} etsyUrl={p.etsyUrl} lemonSqueezyUrl={p.lemonSqueezyUrl} price={p.price} isLive={p.isLive} label="Get this design" />
           <dl class="product__meta">
+            {hasProductOffer && <div><dt>Availability</dt><dd>{p.inStock ? 'Available to purchase' : 'Currently out of stock'}</dd></div>}
             {p.pageCount && <div><dt>Includes</dt><dd>{p.pageCount}</dd></div>}
             {p.formats.length > 0 && <div><dt>Files</dt><dd>{p.formats.join(', ')}</dd></div>}
             <div><dt>Delivery</dt><dd>{p.isLive ? 'Digital download — no physical item shipped' : 'Not for sale yet'}</dd></div>
